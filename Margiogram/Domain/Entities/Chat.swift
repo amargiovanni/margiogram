@@ -223,6 +223,15 @@ enum ChatSource: Equatable, Hashable, Sendable {
     case publicServiceAnnouncement(type: String, text: String)
 }
 
+// MARK: - Chat List
+
+/// Type of chat list.
+enum ChatList: Equatable, Hashable, Sendable {
+    case main
+    case archive
+    case folder(folderId: Int32)
+}
+
 // MARK: - Available Reactions
 
 /// Available reactions in a chat.

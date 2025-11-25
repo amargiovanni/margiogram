@@ -64,6 +64,12 @@ struct User: Identifiable, Equatable, Hashable, Sendable {
     /// Bot info if the user is a bot.
     let botInfo: BotInfo?
 
+    /// Whether this user is blocked.
+    var isBlocked: Bool
+
+    /// Last seen date (for offline status).
+    var lastSeenDate: Date?
+
     // MARK: - Computed Properties
 
     /// Full display name.
@@ -189,26 +195,32 @@ extension User {
         firstName: String = "John",
         lastName: String = "Doe",
         username: String? = "johndoe",
-        isOnline: Bool = false
+        isOnline: Bool = false,
+        isVerified: Bool = false,
+        isPremium: Bool = false,
+        bio: String? = nil
     ) -> User {
-        User(
+        let lastSeen = Date().addingTimeInterval(-Double.random(in: 3600...86400))
+        return User(
             id: id,
             firstName: firstName,
             lastName: lastName,
             username: username,
-            phoneNumber: nil,
+            phoneNumber: "+39 123 456 7890",
             profilePhoto: nil,
-            status: isOnline ? .online(expires: Date().addingTimeInterval(300)) : .offline(wasOnline: Date().addingTimeInterval(-3600)),
+            status: isOnline ? .online(expires: Date().addingTimeInterval(300)) : .offline(wasOnline: lastSeen),
             isContact: true,
             isMutualContact: true,
-            isVerified: false,
-            isPremium: false,
+            isVerified: isVerified,
+            isPremium: isPremium,
             isBot: false,
             canBeCalled: true,
             supportsVideoCalls: true,
             restrictionReason: nil,
-            bio: nil,
-            botInfo: nil
+            bio: bio,
+            botInfo: nil,
+            isBlocked: false,
+            lastSeenDate: isOnline ? nil : lastSeen
         )
     }
 }

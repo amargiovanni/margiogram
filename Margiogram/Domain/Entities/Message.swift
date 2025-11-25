@@ -176,6 +176,83 @@ struct FormattedText: Equatable, Hashable, Sendable {
     }
 }
 
+// MARK: - Text Entity
+
+/// A text formatting entity.
+struct TextEntity: Equatable, Hashable, Sendable {
+    let offset: Int32
+    let length: Int32
+    let type: TextEntityType
+}
+
+/// Type of text entity (formatting).
+enum TextEntityType: Equatable, Hashable, Sendable {
+    case bold
+    case italic
+    case underline
+    case strikethrough
+    case spoiler
+    case code
+    case pre(language: String?)
+    case textUrl(url: String)
+    case mention
+    case hashtag
+    case cashtag
+    case botCommand
+    case url
+    case emailAddress
+    case phoneNumber
+    case bankCardNumber
+    case mediaTimestamp(timestamp: Int32)
+    case customEmoji(customEmojiId: Int64)
+}
+
+// MARK: - Input Message Content
+
+/// Content for sending a new message.
+enum InputMessageContent: Equatable, Hashable, Sendable {
+    case text(FormattedText, disableWebPagePreview: Bool)
+    case photo(photoPath: String, caption: FormattedText?, hasSpoiler: Bool)
+    case video(videoPath: String, caption: FormattedText?, hasSpoiler: Bool)
+    case audio(audioPath: String, caption: FormattedText?)
+    case document(documentPath: String, caption: FormattedText?)
+    case sticker(stickerPath: String)
+    case voiceNote(voiceNotePath: String, duration: Int32, waveform: Data)
+    case videoNote(videoNotePath: String, duration: Int32)
+    case location(latitude: Double, longitude: Double, livePeriod: Int32?)
+    case contact(phoneNumber: String, firstName: String, lastName: String)
+    case poll(question: String, options: [String], isAnonymous: Bool)
+}
+
+// MARK: - Message Sending State
+
+/// State of a message being sent.
+enum MessageSendingState: Equatable, Hashable, Sendable {
+    case pending
+    case failed(errorCode: Int32, errorMessage: String)
+    case sent
+
+    static var failed: MessageSendingState {
+        .failed(errorCode: 0, errorMessage: "Unknown error")
+    }
+}
+
+// MARK: - Message Extension
+
+extension Message {
+    /// The sender as a User if available.
+    var senderUser: User? {
+        // In real implementation, this would look up the user
+        nil
+    }
+
+    /// Sending state of the message.
+    var sendingState: MessageSendingState {
+        // In real implementation, this would come from TDLib
+        .sent
+    }
+}
+
 // MARK: - Reply Info
 
 /// Information about a replied message.
