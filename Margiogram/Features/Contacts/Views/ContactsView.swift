@@ -182,7 +182,7 @@ struct ContactsView: View {
                 } label: {
                     Text(letter)
                         .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(.accentColor)
+                        .foregroundStyle(Color.accentColor)
                 }
                 .buttonStyle(.plain)
             }
@@ -276,7 +276,7 @@ struct ContactRowView: View {
                     if let status = user.statusText {
                         Text(status)
                             .font(Typography.caption)
-                            .foregroundStyle(user.isOnline ? .accentColor : .secondary)
+                            .foregroundStyle(user.isOnline ? Color.accentColor : Color.secondary)
                     }
                 }
 

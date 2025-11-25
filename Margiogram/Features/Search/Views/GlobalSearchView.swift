@@ -288,7 +288,7 @@ private struct ChatSearchResultRow: View {
                     .lineLimit(1)
 
                 if let lastMessage = chat.lastMessage {
-                    Text(lastMessage.text ?? "Media")
+                    Text(lastMessage.content.previewText)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .lineLimit(1)
@@ -340,7 +340,7 @@ private struct ContactSearchResultRow: View {
             Spacer()
 
             // Status
-            if user.status == .online {
+            if user.isOnline {
                 Text("online")
                     .font(.caption)
                     .foregroundColor(.green)
@@ -373,12 +373,11 @@ private struct MessageSearchResultRow: View {
             }
 
             // Message content with highlighted query
-            if let text = result.message.text {
-                highlightedText(text, query: searchQuery)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .lineLimit(2)
-            }
+            let previewText = result.message.content.previewText
+            highlightedText(previewText, query: searchQuery)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .lineLimit(2)
         }
         .padding(.vertical, 4)
         .contentShape(Rectangle())

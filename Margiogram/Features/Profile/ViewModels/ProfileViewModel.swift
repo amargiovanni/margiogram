@@ -202,10 +202,17 @@ final class ProfileViewModel {
                 phoneNumber: user.phoneNumber,
                 profilePhoto: user.profilePhoto,
                 status: user.status,
+                isContact: user.isContact,
+                isMutualContact: user.isMutualContact,
                 isVerified: user.isVerified,
                 isPremium: user.isPremium,
                 isBot: user.isBot,
+                canBeCalled: user.canBeCalled,
+                supportsVideoCalls: user.supportsVideoCalls,
+                restrictionReason: user.restrictionReason,
                 bio: editedBio,
+                botInfo: user.botInfo,
+                isBlocked: user.isBlocked,
                 lastSeenDate: user.lastSeenDate
             )
 

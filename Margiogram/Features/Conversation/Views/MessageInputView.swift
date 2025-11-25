@@ -75,7 +75,7 @@ struct MessageInputView: View {
         } label: {
             Image(systemName: "plus.circle.fill")
                 .font(.system(size: 28))
-                .foregroundStyle(.accentColor)
+                .foregroundStyle(Color.accentColor)
         }
         .buttonStyle(.plain)
         .disabled(!viewModel.canSendMessages)
@@ -171,11 +171,11 @@ struct MessageInputView: View {
     private var sendButtonColor: Color {
         switch viewModel.sendButtonState {
         case .send:
-            return .accentColor
+            return Color.accentColor
         case .microphone:
-            return .accentColor
+            return Color.accentColor
         case .stop:
-            return .error
+            return Color.red
         }
     }
 
@@ -193,7 +193,7 @@ struct MessageInputView: View {
                 // Header
                 Text(replyPreviewHeader)
                     .font(Typography.captionBold)
-                    .foregroundStyle(.accentColor)
+                    .foregroundStyle(Color.accentColor)
 
                 // Preview text
                 Text(replyPreviewText)
@@ -254,14 +254,14 @@ struct MessageInputView: View {
             } label: {
                 Image(systemName: "trash.fill")
                     .font(.system(size: 20))
-                    .foregroundStyle(.error)
+                    .foregroundStyle(Color.red)
             }
             .buttonStyle(.plain)
 
             // Recording indicator
             HStack(spacing: Spacing.xs) {
                 Circle()
-                    .fill(Color.error)
+                    .fill(Color.red)
                     .frame(width: 8, height: 8)
                     .opacity(recordingPulseOpacity)
 
@@ -286,7 +286,7 @@ struct MessageInputView: View {
             } label: {
                 Image(systemName: "arrow.up.circle.fill")
                     .font(.system(size: 36))
-                    .foregroundStyle(.accentColor)
+                    .foregroundStyle(Color.accentColor)
             }
             .buttonStyle(.plain)
         }
@@ -310,6 +310,7 @@ struct MessageInputView: View {
 /// Animated waveform visualization for voice recording.
 struct RecordingWaveformView: View {
     @State private var levels: [CGFloat] = Array(repeating: 0.3, count: 30)
+    @State private var timer: Timer?
 
     var body: some View {
         HStack(spacing: 2) {
@@ -320,14 +321,20 @@ struct RecordingWaveformView: View {
             }
         }
         .onAppear {
-            animateWaveform()
+            startAnimating()
+        }
+        .onDisappear {
+            timer?.invalidate()
+            timer = nil
         }
     }
 
-    private func animateWaveform() {
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-            withAnimation(.easeInOut(duration: 0.1)) {
-                levels = levels.map { _ in CGFloat.random(in: 0.2...1.0) }
+    private func startAnimating() {
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] _ in
+            Task { @MainActor in
+                withAnimation(.easeInOut(duration: 0.1)) {
+                    levels = levels.map { _ in CGFloat.random(in: 0.2...1.0) }
+                }
             }
         }
     }

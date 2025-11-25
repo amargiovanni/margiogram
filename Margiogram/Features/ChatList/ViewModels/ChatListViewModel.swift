@@ -53,7 +53,7 @@ final class ChatListViewModel {
     private let client: TDLibClient
 
     /// Update listener task.
-    private var updateTask: Task<Void, Never>?
+    nonisolated(unsafe) private var updateTask: Task<Void, Never>?
 
     // MARK: - Computed Properties
 
@@ -278,44 +278,21 @@ final class ChatListViewModel {
 
     private func handleUpdate(_ update: TDUpdate) async {
         switch update {
-        case .newChat(let chat):
-            if !chats.contains(where: { $0.id == chat.id }) {
-                chats.insert(chat, at: 0)
-            }
-
-        case .chatLastMessage(let chatId, let lastMessage, _):
-            if let index = chats.firstIndex(where: { $0.id == chatId }) {
-                chats[index].lastMessage = lastMessage
-                chats[index].lastMessageDate = lastMessage?.date
+        case .chatUpdated(let chat):
+            if let index = chats.firstIndex(where: { $0.id == chat.id }) {
+                chats[index] = chat
                 sortChats()
-            }
-
-        case .chatReadInbox(let chatId, _, let unreadCount):
-            if let index = chats.firstIndex(where: { $0.id == chatId }) {
-                chats[index].unreadCount = unreadCount
-            }
-
-        case .chatPosition(let chatId, let position):
-            if let index = chats.firstIndex(where: { $0.id == chatId }) {
-                chats[index].position = position
-                chats[index].isPinned = position.isPinned
-                sortChats()
-            }
-
-        case .chatAction(let chatId, _, let user, let action):
-            if let user, action != .cancel {
-                chatActions[chatId] = (user, action)
             } else {
-                chatActions.removeValue(forKey: chatId)
+                chats.insert(chat, at: 0)
+                sortChats()
             }
 
-        case .chatTitle(let chatId, let title):
-            if let index = chats.firstIndex(where: { $0.id == chatId }) {
-                // Create updated chat with new title
-                var updatedChat = chats[index]
-                // Note: In real implementation, we'd need to create a new Chat
-                // with the updated title since it's a let property
-                _ = title
+        case .newMessage(let message):
+            // Update last message in chat
+            if let index = chats.firstIndex(where: { $0.id == message.chatId }) {
+                chats[index].lastMessage = message
+                chats[index].lastMessageDate = message.date
+                sortChats()
             }
 
         default:
@@ -381,14 +358,14 @@ private extension Message {
     /// Text content of the message for search.
     var textContent: String? {
         switch content {
-        case .text(let text, _):
-            return text
+        case .text(let formatted):
+            return formatted.text
         case .photo(let photo):
-            return photo.caption
+            return photo.caption?.text
         case .video(let video):
-            return video.caption
+            return video.caption?.text
         case .document(let doc):
-            return doc.caption ?? doc.fileName
+            return doc.caption?.text ?? doc.fileName
         default:
             return nil
         }

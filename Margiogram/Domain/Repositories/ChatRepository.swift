@@ -10,64 +10,54 @@ import Foundation
 // MARK: - Chat Repository Protocol
 
 /// Repository for managing chats.
-protocol ChatRepository: Sendable {
+protocol ChatRepository: Actor {
     /// Gets the list of chats.
-    ///
-    /// - Parameters:
-    ///   - list: The chat list to fetch from.
-    ///   - limit: Maximum number of chats to return.
-    /// - Returns: Array of chats.
-    func getChats(list: ChatList, limit: Int) async throws -> [Chat]
+    func getChats(chatList: ChatList, limit: Int, offsetOrder: Int64, offsetChatId: Int64) async throws -> [Chat]
 
     /// Gets a specific chat by ID.
-    ///
-    /// - Parameter chatId: The chat identifier.
-    /// - Returns: The chat if found.
     func getChat(chatId: Int64) async throws -> Chat
 
-    /// Marks a chat as read.
-    ///
-    /// - Parameter chatId: The chat identifier.
-    func markChatAsRead(chatId: Int64) async throws
-
-    /// Pins or unpins a chat.
-    ///
-    /// - Parameters:
-    ///   - chatId: The chat identifier.
-    ///   - isPinned: Whether to pin or unpin.
-    func toggleChatPin(chatId: Int64, isPinned: Bool) async throws
-
-    /// Mutes or unmutes a chat.
-    ///
-    /// - Parameters:
-    ///   - chatId: The chat identifier.
-    ///   - muteFor: Duration to mute in seconds (0 to unmute).
-    func muteChat(chatId: Int64, muteFor: Int32) async throws
-
-    /// Archives or unarchives a chat.
-    ///
-    /// - Parameters:
-    ///   - chatId: The chat identifier.
-    ///   - isArchived: Whether to archive or unarchive.
-    func archiveChat(chatId: Int64, isArchived: Bool) async throws
-
-    /// Deletes a chat.
-    ///
-    /// - Parameters:
-    ///   - chatId: The chat identifier.
-    ///   - removeFromList: Whether to remove from chat list.
-    func deleteChat(chatId: Int64, removeFromList: Bool) async throws
+    /// Creates a private chat with a user.
+    func createPrivateChat(userId: Int64) async throws -> Chat
 
     /// Searches for chats.
-    ///
-    /// - Parameters:
-    ///   - query: Search query.
-    ///   - limit: Maximum results.
-    /// - Returns: Array of matching chats.
     func searchChats(query: String, limit: Int) async throws -> [Chat]
 
-    /// Stream of chat updates.
-    var chatUpdates: AsyncStream<ChatUpdate> { get }
+    /// Searches for public chats.
+    func searchPublicChats(query: String) async throws -> [Chat]
+
+    /// Sets chat notification settings.
+    func setChatNotificationSettings(chatId: Int64, muteFor: Int32, sound: String?) async throws
+
+    /// Pins or unpins a chat.
+    func toggleChatIsPinned(chatId: Int64, chatList: ChatList, isPinned: Bool) async throws
+
+    /// Marks a chat as read/unread.
+    func toggleChatIsMarkedAsUnread(chatId: Int64, isMarkedAsUnread: Bool) async throws
+
+    /// Adds a chat to a list.
+    func addChatToList(chatId: Int64, chatList: ChatList) async throws
+
+    /// Leaves a chat.
+    func leaveChat(chatId: Int64) async throws
+
+    /// Deletes a chat.
+    func deleteChat(chatId: Int64) async throws
+
+    /// Gets chat folders.
+    func getChatFolders() async throws -> [ChatFolder]
+
+    /// Creates a chat folder.
+    func createChatFolder(_ folder: ChatFolder) async throws -> Int32
+
+    /// Edits a chat folder.
+    func editChatFolder(folderId: Int32, folder: ChatFolder) async throws
+
+    /// Deletes a chat folder.
+    func deleteChatFolder(folderId: Int32) async throws
+
+    /// Clears chat history.
+    func clearChatHistory(chatId: Int64, removeFromChatList: Bool) async throws
 }
 
 // MARK: - Chat Update
@@ -86,86 +76,87 @@ enum ChatUpdate {
 // MARK: - Message Repository Protocol
 
 /// Repository for managing messages.
-protocol MessageRepository: Sendable {
-    /// Gets messages from a chat.
-    ///
-    /// - Parameters:
-    ///   - chatId: The chat identifier.
-    ///   - fromMessageId: Start from this message ID (0 for latest).
-    ///   - limit: Maximum number of messages.
-    /// - Returns: Array of messages.
-    func getMessages(chatId: Int64, fromMessageId: Int64, limit: Int) async throws -> [Message]
+protocol MessageRepository: Actor {
+    /// Gets chat history.
+    func getChatHistory(
+        chatId: Int64,
+        fromMessageId: Int64,
+        offset: Int32,
+        limit: Int32
+    ) async throws -> [Message]
 
-    /// Gets a specific message.
-    ///
-    /// - Parameters:
-    ///   - chatId: The chat identifier.
-    ///   - messageId: The message identifier.
-    /// - Returns: The message if found.
-    func getMessage(chatId: Int64, messageId: Int64) async throws -> Message
+    /// Sends a text message.
+    func sendTextMessage(
+        chatId: Int64,
+        text: String,
+        replyToMessageId: Int64?
+    ) async throws -> Message
 
-    /// Sends a message.
-    ///
-    /// - Parameters:
-    ///   - chatId: The chat identifier.
-    ///   - content: Message content.
-    ///   - replyToMessageId: Optional message to reply to.
-    /// - Returns: The sent message.
-    func sendMessage(chatId: Int64, content: InputMessageContent, replyToMessageId: Int64?) async throws -> Message
+    /// Sends a media message.
+    func sendMediaMessage(
+        chatId: Int64,
+        content: InputMessageContent,
+        replyToMessageId: Int64?
+    ) async throws -> Message
 
-    /// Edits a message.
-    ///
-    /// - Parameters:
-    ///   - chatId: The chat identifier.
-    ///   - messageId: The message identifier.
-    ///   - content: New content.
-    func editMessage(chatId: Int64, messageId: Int64, content: InputMessageContent) async throws
+    /// Edits a text message.
+    func editMessageText(
+        chatId: Int64,
+        messageId: Int64,
+        text: String
+    ) async throws
 
     /// Deletes messages.
-    ///
-    /// - Parameters:
-    ///   - chatId: The chat identifier.
-    ///   - messageIds: Messages to delete.
-    ///   - forAll: Whether to delete for all users.
-    func deleteMessages(chatId: Int64, messageIds: [Int64], forAll: Bool) async throws
+    func deleteMessages(
+        chatId: Int64,
+        messageIds: [Int64],
+        revoke: Bool
+    ) async throws
 
     /// Forwards messages.
-    ///
-    /// - Parameters:
-    ///   - chatId: Source chat.
-    ///   - messageIds: Messages to forward.
-    ///   - toChatId: Destination chat.
-    /// - Returns: The forwarded messages.
-    func forwardMessages(chatId: Int64, messageIds: [Int64], toChatId: Int64) async throws -> [Message]
+    func forwardMessages(
+        chatId: Int64,
+        fromChatId: Int64,
+        messageIds: [Int64]
+    ) async throws -> [Message]
 
-    /// Adds a reaction to a message.
-    ///
-    /// - Parameters:
-    ///   - chatId: The chat identifier.
-    ///   - messageId: The message identifier.
-    ///   - reaction: Reaction to add.
-    func addReaction(chatId: Int64, messageId: Int64, reaction: ReactionType) async throws
-
-    /// Removes a reaction from a message.
-    ///
-    /// - Parameters:
-    ///   - chatId: The chat identifier.
-    ///   - messageId: The message identifier.
-    ///   - reaction: Reaction to remove.
-    func removeReaction(chatId: Int64, messageId: Int64, reaction: ReactionType) async throws
+    /// Views messages (marks as read).
+    func viewMessages(
+        chatId: Int64,
+        messageIds: [Int64]
+    ) async throws
 
     /// Searches messages in a chat.
-    ///
-    /// - Parameters:
-    ///   - chatId: The chat identifier.
-    ///   - query: Search query.
-    ///   - filter: Message filter.
-    ///   - limit: Maximum results.
-    /// - Returns: Array of matching messages.
-    func searchMessages(chatId: Int64, query: String, filter: MessageSearchFilter?, limit: Int) async throws -> [Message]
+    func searchChatMessages(
+        chatId: Int64,
+        query: String,
+        fromMessageId: Int64,
+        limit: Int32
+    ) async throws -> [Message]
 
-    /// Stream of message updates.
-    var messageUpdates: AsyncStream<MessageUpdate> { get }
+    /// Searches messages globally.
+    func searchMessages(
+        query: String,
+        offset: String?,
+        limit: Int32
+    ) async throws -> (messages: [Message], nextOffset: String?)
+
+    /// Gets a message.
+    func getMessage(chatId: Int64, messageId: Int64) async throws -> Message
+
+    /// Adds a reaction.
+    func addMessageReaction(
+        chatId: Int64,
+        messageId: Int64,
+        reaction: ReactionType
+    ) async throws
+
+    /// Removes a reaction.
+    func removeMessageReaction(
+        chatId: Int64,
+        messageId: Int64,
+        reaction: ReactionType
+    ) async throws
 }
 
 // MARK: - Message Update
@@ -204,74 +195,50 @@ enum MessageSearchFilter {
 // MARK: - User Repository Protocol
 
 /// Repository for managing users.
-protocol UserRepository: Sendable {
+protocol UserRepository: Actor {
     /// Gets a user by ID.
-    ///
-    /// - Parameter userId: The user identifier.
-    /// - Returns: The user.
     func getUser(userId: Int64) async throws -> User
 
-    /// Gets full info about a user.
-    ///
-    /// - Parameter userId: The user identifier.
-    /// - Returns: Full user info.
-    func getUserFullInfo(userId: Int64) async throws -> UserFullInfo
-
     /// Gets the current user.
-    ///
-    /// - Returns: The current user.
     func getCurrentUser() async throws -> User
 
-    /// Updates the current user's profile.
-    ///
-    /// - Parameters:
-    ///   - firstName: New first name.
-    ///   - lastName: New last name.
-    ///   - bio: New bio.
-    func updateProfile(firstName: String, lastName: String, bio: String?) async throws
+    /// Gets contacts.
+    func getContacts() async throws -> [User]
 
-    /// Sets the current user's username.
-    ///
-    /// - Parameter username: New username.
-    func setUsername(_ username: String) async throws
+    /// Searches contacts.
+    func searchContacts(query: String, limit: Int32) async throws -> [User]
 
-    /// Sets the current user's profile photo.
-    ///
-    /// - Parameter photoPath: Path to the photo file.
-    func setProfilePhoto(photoPath: String) async throws
+    /// Adds a contact.
+    func addContact(
+        phoneNumber: String,
+        firstName: String,
+        lastName: String
+    ) async throws -> User
+
+    /// Removes contacts.
+    func removeContacts(userIds: [Int64]) async throws
 
     /// Blocks a user.
-    ///
-    /// - Parameter userId: User to block.
     func blockUser(userId: Int64) async throws
 
     /// Unblocks a user.
-    ///
-    /// - Parameter userId: User to unblock.
     func unblockUser(userId: Int64) async throws
 
-    /// Gets the list of contacts.
-    ///
-    /// - Returns: Array of contacts.
-    func getContacts() async throws -> [User]
+    /// Gets blocked users.
+    func getBlockedUsers(offset: Int32, limit: Int32) async throws -> [User]
 
-    /// Searches for users.
-    ///
-    /// - Parameters:
-    ///   - query: Search query.
-    ///   - limit: Maximum results.
-    /// - Returns: Array of matching users.
-    func searchUsers(query: String, limit: Int) async throws -> [User]
+    /// Updates current user profile.
+    func updateProfile(firstName: String, lastName: String, bio: String) async throws
 
-    /// Stream of user updates.
-    var userUpdates: AsyncStream<UserUpdate> { get }
-}
+    /// Sets profile photo.
+    func setProfilePhoto(photoData: Data) async throws
 
-// MARK: - User Update
+    /// Deletes profile photo.
+    func deleteProfilePhoto() async throws
 
-/// Represents an update to users.
-enum UserUpdate {
-    case userUpdated(User)
-    case userStatusChanged(userId: Int64, status: UserStatus)
-    case userPhotoChanged(userId: Int64, photo: ChatPhoto?)
+    /// Sets username.
+    func setUsername(_ username: String?) async throws
+
+    /// Gets user full info.
+    func getUserFullInfo(userId: Int64) async throws -> UserFullInfo
 }

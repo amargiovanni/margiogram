@@ -15,7 +15,7 @@ struct StickerPanelView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel = StickerPanelViewModel()
 
-    var onStickerSelected: ((Sticker) -> Void)?
+    var onStickerSelected: ((StickerItem) -> Void)?
     var onGifSelected: ((GifItem) -> Void)?
     var onEmojiSelected: ((String) -> Void)?
 
@@ -163,7 +163,7 @@ struct StickerPanelView: View {
         }
     }
 
-    private func stickerGrid(stickers: [Sticker]) -> some View {
+    private func stickerGrid(stickers: [StickerItem]) -> some View {
         LazyVGrid(
             columns: [GridItem(.adaptive(minimum: 70, maximum: 90), spacing: 8)],
             spacing: 8
@@ -334,7 +334,7 @@ struct StickerPanelView: View {
 // MARK: - Sticker Cell
 
 private struct StickerCell: View {
-    let sticker: Sticker
+    let sticker: StickerItem
     let onTap: () -> Void
 
     var body: some View {

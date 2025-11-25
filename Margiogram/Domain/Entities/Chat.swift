@@ -138,6 +138,20 @@ enum ChatType: Equatable, Hashable, Sendable {
     case basicGroup(groupId: Int64, memberCount: Int32)
     case supergroup(supergroupId: Int64, isChannel: Bool, memberCount: Int32)
     case secret(secretChatId: Int32, userId: Int64)
+
+    /// System icon for this chat type.
+    var icon: String {
+        switch self {
+        case .private(_, let isBot):
+            return isBot ? "cpu" : "person"
+        case .basicGroup:
+            return "person.2"
+        case .supergroup(_, let isChannel, _):
+            return isChannel ? "megaphone" : "person.3"
+        case .secret:
+            return "lock.fill"
+        }
+    }
 }
 
 // MARK: - Chat Photo

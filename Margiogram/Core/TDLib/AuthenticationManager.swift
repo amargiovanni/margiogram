@@ -30,11 +30,81 @@ struct AuthCodeInfo: Equatable {
     let timeout: Int32
 
     enum CodeType: Equatable {
-        case sms
-        case call
-        case flashCall
-        case missedCall(pattern: String)
-        case fragment
+        case sms(length: Int32)
+        case call(length: Int32)
+        case flashCall(pattern: String)
+        case missedCall(pattern: String, length: Int32)
+        case fragment(url: String, length: Int32)
+
+        var displayName: String {
+            switch self {
+            case .sms:
+                return "SMS"
+            case .call:
+                return "Phone call"
+            case .flashCall:
+                return "Flash call"
+            case .missedCall:
+                return "Missed call"
+            case .fragment:
+                return "Fragment"
+            }
+        }
+
+        var codeLength: Int32 {
+            switch self {
+            case .sms(let length), .call(let length), .missedCall(_, let length), .fragment(_, let length):
+                return length
+            case .flashCall:
+                return 5
+            }
+        }
+    }
+
+    init(from codeInfo: CodeInfo) {
+        self.phoneNumber = codeInfo.phoneNumber
+        self.timeout = codeInfo.timeout
+
+        switch codeInfo.type {
+        case .sms(let length):
+            self.type = .sms(length: length)
+        case .call(let length):
+            self.type = .call(length: length)
+        case .flashCall(let pattern):
+            self.type = .flashCall(pattern: pattern)
+        case .missedCall(let prefix, let length):
+            self.type = .missedCall(pattern: prefix, length: length)
+        case .fragment(let url, let length):
+            self.type = .fragment(url: url, length: length)
+        default:
+            self.type = .sms(length: 5)
+        }
+
+        if let nextType = codeInfo.nextType {
+            switch nextType {
+            case .sms(let length):
+                self.nextType = .sms(length: length)
+            case .call(let length):
+                self.nextType = .call(length: length)
+            case .flashCall(let pattern):
+                self.nextType = .flashCall(pattern: pattern)
+            case .missedCall(let prefix, let length):
+                self.nextType = .missedCall(pattern: prefix, length: length)
+            case .fragment(let url, let length):
+                self.nextType = .fragment(url: url, length: length)
+            default:
+                self.nextType = nil
+            }
+        } else {
+            self.nextType = nil
+        }
+    }
+
+    init(phoneNumber: String, type: CodeType, nextType: CodeType?, timeout: Int32) {
+        self.phoneNumber = phoneNumber
+        self.type = type
+        self.nextType = nextType
+        self.timeout = timeout
     }
 }
 
@@ -68,38 +138,34 @@ final class AuthenticationManager: ObservableObject {
     // MARK: - Properties
 
     private let client: TDLibClient
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "Auth")
-    private var updateTask: Task<Void, Never>?
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Margiogram", category: "Auth")
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Initialization
 
     init(client: TDLibClient = .shared) {
         self.client = client
+        setupObservers()
     }
 
-    deinit {
-        updateTask?.cancel()
+    // MARK: - Setup
+
+    private func setupObservers() {
+        // Observe TDLibClient's authorization state
+        client.$authorizationState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] tdAuthState in
+                self?.handleTDAuthorizationState(tdAuthState)
+            }
+            .store(in: &cancellables)
     }
 
     // MARK: - Public Methods
 
-    /// Initializes the authentication manager and starts listening for updates.
-    func initialize() async {
+    /// Initializes the authentication manager and starts the TDLib client.
+    func initialize() {
         logger.info("Initializing authentication manager")
-
-        await client.start()
-
-        // Start listening for authorization state updates
-        updateTask = Task {
-            for await update in await client.updates {
-                await handleUpdate(update)
-            }
-        }
-
-        // For now, simulate unauthorized state
-        // In real implementation, TDLib would send the current auth state
-        try? await Task.sleep(for: .seconds(0.5))
-        state = .waitingForPhoneNumber
+        client.start()
     }
 
     /// Sends the phone number to start authentication.
@@ -123,16 +189,10 @@ final class AuthenticationManager: ObservableObject {
         logger.info("Sending phone number")
 
         do {
-            _ = try await client.send(SetAuthenticationPhoneNumber(phoneNumber: phoneNumber))
-
-            // Simulate successful code sent
-            state = .waitingForCode(codeInfo: AuthCodeInfo(
-                phoneNumber: phoneNumber,
-                type: .sms,
-                nextType: .call,
-                timeout: 60
-            ))
+            try await client.setAuthenticationPhoneNumber(phoneNumber)
+            logger.info("Phone number sent successfully")
         } catch {
+            logger.error("Failed to send phone number: \(error.localizedDescription)")
             self.error = .networkError(error)
             throw error
         }
@@ -159,22 +219,24 @@ final class AuthenticationManager: ObservableObject {
         logger.info("Verifying authentication code")
 
         do {
-            _ = try await client.send(CheckAuthenticationCode(code: code))
-
-            // Simulate successful verification
-            state = .authorized
-        } catch let tdError as TDLibError {
-            switch tdError {
-            case .api(let code, let message) where code == 400:
-                self.error = .invalidCode
-                throw AuthenticationError.invalidCode
-            default:
-                self.error = .networkError(tdError)
-                throw tdError
-            }
+            try await client.checkAuthenticationCode(code)
+            logger.info("Authentication code verified successfully")
         } catch {
-            self.error = .networkError(error)
-            throw error
+            logger.error("Failed to verify code: \(error.localizedDescription)")
+            // Check if it's an invalid code error
+            if let tdError = error as? TDLibError {
+                switch tdError {
+                case .api(let code, _) where code == 400:
+                    self.error = .invalidCode
+                    throw AuthenticationError.invalidCode
+                default:
+                    self.error = .networkError(error)
+                    throw error
+                }
+            } else {
+                self.error = .networkError(error)
+                throw error
+            }
         }
     }
 
@@ -199,43 +261,94 @@ final class AuthenticationManager: ObservableObject {
         logger.info("Verifying 2FA password")
 
         do {
-            _ = try await client.send(CheckAuthenticationPassword(password: password))
-            state = .authorized
-        } catch let tdError as TDLibError {
-            switch tdError {
-            case .api(let code, _) where code == 400:
-                self.error = .invalidPassword
-                throw AuthenticationError.invalidPassword
-            default:
-                self.error = .networkError(tdError)
-                throw tdError
-            }
+            try await client.checkAuthenticationPassword(password)
+            logger.info("Password verified successfully")
         } catch {
+            logger.error("Failed to verify password: \(error.localizedDescription)")
+            if let tdError = error as? TDLibError {
+                switch tdError {
+                case .api(let code, _) where code == 400:
+                    self.error = .invalidPassword
+                    throw AuthenticationError.invalidPassword
+                default:
+                    self.error = .networkError(error)
+                    throw error
+                }
+            } else {
+                self.error = .networkError(error)
+                throw error
+            }
+        }
+    }
+
+    /// Registers a new user.
+    ///
+    /// - Parameters:
+    ///   - firstName: The user's first name.
+    ///   - lastName: The user's last name (optional).
+    /// - Throws: `AuthenticationError` if registration fails.
+    func registerUser(firstName: String, lastName: String = "") async throws {
+        guard !isProcessing else {
+            throw AuthenticationError.alreadyProcessing
+        }
+
+        guard !firstName.isEmpty else {
+            throw AuthenticationError.invalidState
+        }
+
+        isProcessing = true
+        error = nil
+
+        defer { isProcessing = false }
+
+        logger.info("Registering new user: \(firstName)")
+
+        do {
+            try await client.registerUser(firstName: firstName, lastName: lastName)
+            logger.info("User registered successfully")
+        } catch {
+            logger.error("Failed to register user: \(error.localizedDescription)")
             self.error = .networkError(error)
             throw error
         }
     }
 
     /// Requests a new authentication code.
+    ///
+    /// - Throws: `AuthenticationError` if the operation fails.
     func resendCode() async throws {
-        guard case .waitingForCode = state else {
-            throw AuthenticationError.invalidState
+        guard !isProcessing else {
+            throw AuthenticationError.alreadyProcessing
         }
 
         isProcessing = true
+        error = nil
+
         defer { isProcessing = false }
 
         logger.info("Requesting new authentication code")
 
-        // In real implementation: await client.send(ResendAuthenticationCode())
+        do {
+            try await client.resendAuthenticationCode()
+            logger.info("New code requested successfully")
+        } catch {
+            logger.error("Failed to resend code: \(error.localizedDescription)")
+            self.error = .networkError(error)
+            throw error
+        }
     }
 
     /// Logs out the current user.
     func logout() async throws {
         logger.info("Logging out")
 
-        // In real implementation: await client.send(LogOut())
-        state = .waitingForPhoneNumber
+        do {
+            try await client.logOut()
+            logger.info("Logged out successfully")
+        } catch {
+            logger.error("Failed to log out: \(error.localizedDescription)")
+            throw error
+        }
     }
 
     /// Clears the current error.
@@ -245,18 +358,34 @@ final class AuthenticationManager: ObservableObject {
 
     // MARK: - Private Methods
 
-    private func handleUpdate(_ update: TDUpdate) async {
-        switch update {
-        case .authorizationStateUpdate(let authState):
-            handleAuthorizationStateUpdate(authState)
-        default:
-            break
-        }
-    }
+    private func handleTDAuthorizationState(_ tdState: TDAuthorizationState) {
+        logger.info("TDLib authorization state changed: \(String(describing: tdState))")
 
-    private func handleAuthorizationStateUpdate(_ authState: AuthorizationState) {
-        logger.info("Authorization state updated: \(String(describing: authState))")
-        state = authState
+        switch tdState {
+        case .waitingForTdlibParameters:
+            state = .loading
+
+        case .waitingForPhoneNumber:
+            state = .waitingForPhoneNumber
+
+        case .waitingForCode(let codeInfo):
+            state = .waitingForCode(codeInfo: AuthCodeInfo(from: codeInfo))
+
+        case .waitingForPassword(let hint):
+            state = .waitingForPassword(hint: hint)
+
+        case .waitingForRegistration:
+            state = .waitingForRegistration
+
+        case .ready:
+            state = .authorized
+
+        case .loggingOut, .closing:
+            state = .loading
+
+        case .closed:
+            state = .waitingForPhoneNumber
+        }
     }
 
     private func isValidPhoneNumber(_ phone: String) -> Bool {

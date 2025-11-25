@@ -247,15 +247,10 @@ private struct ForwardChatRow: View {
                             .fontWeight(.medium)
                             .foregroundColor(.primary)
 
-                        if chat.isVerified {
-                            Image(systemName: "checkmark.seal.fill")
-                                .font(.caption)
-                                .foregroundColor(.blue)
-                        }
                     }
 
                     if let lastMessage = chat.lastMessage {
-                        Text(lastMessage.text ?? "Media")
+                        Text(lastMessage.content.previewText)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .lineLimit(1)
@@ -312,7 +307,7 @@ private struct ForwardContactRow: View {
                 Spacer()
 
                 // Online status
-                if contact.status == .online {
+                if contact.isOnline {
                     Circle()
                         .fill(Color.green)
                         .frame(width: 8, height: 8)

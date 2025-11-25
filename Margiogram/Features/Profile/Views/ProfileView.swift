@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 // MARK: - Profile View
 
@@ -26,6 +27,7 @@ struct ProfileView: View {
     @State private var showPhotoOptions = false
     @State private var showPhotoPicker = false
     @State private var showBlockConfirmation = false
+    @State private var selectedPhotoItem: PhotosPickerItem?
 
     // MARK: - Environment
 
@@ -46,6 +48,59 @@ struct ProfileView: View {
     // MARK: - Body
 
     var body: some View {
+        bodyWithModifiers
+    }
+
+    @ViewBuilder
+    private var bodyWithModifiers: some View {
+        let base = mainContent
+            .background(Color(.systemGroupedBackground))
+            .navigationTitle(viewModel.isEditing ? String(localized: "Edit Profile") : "")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                toolbarContent
+            }
+            .task {
+                await viewModel.loadProfile()
+            }
+
+        let withDialogs = base
+            .confirmationDialog("Profile Photo", isPresented: $showPhotoOptions) {
+                photoOptionsButtons
+            }
+            .photosPicker(
+                isPresented: $showPhotoPicker,
+                selection: $selectedPhotoItem,
+                matching: .images
+            )
+
+        let withBlockAlert = withDialogs
+            .alert("Block User", isPresented: $showBlockConfirmation) {
+                Button("Cancel", role: .cancel) {}
+                Button("Block", role: .destructive) {
+                    Task {
+                        await viewModel.toggleBlock()
+                    }
+                }
+            } message: {
+                Text("Are you sure you want to block \(viewModel.user.fullName)?")
+            }
+
+        withBlockAlert
+            .alert(
+                "Error",
+                isPresented: .constant(viewModel.error != nil),
+                presenting: viewModel.error
+            ) { _ in
+                Button("OK") {
+                    viewModel.clearError()
+                }
+            } message: { error in
+                Text(error.localizedDescription)
+            }
+    }
+
+    private var mainContent: some View {
         ScrollView {
             VStack(spacing: 0) {
                 // Header
@@ -64,43 +119,6 @@ struct ProfileView: View {
                     sharedMediaSection
                 }
             }
-        }
-        .background(Color(.systemGroupedBackground))
-        .navigationTitle(viewModel.isEditing ? String(localized: "Edit Profile") : "")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            toolbarContent
-        }
-        .task {
-            await viewModel.loadProfile()
-        }
-        .confirmationDialog("Profile Photo", isPresented: $showPhotoOptions) {
-            photoOptionsButtons
-        }
-        .photosPicker(
-            isPresented: $showPhotoPicker,
-            selection: .constant(nil)
-        )
-        .alert("Block User", isPresented: $showBlockConfirmation) {
-            Button("Cancel", role: .cancel) {}
-            Button("Block", role: .destructive) {
-                Task {
-                    await viewModel.toggleBlock()
-                }
-            }
-        } message: {
-            Text("Are you sure you want to block \(viewModel.user.fullName)?")
-        }
-        .alert(
-            "Error",
-            isPresented: .constant(viewModel.error != nil),
-            presenting: viewModel.error
-        ) { _ in
-            Button("OK") {
-                viewModel.clearError()
-            }
-        } message: { error in
-            Text(error.localizedDescription)
         }
     }
 
@@ -157,7 +175,7 @@ struct ProfileView: View {
 
                     Text(viewModel.user.statusText ?? "")
                         .font(Typography.bodySmall)
-                        .foregroundStyle(viewModel.user.isOnline ? .accentColor : .secondary)
+                        .foregroundStyle(viewModel.user.isOnline ? Color.accentColor : Color.secondary)
                 }
             }
         }
@@ -205,13 +223,13 @@ struct ProfileView: View {
                     .frame(width: 50, height: 50)
                     .background(
                         Circle()
-                            .fill(action.isDestructive ? Color.error.opacity(0.1) : Color.accentColor.opacity(0.1))
+                            .fill(action.isDestructive ? Color.red.opacity(0.1) : Color.accentColor.opacity(0.1))
                     )
 
                 Text(action.title)
                     .font(Typography.caption)
             }
-            .foregroundStyle(action.isDestructive ? .error : .accentColor)
+            .foregroundStyle(action.isDestructive ? Color.red : Color.accentColor)
         }
         .buttonStyle(.plain)
     }
@@ -266,7 +284,7 @@ struct ProfileView: View {
             HStack(spacing: Spacing.sm) {
                 Image(systemName: item.icon)
                     .font(.system(size: 18))
-                    .foregroundStyle(.accentColor)
+                    .foregroundStyle(Color.accentColor)
                     .frame(width: 30)
 
                 VStack(alignment: .leading, spacing: Spacing.xxxs) {
@@ -337,7 +355,7 @@ struct ProfileView: View {
                 } label: {
                     Text("See All")
                         .font(Typography.bodySmall)
-                        .foregroundStyle(.accentColor)
+                        .foregroundStyle(Color.accentColor)
                 }
             }
             .padding(.horizontal, Spacing.md)

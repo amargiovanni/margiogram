@@ -20,8 +20,8 @@ final class StickerPanelViewModel {
     var isSearching: Bool = false
 
     // Sticker Data
-    var recentStickers: [Sticker] = []
-    var favoriteStickers: [Sticker] = []
+    var recentStickers: [StickerItem] = []
+    var favoriteStickers: [StickerItem] = []
     var installedStickerSets: [StickerSet] = []
     var trendingStickerSets: [StickerSet] = []
 
@@ -75,8 +75,8 @@ final class StickerPanelViewModel {
         #if DEBUG
         try? await Task.sleep(for: .milliseconds(300))
         installedStickerSets = StickerSet.mockSets
-        recentStickers = Sticker.mockRecent
-        favoriteStickers = Sticker.mockFavorites
+        recentStickers = StickerItem.mockRecent
+        favoriteStickers = StickerItem.mockFavorites
         #endif
     }
 
@@ -127,24 +127,24 @@ final class StickerPanelViewModel {
 
     // MARK: - Sticker Actions
 
-    func sendSticker(_ sticker: Sticker) {
+    func sendSticker(_ sticker: StickerItem) {
         // Add to recent
         addToRecentStickers(sticker)
         // In real implementation: send sticker message
     }
 
-    func addToFavorites(_ sticker: Sticker) {
+    func addToFavorites(_ sticker: StickerItem) {
         guard !favoriteStickers.contains(sticker) else { return }
         favoriteStickers.insert(sticker, at: 0)
         // In real implementation: call TDLib's addFavoriteSticker
     }
 
-    func removeFromFavorites(_ sticker: Sticker) {
+    func removeFromFavorites(_ sticker: StickerItem) {
         favoriteStickers.removeAll { $0.id == sticker.id }
         // In real implementation: call TDLib's removeFavoriteSticker
     }
 
-    private func addToRecentStickers(_ sticker: Sticker) {
+    private func addToRecentStickers(_ sticker: StickerItem) {
         recentStickers.removeAll { $0.id == sticker.id }
         recentStickers.insert(sticker, at: 0)
         if recentStickers.count > 20 {
@@ -217,9 +217,9 @@ enum StickerTab: String, CaseIterable {
     }
 }
 
-// MARK: - Sticker
+// MARK: - Sticker Item
 
-struct Sticker: Identifiable, Equatable, Hashable, Sendable {
+struct StickerItem: Identifiable, Equatable, Hashable, Sendable {
     let id: String
     let setId: String
     let emoji: String
@@ -254,7 +254,7 @@ struct StickerSet: Identifiable, Equatable, Hashable, Sendable {
     let title: String
     let name: String
     let thumbnail: URL?
-    let stickers: [Sticker]
+    let stickers: [StickerItem]
     let isOfficial: Bool
     let isAnimated: Bool
 
@@ -263,7 +263,7 @@ struct StickerSet: Identifiable, Equatable, Hashable, Sendable {
         title: String,
         name: String = "",
         thumbnail: URL? = nil,
-        stickers: [Sticker] = [],
+        stickers: [StickerItem] = [],
         isOfficial: Bool = false,
         isAnimated: Bool = false
     ) {
@@ -329,23 +329,23 @@ struct EmojiData {
 
 // MARK: - Mock Data
 
-extension Sticker {
-    static var mockRecent: [Sticker] {
-        (0..<10).map { Sticker(id: "recent_\($0)", emoji: ["😀", "😎", "🥳", "🤔", "👍", "❤️", "🎉", "🔥", "✨", "💯"][$0]) }
+extension StickerItem {
+    static var mockRecent: [StickerItem] {
+        (0..<10).map { StickerItem(id: "recent_\($0)", emoji: ["😀", "😎", "🥳", "🤔", "👍", "❤️", "🎉", "🔥", "✨", "💯"][$0]) }
     }
 
-    static var mockFavorites: [Sticker] {
-        (0..<5).map { Sticker(id: "fav_\($0)", emoji: ["⭐️", "💖", "🌟", "🎯", "🏆"][$0]) }
+    static var mockFavorites: [StickerItem] {
+        (0..<5).map { StickerItem(id: "fav_\($0)", emoji: ["⭐️", "💖", "🌟", "🎯", "🏆"][$0]) }
     }
 }
 
 extension StickerSet {
     static var mockSets: [StickerSet] {
         [
-            StickerSet(title: "Cool Cats", stickers: (0..<20).map { Sticker(id: "cat_\($0)") }, isAnimated: true),
-            StickerSet(title: "Happy Dogs", stickers: (0..<15).map { Sticker(id: "dog_\($0)") }),
-            StickerSet(title: "Funny Faces", stickers: (0..<25).map { Sticker(id: "face_\($0)") }, isAnimated: true),
-            StickerSet(title: "Love Pack", stickers: (0..<18).map { Sticker(id: "love_\($0)") }),
+            StickerSet(title: "Cool Cats", stickers: (0..<20).map { StickerItem(id: "cat_\($0)") }, isAnimated: true),
+            StickerSet(title: "Happy Dogs", stickers: (0..<15).map { StickerItem(id: "dog_\($0)") }),
+            StickerSet(title: "Funny Faces", stickers: (0..<25).map { StickerItem(id: "face_\($0)") }, isAnimated: true),
+            StickerSet(title: "Love Pack", stickers: (0..<18).map { StickerItem(id: "love_\($0)") }),
         ]
     }
 }

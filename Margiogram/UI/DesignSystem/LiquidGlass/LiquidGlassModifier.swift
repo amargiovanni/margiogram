@@ -91,8 +91,9 @@ struct LiquidGlassModifier: ViewModifier {
 
     private var backgroundView: some View {
         ZStack {
-            // Material blur
-            intensity.material
+            // Material blur - use Rectangle with fill
+            Rectangle()
+                .fill(intensity.material)
 
             // Highlight gradient
             if showHighlight {

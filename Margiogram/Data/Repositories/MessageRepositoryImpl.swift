@@ -7,106 +7,17 @@
 
 import Foundation
 
-// MARK: - Message Repository Protocol
-
-/// Repository for message operations.
-protocol MessageRepository: Actor {
-    /// Gets chat history.
-    func getChatHistory(
-        chatId: Int64,
-        fromMessageId: Int64,
-        offset: Int32,
-        limit: Int32
-    ) async throws -> [Message]
-
-    /// Sends a text message.
-    func sendTextMessage(
-        chatId: Int64,
-        text: String,
-        replyToMessageId: Int64?
-    ) async throws -> Message
-
-    /// Sends a media message.
-    func sendMediaMessage(
-        chatId: Int64,
-        content: InputMessageContent,
-        replyToMessageId: Int64?
-    ) async throws -> Message
-
-    /// Edits a text message.
-    func editMessageText(
-        chatId: Int64,
-        messageId: Int64,
-        text: String
-    ) async throws
-
-    /// Deletes messages.
-    func deleteMessages(
-        chatId: Int64,
-        messageIds: [Int64],
-        revoke: Bool
-    ) async throws
-
-    /// Forwards messages.
-    func forwardMessages(
-        chatId: Int64,
-        fromChatId: Int64,
-        messageIds: [Int64]
-    ) async throws -> [Message]
-
-    /// Views messages (marks as read).
-    func viewMessages(
-        chatId: Int64,
-        messageIds: [Int64]
-    ) async throws
-
-    /// Searches messages in a chat.
-    func searchChatMessages(
-        chatId: Int64,
-        query: String,
-        fromMessageId: Int64,
-        limit: Int32
-    ) async throws -> [Message]
-
-    /// Searches messages globally.
-    func searchMessages(
-        query: String,
-        offset: String?,
-        limit: Int32
-    ) async throws -> (messages: [Message], nextOffset: String?)
-
-    /// Gets a message.
-    func getMessage(chatId: Int64, messageId: Int64) async throws -> Message
-
-    /// Adds a reaction.
-    func addMessageReaction(
-        chatId: Int64,
-        messageId: Int64,
-        reaction: ReactionType
-    ) async throws
-
-    /// Removes a reaction.
-    func removeMessageReaction(
-        chatId: Int64,
-        messageId: Int64,
-        reaction: ReactionType
-    ) async throws
-}
-
 // MARK: - Message Repository Implementation
 
 /// Implementation of MessageRepository using TDLib.
 actor MessageRepositoryImpl: MessageRepository {
     // MARK: - Properties
 
-    private let client: TDLibClient
     private var messageCache: [Int64: [Int64: Message]] = [:] // chatId -> (messageId -> Message)
 
     // MARK: - Initialization
 
-    init(client: TDLibClient = .shared) {
-        self.client = client
-    }
+    init() {}
 
     // MARK: - MessageRepository
 

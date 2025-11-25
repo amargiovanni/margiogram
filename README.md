@@ -3,7 +3,7 @@
 > Un client Telegram nativo per macOS e iOS con design Liquid Glass, costruito interamente in Swift.
 
 ![Platform](https://img.shields.io/badge/Platform-iOS%2026%2B%20%7C%20macOS%2026%2B-blue)
-![Swift](https://img.shields.io/badge/Swift-6.0%2B-orange)
+![Swift](https://img.shields.io/badge/Swift-6.0-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-In%20Development-yellow)
 
@@ -11,24 +11,41 @@
 
 Margiogram è un client Telegram completo che sfrutta le API ufficiali di Telegram (TDLib) per offrire un'esperienza utente premium su dispositivi Apple. Il design Liquid Glass si adatta fluidamente tra iOS e macOS, mantenendo un'estetica moderna e coerente.
 
-## Stato Sviluppo
+## Stato Sviluppo Attuale
 
-### ✅ Completato
+L'app compila e funziona con **dati mock** per lo sviluppo e il testing dell'UI. L'integrazione reale con TDLib è pianificata per la prossima fase.
+
+### Modalità Mock
+
+L'app attualmente funziona in modalità mock che permette di:
+- Testare il flusso completo di autenticazione (phone -> code -> auth)
+- Visualizzare chat mock con messaggi di esempio
+- Navigare tra tutte le schermate dell'app
+- Testare tutte le interazioni UI
+
+**Per autenticarsi in modalità mock:**
+1. Inserire un numero di telefono in formato internazionale (es. `+39123456789`)
+2. Cliccare "Continue"
+3. Inserire il codice `12345` (o qualsiasi codice di 4+ cifre)
+
+### Completato
 
 #### Core Layer
-- **TDLib Integration**: Wrapper completo per TDLib con supporto actor-based
-  - `TDLibClient.swift` - Client principale con async/await
-  - `TDLibFunctions.swift` - Tutte le funzioni TDLib (auth, chat, messages, calls, stickers)
-  - `TDLibUpdateHandler.swift` - Gestione aggiornamenti real-time con delegate pattern
+- **TDLib Mock Client**: Wrapper completo con supporto async/await
+  - `TDLibClient.swift` - Client principale con mock data
+  - `TDLibTypes.swift` - Tipi base (TDFunction, TDUpdate, Ok)
+  - `TDLibFunctions.swift` - Definizioni funzioni TDLib
+  - `TDLibUpdateHandler.swift` - Gestione aggiornamenti con delegate pattern
+  - `AuthenticationManager.swift` - Gestione flusso di autenticazione
 
 #### Domain Layer
-- **Entities**: User, Chat, Message, ChatFolder con supporto completo
+- **Entities**: User, Chat, Message, ChatFolder con supporto completo e mock data
 - **Repositories**: Protocol-based abstractions per data access
 - **UseCases**: Business logic per Chat, Message, User operations
 
 #### Data Layer
 - **Repository Implementations**: ChatRepositoryImpl, MessageRepositoryImpl, UserRepositoryImpl
-- **Mappers**: TDLib to Domain entity mapping
+- **Mock Data**: Dati di esempio per tutte le entità
 
 #### Services
 - **KeychainService**: Storage sicuro con actor-based design
@@ -40,7 +57,7 @@ Margiogram è un client Telegram completo che sfrutta le API ufficiali di Telegr
 #### Features
 | Feature | Views | ViewModels | Status |
 |---------|-------|------------|--------|
-| **Authentication** | AuthView, PhoneInputView, CodeInputView, PasswordView | AuthViewModel | ✅ |
+| **Authentication** | AuthenticationView, PhoneInputView, CodeInputView, PasswordView | AuthViewModel | ✅ |
 | **Chat List** | ChatListView, ChatRowView | ChatListViewModel | ✅ |
 | **Conversation** | ConversationView, MessageBubble, MessageInputView | ConversationViewModel | ✅ |
 | **Contacts** | ContactsView | ContactsViewModel | ✅ |
@@ -48,26 +65,28 @@ Margiogram è un client Telegram completo che sfrutta le API ufficiali di Telegr
 | **Profile** | ProfileView | ProfileViewModel | ✅ |
 | **Media Viewer** | MediaViewerView, MediaGalleryView | MediaViewerViewModel | ✅ |
 | **Global Search** | GlobalSearchView | GlobalSearchViewModel | ✅ |
-| **Calls** | CallView, CallHistoryView | CallViewModel | ✅ |
-| **Stickers** | StickerPanelView, StickerStoreView | StickerPanelViewModel | ✅ |
-| **Forward** | ForwardView, ShareSheetView | ForwardViewModel | ✅ |
+| **Calls** | CallView | CallViewModel | ✅ |
+| **Stickers** | StickerPanelView | StickerPanelViewModel | ✅ |
+| **Forward** | ForwardView | ForwardViewModel | ✅ |
 
 #### UI Design System
-- **Liquid Glass Components**: GlassContainer, GlassButton, GlassTextField
-- **Typography**: Complete type system
-- **Colors**: Dynamic color palette with dark mode
-- **Modifiers**: LiquidGlass view modifiers
+- **Liquid Glass Components**: GlassContainer, GlassButton, GlassTextField, GlassSectionHeader
+- **Typography**: Complete type system con Typography enum
+- **Colors**: Dynamic color palette con AppColors
+- **Spacing**: Spacing constants per consistenza UI
+- **Modifiers**: LiquidGlassModifier view modifiers
+- **Components**: AvatarView, MessageBubble, e altri componenti riutilizzabili
 
 #### Navigation
 - **RootView**: Adaptive layout (TabView iPhone, NavigationSplitView iPad/Mac)
 - **Cross-platform support**: iOS, iPadOS, macOS
 
-### 🚧 In Progress
-- Xcode project generation (project.yml ready)
+### In Progress
+- Integrazione reale TDLib
 - Widget extensions
 - Watch companion app
 
-### 📋 Planned
+### Planned
 - Stories feature
 - Channels management
 - Bot interactions
@@ -83,9 +102,11 @@ Margiogram/
 │   └── RootView.swift               # Adaptive navigation
 ├── Core/
 │   ├── TDLib/
-│   │   ├── TDLibClient.swift        # Main TDLib wrapper
-│   │   ├── TDLibFunctions.swift     # All TDLib functions
-│   │   └── TDLibUpdateHandler.swift # Update handling
+│   │   ├── TDLibClient.swift        # Main TDLib wrapper (mock)
+│   │   ├── TDLibTypes.swift         # Base types (TDFunction, TDUpdate, Ok)
+│   │   ├── TDLibFunctions.swift     # TDLib function definitions
+│   │   ├── TDLibUpdateHandler.swift # Update handling
+│   │   └── AuthenticationManager.swift # Auth flow management
 │   ├── Database/
 │   │   └── DatabaseService.swift
 │   ├── Network/
@@ -116,7 +137,9 @@ Margiogram/
 ├── Features/
 │   ├── Auth/
 │   │   ├── Views/
+│   │   │   └── AuthenticationView.swift
 │   │   └── ViewModels/
+│   │       └── AuthViewModel.swift
 │   ├── ChatList/
 │   │   ├── Views/
 │   │   │   ├── ChatListView.swift
@@ -126,7 +149,6 @@ Margiogram/
 │   ├── Conversation/
 │   │   ├── Views/
 │   │   │   ├── ConversationView.swift
-│   │   │   ├── MessageBubble.swift
 │   │   │   └── MessageInputView.swift
 │   │   └── ViewModels/
 │   │       └── ConversationViewModel.swift
@@ -134,45 +156,26 @@ Margiogram/
 │   ├── Settings/
 │   ├── Profile/
 │   ├── MediaViewer/
-│   │   ├── Views/
-│   │   │   ├── MediaViewerView.swift
-│   │   │   └── MediaGalleryView.swift
-│   │   └── ViewModels/
-│   │       └── MediaViewerViewModel.swift
 │   ├── Search/
-│   │   ├── Views/
-│   │   │   └── GlobalSearchView.swift
-│   │   └── ViewModels/
-│   │       └── GlobalSearchViewModel.swift
 │   ├── Calls/
-│   │   ├── Views/
-│   │   │   └── CallView.swift
-│   │   └── ViewModels/
-│   │       └── CallViewModel.swift
 │   ├── Stickers/
-│   │   ├── Views/
-│   │   │   └── StickerPanelView.swift
-│   │   └── ViewModels/
-│   │       └── StickerPanelViewModel.swift
 │   └── Forward/
-│       ├── Views/
-│       │   └── ForwardView.swift
-│       └── ViewModels/
-│           └── ForwardViewModel.swift
 ├── UI/
 │   ├── DesignSystem/
 │   │   ├── LiquidGlass/
-│   │   │   ├── GlassContainer.swift
-│   │   │   ├── GlassButton.swift
-│   │   │   └── GlassTextField.swift
+│   │   │   └── LiquidGlassModifier.swift
 │   │   ├── Colors/
-│   │   │   └── AppColors.swift
+│   │   │   └── Colors.swift
 │   │   └── Typography/
-│   │       └── AppTypography.swift
+│   │       └── Typography.swift
 │   ├── Components/
+│   │   ├── AvatarView.swift
+│   │   ├── GlassButton.swift
+│   │   ├── GlassContainer.swift
+│   │   └── MessageBubble.swift
 │   └── Modifiers/
-│       └── LiquidGlassModifier.swift
 ├── Extensions/
+├── Utilities/
 └── Resources/
     ├── Assets.xcassets/
     └── Localizable/
@@ -182,16 +185,14 @@ Margiogram/
 
 | Componente | Tecnologia |
 |------------|------------|
-| UI Framework | SwiftUI |
-| Backend API | TDLib (Telegram Database Library) |
+| UI Framework | SwiftUI (iOS 26+) |
+| Backend API | TDLib (Telegram Database Library) - mock |
 | Architecture | MVVM + Clean Architecture |
-| Concurrency | Swift Concurrency (async/await, actors) |
-| State Management | @Observable (iOS 17+) |
-| Database Locale | SwiftData |
-| Networking | URLSession + WebSocket |
+| Concurrency | Swift 6.0 Strict Concurrency (async/await, actors) |
+| State Management | @Observable, @Bindable |
+| Project Generation | XcodeGen |
 | Media | AVFoundation, PhotosUI |
-| Chiamate | WebRTC (planned) |
-| Notifiche | UserNotifications, PushKit |
+| Notifiche | UserNotifications |
 | Sicurezza | CryptoKit, Keychain |
 
 ## Requisiti di Sistema
@@ -202,15 +203,22 @@ Margiogram/
 
 ### macOS
 - macOS 26.0 o successivo
-- Chip Apple Silicon (Intel non supportato)
+
+### Development
+- Xcode 17.0+ (beta)
+- XcodeGen (per generare il progetto)
+- Swift 6.0
 
 ## Installazione
 
 ### Prerequisites
 
 1. **Xcode 17.0+** con Command Line Tools
-2. **XcodeGen** (opzionale, per generare il progetto)
-3. **TDLib** compilato per le piattaforme target
+2. **XcodeGen** per generare il progetto Xcode
+
+```bash
+brew install xcodegen
+```
 
 ### Setup
 
@@ -220,29 +228,29 @@ git clone https://github.com/amargiovanni/margiogram.git
 cd margiogram
 ```
 
-2. Genera il progetto Xcode (opzionale):
+2. Genera il progetto Xcode:
 ```bash
 xcodegen generate
 ```
 
-3. Configura le API credentials in `Config.xcconfig`:
-```xcconfig
-TELEGRAM_API_ID = your_api_id
-TELEGRAM_API_HASH = your_api_hash
-```
-
-4. Apri e builda il progetto:
+3. Apri e builda il progetto:
 ```bash
 open Margiogram.xcodeproj
 ```
 
-### Ottenere API Credentials
+4. Seleziona lo scheme "Margiogram" e un simulatore iOS 26+
+
+5. Build and Run (Cmd+R)
+
+### Configurazione TDLib (per integrazione reale)
+
+Quando l'integrazione TDLib sarà implementata:
 
 1. Vai su [my.telegram.org](https://my.telegram.org)
 2. Accedi con il tuo numero di telefono
 3. Vai su "API development tools"
 4. Crea una nuova applicazione
-5. Copia `api_id` e `api_hash`
+5. Configura le credenziali nel progetto
 
 ## Design Liquid Glass
 
@@ -253,33 +261,32 @@ open Margiogram.xcodeproj
 3. **Fluidità**: Transizioni e animazioni smooth tra stati
 4. **Adattabilità**: Interfaccia che si adatta a dispositivo, tema e contenuto
 
-### Implementazione
+### Componenti Principali
 
 ```swift
-// Liquid Glass Container
-struct GlassContainer<Content: View>: View {
-    let content: Content
-
-    var body: some View {
-        content
-            .padding()
-            .background(.ultraThinMaterial)
-            .background(
-                LinearGradient(
-                    colors: [.white.opacity(0.15), .white.opacity(0.05)],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .stroke(.white.opacity(0.2), lineWidth: 1)
-            )
-            .shadow(color: .black.opacity(0.1), radius: 10, y: 5)
-    }
+// Glass Container
+GlassContainer {
+    Text("Content")
 }
+
+// Glass Button
+GlassButton("Action") {
+    // action
+}
+
+// Liquid Glass Modifier
+Text("Hello")
+    .liquidGlass()
 ```
+
+## Strict Concurrency (Swift 6.0)
+
+Il progetto utilizza Swift 6.0 con strict concurrency checking:
+
+- **@MainActor** per ViewModels e UI code
+- **actor** per services thread-safe (KeychainService, repositories)
+- **Sendable** conformance per tipi condivisi
+- **async/await** per tutte le operazioni asincrone
 
 ## Performance
 
@@ -301,22 +308,23 @@ struct GlassContainer<Content: View>: View {
 
 ## Sicurezza
 
-- **End-to-End Encryption**: Chat segrete con MTProto 2.0
 - **Secure Storage**: Keychain per dati sensibili
 - **Biometric Auth**: Face ID / Touch ID / Optic ID
-- **App Lock**: PIN/Password per protezione app
+- **App Lock**: PIN/Password per protezione app (planned)
+- **E2E Encryption**: Per chat segrete (con TDLib reale)
 
 ## Roadmap
 
-### v1.0 (MVP)
-- [x] Autenticazione completa
-- [x] Lista chat con folders
-- [x] Messaggi (testo, media, voice)
-- [x] Chiamate audio/video
-- [x] Sticker e GIF
-- [x] Ricerca globale
-- [x] Media viewer
-- [x] Forward/Share
+### v0.1 (Current - Mock Mode)
+- [x] UI completa per tutte le features
+- [x] Flusso autenticazione mock
+- [x] Mock data per testing UI
+- [x] Build funzionante iOS/macOS
+
+### v1.0 (MVP - TDLib Integration)
+- [ ] Integrazione TDLib reale
+- [ ] Autenticazione completa
+- [ ] Messaggi real-time
 - [ ] Notifiche push
 - [ ] Widget iOS
 
@@ -347,6 +355,7 @@ struct GlassContainer<Content: View>: View {
 - Segui le [Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)
 - Usa `@Observable` per ViewModels
 - Usa `actor` per services thread-safe
+- Strict concurrency compliance (Swift 6.0)
 - Documenta con DocC
 
 ## Licenza

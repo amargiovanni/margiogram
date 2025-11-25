@@ -98,7 +98,7 @@ struct ChatRowView: View {
             if let date = chat.lastMessageDate {
                 Text(formatTime(date))
                     .font(Typography.caption)
-                    .foregroundStyle(chat.hasUnread ? .accentColor : .secondary)
+                    .foregroundStyle(chat.hasUnread ? Color.accentColor : Color.secondary)
             }
         }
     }
@@ -128,12 +128,12 @@ struct ChatRowView: View {
             if chat.isGroup || chat.isChannel {
                 Text(user.firstName + ":")
                     .font(Typography.chatPreview)
-                    .foregroundStyle(.accentColor)
+                    .foregroundStyle(Color.accentColor)
             }
 
             Text(action.description)
                 .font(Typography.chatPreview)
-                .foregroundStyle(.accentColor)
+                .foregroundStyle(Color.accentColor)
                 .italic()
 
             TypingDotsView()
@@ -145,7 +145,7 @@ struct ChatRowView: View {
         HStack(spacing: Spacing.xxs) {
             Text("Draft:")
                 .font(Typography.chatPreview)
-                .foregroundStyle(.error)
+                .foregroundStyle(Color.red)
 
             Text(draftPreview(draft))
                 .font(Typography.chatPreview)
@@ -158,11 +158,10 @@ struct ChatRowView: View {
         HStack(spacing: Spacing.xxs) {
             // Sender name for groups
             if (chat.isGroup || chat.isChannel) && !message.isOutgoing {
-                if let sender = message.sender {
-                    Text(sender.firstName + ":")
-                        .font(Typography.chatPreview)
-                        .foregroundStyle(.accentColor)
-                }
+                // Show sender name for group messages
+                Text(":")
+                    .font(Typography.chatPreview)
+                    .foregroundStyle(Color.accentColor)
             } else if message.isOutgoing {
                 // Outgoing message status
                 messageStatusIcon(message)
@@ -186,12 +185,12 @@ struct ChatRowView: View {
         case .failed:
             Image(systemName: "exclamationmark.circle.fill")
                 .font(.caption2)
-                .foregroundStyle(.error)
+                .foregroundStyle(Color.red)
         case .sent:
             if message.isRead {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.caption2)
-                    .foregroundStyle(.accentColor)
+                    .foregroundStyle(Color.accentColor)
             } else {
                 Image(systemName: "checkmark")
                     .font(.caption2)
@@ -248,20 +247,20 @@ struct ChatRowView: View {
 
     private func messagePreview(_ message: Message) -> String {
         switch message.content {
-        case .text(let text, _):
-            return text
+        case .text(let formatted):
+            return formatted.text
         case .photo(let photo):
-            return photo.caption?.isEmpty == false ? photo.caption! : String(localized: "Photo")
+            return photo.caption?.text.isEmpty == false ? photo.caption!.text : String(localized: "Photo")
         case .video(let video):
-            return video.caption?.isEmpty == false ? video.caption! : String(localized: "Video")
+            return video.caption?.text.isEmpty == false ? video.caption!.text : String(localized: "Video")
         case .audio(let audio):
             return audio.title ?? String(localized: "Audio")
-        case .voice:
+        case .voiceNote:
             return String(localized: "Voice message")
         case .videoNote:
             return String(localized: "Video message")
         case .document(let doc):
-            return doc.fileName ?? String(localized: "Document")
+            return doc.fileName
         case .sticker(let sticker):
             return sticker.emoji + " " + String(localized: "Sticker")
         case .animation:
@@ -272,6 +271,10 @@ struct ChatRowView: View {
             return String(localized: "Contact: \(contact.firstName)")
         case .poll(let poll):
             return String(localized: "Poll: \(poll.question)")
+        case .game(let game):
+            return String(localized: "Game: \(game.title)")
+        case .invoice(let invoice):
+            return String(localized: "Invoice: \(invoice.title)")
         case .unsupported:
             return String(localized: "Unsupported message")
         }
@@ -279,8 +282,8 @@ struct ChatRowView: View {
 
     private func draftPreview(_ draft: DraftMessage) -> String {
         switch draft.content {
-        case .text(let text, _):
-            return text
+        case .text(let formatted, _):
+            return formatted.text
         default:
             return String(localized: "Message")
         }

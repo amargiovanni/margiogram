@@ -258,10 +258,14 @@ struct MainView: View {
     private var iPadLayout: some View {
         NavigationSplitView {
             // Sidebar
-            List(selection: $selectedTab) {
+            List {
                 ForEach(Tab.allCases, id: \.self) { tab in
-                    Label(tab.rawValue, systemImage: tab.icon)
-                        .tag(tab)
+                    Button {
+                        selectedTab = tab
+                    } label: {
+                        Label(tab.rawValue, systemImage: tab.icon)
+                    }
+                    .listRowBackground(selectedTab == tab ? Color.accentColor.opacity(0.2) : Color.clear)
                 }
             }
             .listStyle(.sidebar)

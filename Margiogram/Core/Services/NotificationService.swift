@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import UserNotifications
+@preconcurrency import UserNotifications
 
 // MARK: - Notification Service
 
@@ -18,7 +18,7 @@ actor NotificationService {
 
     // MARK: - Properties
 
-    private let center = UNUserNotificationCenter.current()
+    nonisolated(unsafe) private let center = UNUserNotificationCenter.current()
     private var deviceToken: Data?
 
     // MARK: - Initialization

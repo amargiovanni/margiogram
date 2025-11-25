@@ -433,7 +433,7 @@ struct ConversationView: View {
 
                     Text(viewModel.subtitle)
                         .font(Typography.caption)
-                        .foregroundStyle(viewModel.typingUsers.isEmpty ? .secondary : .accentColor)
+                        .foregroundStyle(viewModel.typingUsers.isEmpty ? Color.secondary : Color.accentColor)
                 }
             }
         }
@@ -534,7 +534,7 @@ struct ConversationView: View {
 // MARK: - Scroll Offset Preference Key
 
 struct ScrollOffsetPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
+    nonisolated(unsafe) static var defaultValue: CGFloat = 0
 
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()

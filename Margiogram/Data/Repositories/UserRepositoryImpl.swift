@@ -7,76 +7,25 @@
 
 import Foundation
 
-// MARK: - User Repository Protocol
-
-/// Repository for user operations.
-protocol UserRepository: Actor {
-    /// Gets a user by ID.
-    func getUser(userId: Int64) async throws -> User
-
-    /// Gets the current user.
-    func getCurrentUser() async throws -> User
-
-    /// Gets contacts.
-    func getContacts() async throws -> [User]
-
-    /// Searches contacts.
-    func searchContacts(query: String, limit: Int32) async throws -> [User]
-
-    /// Adds a contact.
-    func addContact(
-        phoneNumber: String,
-        firstName: String,
-        lastName: String
-    ) async throws -> User
-
-    /// Removes contacts.
-    func removeContacts(userIds: [Int64]) async throws
-
-    /// Blocks a user.
-    func blockUser(userId: Int64) async throws
-
-    /// Unblocks a user.
-    func unblockUser(userId: Int64) async throws
-
-    /// Gets blocked users.
-    func getBlockedUsers(offset: Int32, limit: Int32) async throws -> [User]
-
-    /// Updates current user profile.
-    func updateProfile(
-        firstName: String,
-        lastName: String,
-        bio: String
-    ) async throws
-
-    /// Sets profile photo.
-    func setProfilePhoto(photoData: Data) async throws
-
-    /// Deletes profile photo.
-    func deleteProfilePhoto() async throws
-
-    /// Sets username.
-    func setUsername(_ username: String?) async throws
-
-    /// Gets user full info.
-    func getUserFullInfo(userId: Int64) async throws -> UserFullInfo
-}
-
 // MARK: - User Repository Implementation
 
 /// Implementation of UserRepository using TDLib.
 actor UserRepositoryImpl: UserRepository {
     // MARK: - Properties
 
-    private let client: TDLibClient
     private var userCache: [Int64: User] = [:]
     private var currentUserId: Int64?
 
+    // MARK: - Computed Properties
+
+    @MainActor
+    private var client: TDLibClient {
+        TDLibClient.shared
+    }
+
     // MARK: - Initialization
 
-    init(client: TDLibClient = .shared) {
-        self.client = client
-    }
+    init() {}
 
     // MARK: - UserRepository
 

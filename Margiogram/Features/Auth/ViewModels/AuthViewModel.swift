@@ -205,7 +205,7 @@ final class AuthViewModel {
 
         // In real implementation, this would call authManager.register()
         // For now, we just log
-        logger.info("Registration: \(firstName) \(lastName)")
+        logger.info("Registration: \(self.firstName) \(self.lastName)")
     }
 
     /// Clears the current error.
@@ -220,17 +220,15 @@ final class AuthViewModel {
         resendTimeRemaining = Int(codeInfo.timeout)
         resendTimer?.invalidate()
 
-        resendTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
-            Task { @MainActor in
-                guard let self else {
-                    timer.invalidate()
-                    return
-                }
+        resendTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                guard let self else { return }
 
                 if self.resendTimeRemaining > 0 {
                     self.resendTimeRemaining -= 1
                 } else {
-                    timer.invalidate()
+                    self.resendTimer?.invalidate()
+                    self.resendTimer = nil
                 }
             }
         }

@@ -81,7 +81,7 @@ struct SettingsView: View {
 
                         Text("@andream")
                             .font(Typography.caption)
-                            .foregroundStyle(.accentColor)
+                            .foregroundStyle(Color.accentColor)
                     }
                 }
                 .padding(.vertical, Spacing.xs)
@@ -530,7 +530,7 @@ struct PrivacyOptionView: View {
     var body: some View {
         List {
             Section {
-                ForEach(0..<3) { index in
+                ForEach(0..<3, id: \.self) { index in
                     Button {
                         selection = index
                     } label: {
@@ -539,7 +539,7 @@ struct PrivacyOptionView: View {
                             Spacer()
                             if selection == index {
                                 Image(systemName: "checkmark")
-                                    .foregroundStyle(.accentColor)
+                                    .foregroundStyle(Color.accentColor)
                             }
                         }
                     }
@@ -622,7 +622,7 @@ struct AboutView: View {
                 VStack(spacing: Spacing.md) {
                     Image(systemName: "paperplane.fill")
                         .font(.system(size: 60))
-                        .foregroundStyle(.accentColor)
+                        .foregroundStyle(Color.accentColor)
 
                     Text("Margiogram")
                         .font(Typography.displaySmall)

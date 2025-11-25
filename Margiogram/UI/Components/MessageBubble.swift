@@ -311,7 +311,7 @@ struct MessageBubble: View {
             if isFromMe {
                 Image(systemName: message.isRead ? "checkmark.circle.fill" : "checkmark.circle")
                     .font(.system(size: 12))
-                    .foregroundStyle(message.isRead ? .accentColor : .secondary)
+                    .foregroundStyle(message.isRead ? Color.accentColor : Color.secondary)
             }
         }
         .padding(.horizontal, Spacing.xs)
@@ -328,7 +328,8 @@ struct MessageBubble: View {
                 endPoint: .bottomTrailing
             )
         } else {
-            Material.regularMaterial
+            Rectangle()
+                .fill(.regularMaterial)
         }
     }
 

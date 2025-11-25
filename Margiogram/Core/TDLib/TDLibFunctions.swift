@@ -118,7 +118,7 @@ struct GetContacts: TDFunction {
 struct AddContact: TDFunction {
     typealias Result = Ok
 
-    let contact: Contact
+    let contact: TDContact
     let sharePhoneNumber: Bool
 
     func encode() throws -> [String: Any] {
@@ -202,7 +202,7 @@ struct CloseChat: TDFunction {
 
 /// Gets chat history.
 struct GetChatHistory: TDFunction {
-    typealias Result = Messages
+    typealias Result = TDMessages
 
     let chatId: Int64
     let fromMessageId: Int64
@@ -242,7 +242,7 @@ struct SearchChatMessages: TDFunction {
 
     let chatId: Int64
     let query: String
-    let senderId: MessageSender?
+    let senderId: TDMessageSender?
     let fromMessageId: Int64
     let offset: Int32
     let limit: Int32
@@ -251,7 +251,7 @@ struct SearchChatMessages: TDFunction {
     init(
         chatId: Int64,
         query: String = "",
-        senderId: MessageSender? = nil,
+        senderId: TDMessageSender? = nil,
         fromMessageId: Int64 = 0,
         offset: Int32 = 0,
         limit: Int32 = 50,
@@ -288,7 +288,7 @@ struct SearchChatMessages: TDFunction {
 struct ToggleChatIsPinned: TDFunction {
     typealias Result = Ok
 
-    let chatList: ChatList
+    let chatList: TDChatList
     let chatId: Int64
     let isPinned: Bool
 
@@ -346,7 +346,7 @@ struct ViewMessages: TDFunction {
 
 /// Gets a message by ID.
 struct GetMessage: TDFunction {
-    typealias Result = Message
+    typealias Result = TDMessage
 
     let chatId: Int64
     let messageId: Int64
@@ -362,11 +362,11 @@ struct GetMessage: TDFunction {
 
 /// Edits a text message.
 struct EditMessageText: TDFunction {
-    typealias Result = Message
+    typealias Result = TDMessage
 
     let chatId: Int64
     let messageId: Int64
-    let inputMessageContent: InputMessageContent
+    let inputMessageContent: TDInputMessageContent
 
     func encode() throws -> [String: Any] {
         [
@@ -398,7 +398,7 @@ struct DeleteMessages: TDFunction {
 
 /// Forwards messages.
 struct ForwardMessages: TDFunction {
-    typealias Result = Messages
+    typealias Result = TDMessages
 
     let chatId: Int64
     let fromChatId: Int64
@@ -438,14 +438,14 @@ struct AddMessageReaction: TDFunction {
 
     let chatId: Int64
     let messageId: Int64
-    let reactionType: ReactionType
+    let reactionType: TDReactionType
     let isBig: Bool
     let updateRecentReactions: Bool
 
     init(
         chatId: Int64,
         messageId: Int64,
-        reactionType: ReactionType,
+        reactionType: TDReactionType,
         isBig: Bool = false,
         updateRecentReactions: Bool = true
     ) {
@@ -472,7 +472,7 @@ struct AddMessageReaction: TDFunction {
 
 /// Downloads a file.
 struct DownloadFile: TDFunction {
-    typealias Result = File
+    typealias Result = TDFile
 
     let fileId: Int32
     let priority: Int32
@@ -716,14 +716,14 @@ struct Users {
     let userIds: [Int64]
 }
 
-struct Messages {
+struct TDMessages {
     let totalCount: Int32
-    let messages: [Message]
+    let messages: [TDMessage]
 }
 
 struct FoundChatMessages {
     let totalCount: Int32
-    let messages: [Message]
+    let messages: [TDMessage]
     let nextFromMessageId: Int64
 }
 
@@ -765,7 +765,7 @@ struct AnimationInfo: Identifiable {
     let height: Int32
 }
 
-struct Contact: Sendable {
+struct TDContact: Sendable {
     let phoneNumber: String
     let firstName: String
     let lastName: String
@@ -834,7 +834,7 @@ enum StickerType {
     }
 }
 
-enum ReactionType {
+enum TDReactionType {
     case emoji(String)
     case customEmoji(Int64)
 
@@ -848,7 +848,7 @@ enum ReactionType {
     }
 }
 
-enum MessageSender {
+enum TDMessageSender {
     case user(Int64)
     case chat(Int64)
 }
@@ -900,6 +900,132 @@ enum InputFile {
                 dict["expected_size"] = size
             }
             return dict
+        }
+    }
+}
+
+// MARK: - TDLib Type Definitions
+
+/// TDLib message representation.
+struct TDMessage: Identifiable, Sendable {
+    let id: Int64
+    let chatId: Int64
+    let senderId: Int64
+    let isOutgoing: Bool
+    let date: Date
+    let content: TDMessageContent
+    let replyToMessageId: Int64?
+}
+
+/// TDLib message content.
+enum TDMessageContent: Sendable {
+    case text(String)
+    case photo
+    case video
+    case animation
+    case audio
+    case document
+    case sticker
+    case voiceNote
+    case videoNote
+    case location
+    case contact
+    case poll
+    case unsupported
+}
+
+/// TDLib file representation.
+struct TDFile: Identifiable, Equatable, Sendable {
+    let id: Int32
+    let size: Int64
+    let expectedSize: Int64
+    let localPath: String?
+    let isDownloadingActive: Bool
+    let isDownloadingCompleted: Bool
+    let downloadedSize: Int64
+    let remoteId: String?
+    let isUploadingActive: Bool
+    let isUploadingCompleted: Bool
+    let uploadedSize: Int64
+
+    var downloadProgress: Double {
+        guard expectedSize > 0 else { return 0 }
+        return Double(downloadedSize) / Double(expectedSize)
+    }
+
+    var uploadProgress: Double {
+        guard size > 0 else { return 0 }
+        return Double(uploadedSize) / Double(size)
+    }
+}
+
+/// TDLib input message content.
+enum TDInputMessageContent {
+    case text(String, disableWebPagePreview: Bool)
+    case photo(path: String, caption: String?)
+    case video(path: String, caption: String?)
+    case document(path: String, caption: String?)
+    case voiceNote(path: String, duration: Int32)
+
+    func encode() -> [String: Any] {
+        switch self {
+        case .text(let text, let disablePreview):
+            return [
+                "@type": "inputMessageText",
+                "text": ["@type": "formattedText", "text": text],
+                "disable_web_page_preview": disablePreview
+            ]
+        case .photo(let path, let caption):
+            var dict: [String: Any] = [
+                "@type": "inputMessagePhoto",
+                "photo": ["@type": "inputFileLocal", "path": path]
+            ]
+            if let caption = caption {
+                dict["caption"] = ["@type": "formattedText", "text": caption]
+            }
+            return dict
+        case .video(let path, let caption):
+            var dict: [String: Any] = [
+                "@type": "inputMessageVideo",
+                "video": ["@type": "inputFileLocal", "path": path]
+            ]
+            if let caption = caption {
+                dict["caption"] = ["@type": "formattedText", "text": caption]
+            }
+            return dict
+        case .document(let path, let caption):
+            var dict: [String: Any] = [
+                "@type": "inputMessageDocument",
+                "document": ["@type": "inputFileLocal", "path": path]
+            ]
+            if let caption = caption {
+                dict["caption"] = ["@type": "formattedText", "text": caption]
+            }
+            return dict
+        case .voiceNote(let path, let duration):
+            return [
+                "@type": "inputMessageVoiceNote",
+                "voice_note": ["@type": "inputFileLocal", "path": path],
+                "duration": duration
+            ]
+        }
+    }
+}
+
+/// TDLib chat list type.
+enum TDChatList: Equatable, Hashable, Sendable {
+    case main
+    case archive
+    case folder(folderId: Int32)
+
+    func encode() -> [String: Any] {
+        switch self {
+        case .main:
+            return ["@type": "chatListMain"]
+        case .archive:
+            return ["@type": "chatListArchive"]
+        case .folder(let folderId):
+            return ["@type": "chatListFolder", "chat_folder_id": folderId]
         }
     }
 }

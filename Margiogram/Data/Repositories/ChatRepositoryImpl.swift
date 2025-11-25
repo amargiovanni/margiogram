@@ -13,14 +13,11 @@ import Foundation
 actor ChatRepositoryImpl: ChatRepository {
     // MARK: - Properties
 
-    private let client: TDLibClient
     private var chatCache: [Int64: Chat] = [:]
 
     // MARK: - Initialization
 
-    init(client: TDLibClient = .shared) {
-        self.client = client
-    }
+    init() {}
 
     // MARK: - ChatRepository
 

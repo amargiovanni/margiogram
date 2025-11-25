@@ -1,0 +1,1424 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00923B28447F56ECB4E2701A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5667DC7C5F720ABBFB44804D /* ProfileView.swift */; };
+		038B95FF3C6E951581BA6D25 /* StickerPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A08E7D1B1CD62861D306C8B /* StickerPanelViewModel.swift */; };
+		04B8387C647BDDDA42EECB76 /* StickerPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A08E7D1B1CD62861D306C8B /* StickerPanelViewModel.swift */; };
+		0CBA05AE33390EFEAC406C65 /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C2C40CC7AFE9B09F111CDF /* FileService.swift */; };
+		11D69BC0851BB9B9A8B5CE5C /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB28ABBB88286B4A7C133C4 /* AuthenticationManager.swift */; };
+		1409576452F1B80FC94AA414 /* ChatRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E1A950583EE176D2324614 /* ChatRowView.swift */; };
+		147D65365A0D2CE66DB30247 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49B52A6C8AD3BFFEF4CC150 /* KeychainService.swift */; };
+		155E4ECCFCE1F4612B667AEA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684D6F4C86C23328E47A10FF /* SettingsView.swift */; };
+		16170EBB0531AFD696C783A2 /* ForwardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C620ACD733A1884B9D289B03 /* ForwardViewModel.swift */; };
+		166D4D3AF07A0081062759DD /* UserUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F835678EC57CB05BAFE552 /* UserUseCases.swift */; };
+		18F60326229819545B190B04 /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC0046FBEEABAE238008C8 /* UserRepositoryImpl.swift */; };
+		1AC7D34C463620775128F83F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B3ABAADD858DDE80D7CBC /* NotificationService.swift */; };
+		1D9DDA88B7B82C354E3897FA /* GlobalSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E460E08891ADE9CBF194E9D /* GlobalSearchViewModel.swift */; };
+		1E545DD744C4484E9CD61A25 /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D650E5BC0984E092727CF2 /* ChatListView.swift */; };
+		20B6B0F4EADC563F21617920 /* ChatUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CEFE2C1BAFC2F019DCE773 /* ChatUseCases.swift */; };
+		241D3730C561300A35F56DFA /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C9A20515B7F8A0A8928BC /* MessageBubble.swift */; };
+		251C38A3EA0CB0881F89C4C3 /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9987AEBC3C3690460752F63 /* ChatListViewModel.swift */; };
+		254B5D9584683C006C3FE56F /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C4E699D283488F2C14C03 /* ConversationView.swift */; };
+		26FD0AAB944A355581016EC5 /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AC0046FBEEABAE238008C8 /* UserRepositoryImpl.swift */; };
+		297E32485B7A43DF9702B0D2 /* TDLibUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4162A9B53B74E996668A5B /* TDLibUpdateHandler.swift */; };
+		2A75B4C2EEE92496FE1FDE2E /* GlassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C49E0BE0D0780D2B23DFF42 /* GlassButton.swift */; };
+		2BF99432DD8DEB187BC88E50 /* MediaViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6B968CA6C0BE52113B1992 /* MediaViewerView.swift */; };
+		2C601245BCB7DB053E3B4E8B /* CallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370B83F81ED3AD3FDB44429E /* CallView.swift */; };
+		2DDC99730CA31CC60E990BFB /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A1A86BB59CFF482325ECAD /* MessageInputView.swift */; };
+		2E2EB6EC0A2CCA7D97A3CBB7 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE94125422C76E6BABA3628 /* ProfileViewModel.swift */; };
+		303E563CFCDEA5695A0CCF64 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7A20CFFADF9D89A0F35E6 /* AuthViewModel.swift */; };
+		31432DD832F5268D9E56A19E /* MargiogramApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F81FAFC5CF7EAE812D9BFD /* MargiogramApp.swift */; };
+		3212EB2F181AB30A7D1445F7 /* TDLibUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4162A9B53B74E996668A5B /* TDLibUpdateHandler.swift */; };
+		33BE6A318EE748CDDD1C6FB1 /* CallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370B83F81ED3AD3FDB44429E /* CallView.swift */; };
+		3661422139C30072080B3AAF /* StickerPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC6B61925EA196F6249C85C /* StickerPanelView.swift */; };
+		3A7BAEA8603D98B1DB0F6836 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5667DC7C5F720ABBFB44804D /* ProfileView.swift */; };
+		3B8CEF3EBF8788500C4A78EB /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771CDBD911DC0730F98B6292 /* Message.swift */; };
+		3BB9B46EEC3EB6E621589DDB /* ChatRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E1A950583EE176D2324614 /* ChatRowView.swift */; };
+		3CF2761650849CFB5B70F5F4 /* GlobalSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE4B2C397B74283D24ABBD1 /* GlobalSearchView.swift */; };
+		439441610AD1D166E0319DA5 /* ConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A9A6CA968CF9E95EBFF534 /* ConversationViewModel.swift */; };
+		4A9687E472A2AF77450A53ED /* MessageUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418789E14EF8DDC9C37AF83 /* MessageUseCases.swift */; };
+		4DD0F8A08C172F6825CD70F8 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49B52A6C8AD3BFFEF4CC150 /* KeychainService.swift */; };
+		5136C84DE45842A7F5F60D65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E0810026600ACE442140B93 /* Assets.xcassets */; };
+		52C139EC3FEF7C33F4FD3360 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E199E077FCFDCFDBC647F28 /* ContactsView.swift */; };
+		534A2AF833D9D2698F18594D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E0810026600ACE442140B93 /* Assets.xcassets */; };
+		548091C248AC1E0730FAF165 /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C2C40CC7AFE9B09F111CDF /* FileService.swift */; };
+		56A22174A909C320CE87F229 /* MessageUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418789E14EF8DDC9C37AF83 /* MessageUseCases.swift */; };
+		5C0965BE84206DCC4B7592F7 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEEA4ED69795BD1383F37D0 /* NetworkMonitor.swift */; };
+		5FBD755694DAF989EC3F9D06 /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A1A86BB59CFF482325ECAD /* MessageInputView.swift */; };
+		604C7FA7ACD3B78A66BBADB1 /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9987AEBC3C3690460752F63 /* ChatListViewModel.swift */; };
+		61745B5DB3E658438C5DE1CE /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C4E699D283488F2C14C03 /* ConversationView.swift */; };
+		62475BE484CA6450330F2D24 /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D650E5BC0984E092727CF2 /* ChatListView.swift */; };
+		664DD6C99BB6CBF9C112B3B5 /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2E73FE45D34579205EB2E2 /* BiometricService.swift */; };
+		6A87C8FDDB2DBAC7F0478DCC /* TDLibClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B648E846E24D96A32C6DB795 /* TDLibClient.swift */; };
+		6B12C6D037B3388A111920DA /* MargiogramUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26875C1DA24B1624332CDE4E /* MargiogramUITestsLaunchTests.swift */; };
+		73CB8E43C3849F2BF5AC513D /* MediaGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C92A95BA247327B9825838 /* MediaGalleryView.swift */; };
+		74785D2F290D7FC80B59DF7D /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2E73FE45D34579205EB2E2 /* BiometricService.swift */; };
+		77CB3426729EC190DBC0026A /* ForwardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C620ACD733A1884B9D289B03 /* ForwardViewModel.swift */; };
+		804DC77CCA80693AF9CF06A4 /* ConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A9A6CA968CF9E95EBFF534 /* ConversationViewModel.swift */; };
+		827FF92313C85E235103785F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36C181183218A137FC2E503 /* Colors.swift */; };
+		84C21703C4C5385E804878B8 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C00D1B1E4065169C8170CCA /* ContactsViewModel.swift */; };
+		863690DA797E58B60A161E50 /* CallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24CCC4D384FD49BBC6323A4 /* CallViewModel.swift */; };
+		86B877BCE129567010A24605 /* TDLibFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97E51630C9685489AD870F3 /* TDLibFunctions.swift */; };
+		899778BFF2C34CAECA88BA45 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5782EC9F7499FB9A7FFD98B7 /* AuthenticationView.swift */; };
+		8ED843C129BB6A3753C44D66 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E199E077FCFDCFDBC647F28 /* ContactsView.swift */; };
+		910805BCC81A5FFB85397FE1 /* TDLibFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B97E51630C9685489AD870F3 /* TDLibFunctions.swift */; };
+		93C556CB8A3D56701492EFC3 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C9A20515B7F8A0A8928BC /* MessageBubble.swift */; };
+		955C9E2223F85B94D1DE62F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B290913FFEBB36B8258791BE /* User.swift */; };
+		968481B47D3548314441E1AB /* UserUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F835678EC57CB05BAFE552 /* UserUseCases.swift */; };
+		9C868AD1F70985155B5AE61A /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B3ABAADD858DDE80D7CBC /* NotificationService.swift */; };
+		A134B85F0C001FD425BFE39C /* CallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24CCC4D384FD49BBC6323A4 /* CallViewModel.swift */; };
+		A23AB7A798FE9D3F62E4FADC /* MediaViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6B968CA6C0BE52113B1992 /* MediaViewerView.swift */; };
+		A283FCBA23896E6A4C8C2BA9 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB28ABBB88286B4A7C133C4 /* AuthenticationManager.swift */; };
+		A5C870048055063F8AA0D243 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771CDBD911DC0730F98B6292 /* Message.swift */; };
+		A6F1AC0B5EAC78CA9A990699 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29558311BF25C69A7DC9E82F /* Chat.swift */; };
+		A85C9AB0D796418C95474AF8 /* MargiogramApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F81FAFC5CF7EAE812D9BFD /* MargiogramApp.swift */; };
+		AC5DBA4BFA616AAD5E0A0BAC /* GlassContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38B07CE32D3D70B2A8A0E93 /* GlassContainer.swift */; };
+		AF102889AFA0ABDEDAEE19A0 /* GlassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C49E0BE0D0780D2B23DFF42 /* GlassButton.swift */; };
+		B1EF2939F244A4597A5DC764 /* TDLibTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE79CB9B5A982E29794EA0A2 /* TDLibTypes.swift */; };
+		B2186FB12579B13E6DFF7115 /* LiquidGlassModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22B350C466EBEACBDB6D6F /* LiquidGlassModifier.swift */; };
+		B28507209E8594316450AB6E /* GlobalSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E460E08891ADE9CBF194E9D /* GlobalSearchViewModel.swift */; };
+		B2B0B3BBDA9B3FBB97BA20D0 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE94125422C76E6BABA3628 /* ProfileViewModel.swift */; };
+		B49785B1F2DEE2E8A929204A /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEEA4ED69795BD1383F37D0 /* NetworkMonitor.swift */; };
+		B548A9C800847F767E5A8972 /* ChatRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8B8F8B17F6B118491B07E0 /* ChatRepositoryImpl.swift */; };
+		B91AE559917D6BFF5751CD9D /* MargiogramTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C60EA12524F945B3D02C0C3 /* MargiogramTests.swift */; };
+		BB6943D92DE9EAA1390E3953 /* TDLibClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B648E846E24D96A32C6DB795 /* TDLibClient.swift */; };
+		BC844357D6CC507EEBC7DECD /* LiquidGlassModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22B350C466EBEACBDB6D6F /* LiquidGlassModifier.swift */; };
+		BED55F8D831DEB517B468E0E /* ForwardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F5B2C20E0DD31771474BCF /* ForwardView.swift */; };
+		C2EA97486EAC3D1201ACB523 /* ChatUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CEFE2C1BAFC2F019DCE773 /* ChatUseCases.swift */; };
+		C86A9DD684BE8A9EAD94D37D /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29558311BF25C69A7DC9E82F /* Chat.swift */; };
+		C8AA53157AF1E69C1FE8A9D3 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C985D263E26238CB0FFA88 /* Typography.swift */; };
+		CA33CFBF023C7AFCE55BA4BE /* MediaGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C92A95BA247327B9825838 /* MediaGalleryView.swift */; };
+		CDF461A841358F0C7A3E73AF /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2379A7FA0FAF1A0F0A9739 /* AvatarView.swift */; };
+		D11AEE7C22542D39FFC4F292 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B290913FFEBB36B8258791BE /* User.swift */; };
+		D1669F9DB4328DD39C59FB5E /* StickerPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC6B61925EA196F6249C85C /* StickerPanelView.swift */; };
+		D17E224FE092EB006380DBE5 /* ChatRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8B8F8B17F6B118491B07E0 /* ChatRepositoryImpl.swift */; };
+		D20D20C09AEDAC21E5170D5E /* MediaViewerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29524EF28A1214D035874238 /* MediaViewerViewModel.swift */; };
+		D25AA1DBA891BAA0085673DD /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2379A7FA0FAF1A0F0A9739 /* AvatarView.swift */; };
+		D2B77FCFB1B43ADD02A020F0 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C00D1B1E4065169C8170CCA /* ContactsViewModel.swift */; };
+		D6B55D92B4C7C349F3AB5153 /* GlobalSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE4B2C397B74283D24ABBD1 /* GlobalSearchView.swift */; };
+		D937BD3FBBA0A5EB4FABB8C6 /* MessageRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08FA8527825DCE6C8C99EED /* MessageRepositoryImpl.swift */; };
+		DAC221119CBDEA7DC3829D43 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21017B9FD87E1AD3E5361308 /* ChatRepository.swift */; };
+		DBBEAD9E386D751F35B79D15 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099D165F230372CF2A416074 /* RootView.swift */; };
+		DC6639CB86D9BCB8BC13B325 /* ForwardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F5B2C20E0DD31771474BCF /* ForwardView.swift */; };
+		E0A3BFDC305620207013FAD4 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21017B9FD87E1AD3E5361308 /* ChatRepository.swift */; };
+		E23793871E0E9ACC352105A4 /* MediaViewerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29524EF28A1214D035874238 /* MediaViewerViewModel.swift */; };
+		E49D15D10D47CAFB6924C0B3 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C985D263E26238CB0FFA88 /* Typography.swift */; };
+		E4A348644847B7CC7BFC280E /* MargiogramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEA4D16749337F1AB29ACEB /* MargiogramUITests.swift */; };
+		E8827D34CC8F5CC004E253F7 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099D165F230372CF2A416074 /* RootView.swift */; };
+		EE2B3D1AFC48E9BBD3375098 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684D6F4C86C23328E47A10FF /* SettingsView.swift */; };
+		EF88CFA450BC198D30028A21 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5782EC9F7499FB9A7FFD98B7 /* AuthenticationView.swift */; };
+		F0255E1CE2C0292EF64885CC /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36C181183218A137FC2E503 /* Colors.swift */; };
+		F6B02EAFC4DE67970B40BF53 /* TDLibTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE79CB9B5A982E29794EA0A2 /* TDLibTypes.swift */; };
+		F6DEA22ABFCD1C75A240EDED /* GlassContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38B07CE32D3D70B2A8A0E93 /* GlassContainer.swift */; };
+		FCB3F43257F442A7A206E46F /* MessageRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08FA8527825DCE6C8C99EED /* MessageRepositoryImpl.swift */; };
+		FDB85118562714BC572AE535 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B7A20CFFADF9D89A0F35E6 /* AuthViewModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		13F20BCA58039F47F0D6CA15 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B937821112FDEADF84A89C03 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 71AC9AC275CD45AE8C23D473;
+			remoteInfo = Margiogram;
+		};
+		FC5843D5285A560391D324D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B937821112FDEADF84A89C03 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 71AC9AC275CD45AE8C23D473;
+			remoteInfo = Margiogram;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		099D165F230372CF2A416074 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		0E199E077FCFDCFDBC647F28 /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
+		1B22B350C466EBEACBDB6D6F /* LiquidGlassModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassModifier.swift; sourceTree = "<group>"; };
+		1CEA4D16749337F1AB29ACEB /* MargiogramUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MargiogramUITests.swift; sourceTree = "<group>"; };
+		21017B9FD87E1AD3E5361308 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
+		21AC0046FBEEABAE238008C8 /* UserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryImpl.swift; sourceTree = "<group>"; };
+		21CEFE2C1BAFC2F019DCE773 /* ChatUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUseCases.swift; sourceTree = "<group>"; };
+		2533C324A0CEA2FB6AEF7BF2 /* MargiogramMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MargiogramMac.entitlements; sourceTree = "<group>"; };
+		26875C1DA24B1624332CDE4E /* MargiogramUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MargiogramUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		29524EF28A1214D035874238 /* MediaViewerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewerViewModel.swift; sourceTree = "<group>"; };
+		29558311BF25C69A7DC9E82F /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		370B83F81ED3AD3FDB44429E /* CallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallView.swift; sourceTree = "<group>"; };
+		380C4E699D283488F2C14C03 /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
+		39A9A6CA968CF9E95EBFF534 /* ConversationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewModel.swift; sourceTree = "<group>"; };
+		3C00D1B1E4065169C8170CCA /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
+		3C60EA12524F945B3D02C0C3 /* MargiogramTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MargiogramTests.swift; sourceTree = "<group>"; };
+		40E1A950583EE176D2324614 /* ChatRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRowView.swift; sourceTree = "<group>"; };
+		45831DB5381A3256D8ECE220 /* Margiogram.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Margiogram.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AD952FC1408129BF77B770E /* MargiogramMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MargiogramMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FC6B61925EA196F6249C85C /* StickerPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerPanelView.swift; sourceTree = "<group>"; };
+		5418789E14EF8DDC9C37AF83 /* MessageUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageUseCases.swift; sourceTree = "<group>"; };
+		5667DC7C5F720ABBFB44804D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		5782EC9F7499FB9A7FFD98B7 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		684D6F4C86C23328E47A10FF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		75A1A86BB59CFF482325ECAD /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
+		769B3ABAADD858DDE80D7CBC /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		771CDBD911DC0730F98B6292 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		7A08E7D1B1CD62861D306C8B /* StickerPanelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerPanelViewModel.swift; sourceTree = "<group>"; };
+		8DEEA4ED69795BD1383F37D0 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		8E0810026600ACE442140B93 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		90D650E5BC0984E092727CF2 /* ChatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListView.swift; sourceTree = "<group>"; };
+		92C92A95BA247327B9825838 /* MediaGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaGalleryView.swift; sourceTree = "<group>"; };
+		9C49E0BE0D0780D2B23DFF42 /* GlassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassButton.swift; sourceTree = "<group>"; };
+		9D2E73FE45D34579205EB2E2 /* BiometricService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricService.swift; sourceTree = "<group>"; };
+		9E460E08891ADE9CBF194E9D /* GlobalSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSearchViewModel.swift; sourceTree = "<group>"; };
+		9F8B8F8B17F6B118491B07E0 /* ChatRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepositoryImpl.swift; sourceTree = "<group>"; };
+		A08FA8527825DCE6C8C99EED /* MessageRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepositoryImpl.swift; sourceTree = "<group>"; };
+		A36C181183218A137FC2E503 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		A9F81FAFC5CF7EAE812D9BFD /* MargiogramApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MargiogramApp.swift; sourceTree = "<group>"; };
+		ADB28ABBB88286B4A7C133C4 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		AE2379A7FA0FAF1A0F0A9739 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		B1B7A20CFFADF9D89A0F35E6 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		B24CCC4D384FD49BBC6323A4 /* CallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewModel.swift; sourceTree = "<group>"; };
+		B290913FFEBB36B8258791BE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B38B07CE32D3D70B2A8A0E93 /* GlassContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassContainer.swift; sourceTree = "<group>"; };
+		B49B52A6C8AD3BFFEF4CC150 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		B648E846E24D96A32C6DB795 /* TDLibClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDLibClient.swift; sourceTree = "<group>"; };
+		B97E51630C9685489AD870F3 /* TDLibFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDLibFunctions.swift; sourceTree = "<group>"; };
+		BB167D5B333EE1153287A737 /* MargiogramTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MargiogramTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C620ACD733A1884B9D289B03 /* ForwardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardViewModel.swift; sourceTree = "<group>"; };
+		CDE94125422C76E6BABA3628 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		CE4162A9B53B74E996668A5B /* TDLibUpdateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDLibUpdateHandler.swift; sourceTree = "<group>"; };
+		D101009B3C4EB2BB453A8A89 /* Margiogram.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Margiogram.entitlements; sourceTree = "<group>"; };
+		DE79CB9B5A982E29794EA0A2 /* TDLibTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDLibTypes.swift; sourceTree = "<group>"; };
+		DF0C9A20515B7F8A0A8928BC /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
+		E9987AEBC3C3690460752F63 /* ChatListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModel.swift; sourceTree = "<group>"; };
+		EC6B968CA6C0BE52113B1992 /* MediaViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewerView.swift; sourceTree = "<group>"; };
+		F0F835678EC57CB05BAFE552 /* UserUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUseCases.swift; sourceTree = "<group>"; };
+		F1221CE632A62E8858EAD541 /* MargiogramUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MargiogramUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1C985D263E26238CB0FFA88 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		F3F5B2C20E0DD31771474BCF /* ForwardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardView.swift; sourceTree = "<group>"; };
+		F6C2C40CC7AFE9B09F111CDF /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
+		FBE4B2C397B74283D24ABBD1 /* GlobalSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSearchView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		05B305E9F2F53F23B4775FFF /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				39A9A6CA968CF9E95EBFF534 /* ConversationViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		0C91C86A01D9AD7FA392CAD3 /* TDLib */ = {
+			isa = PBXGroup;
+			children = (
+				ADB28ABBB88286B4A7C133C4 /* AuthenticationManager.swift */,
+				B648E846E24D96A32C6DB795 /* TDLibClient.swift */,
+				B97E51630C9685489AD870F3 /* TDLibFunctions.swift */,
+				DE79CB9B5A982E29794EA0A2 /* TDLibTypes.swift */,
+				CE4162A9B53B74E996668A5B /* TDLibUpdateHandler.swift */,
+			);
+			path = TDLib;
+			sourceTree = "<group>";
+		};
+		113BB45CA6859912DB076C4E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				380C4E699D283488F2C14C03 /* ConversationView.swift */,
+				75A1A86BB59CFF482325ECAD /* MessageInputView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1674A011CEEB3C251F3FE103 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				3C8BE5D1263BA4125DE1AC49 /* Entities */,
+				8F9303E60D8AE67847E128CA /* Repositories */,
+				92A65AC177C756BE4025DF78 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		170861427B555E70D886C286 /* MediaViewer */ = {
+			isa = PBXGroup;
+			children = (
+				F7269CDE2684421BB5CE645A /* ViewModels */,
+				B37C408B9B50A7974F06FE6F /* Views */,
+			);
+			path = MediaViewer;
+			sourceTree = "<group>";
+		};
+		179B8C9723366DE0F23E6607 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				BDE68698A89568237028C67B /* ViewModels */,
+				B4A82C71166829FF1895509B /* Views */,
+			);
+			path = Contacts;
+			sourceTree = "<group>";
+		};
+		1A1C63717F7654BB46EE8645 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F6C2C40CC7AFE9B09F111CDF /* FileService.swift */,
+				769B3ABAADD858DDE80D7CBC /* NotificationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1CD6F63F3ED3C0ADA73A4332 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F6FF2E25E9E9163DFE69CBF7 /* Components */,
+				A6F09CA2A33460024A882C8A /* DesignSystem */,
+				47CFB734F102467D8EBE6AB5 /* Modifiers */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		1FA13DFBCA1B1104D7BC6561 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		21A9698DE91DEE1523E3B926 /* Stickers */ = {
+			isa = PBXGroup;
+			children = (
+				7EF6A40D008AAA00FDB80E32 /* ViewModels */,
+				CE46D6AB5760CF108069FD4C /* Views */,
+			);
+			path = Stickers;
+			sourceTree = "<group>";
+		};
+		28ACA85E79B4180A331262A7 /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				A36C181183218A137FC2E503 /* Colors.swift */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
+		313B8A296C9512CFE14F1C6D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				C620ACD733A1884B9D289B03 /* ForwardViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		35B8DA751294A44F7D9793B5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5667DC7C5F720ABBFB44804D /* ProfileView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		390BEFCD60C364E0E1679B3B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				8DEEA4ED69795BD1383F37D0 /* NetworkMonitor.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		3A7A653937A4EDA8BD2C4B39 /* MargiogramUITests */ = {
+			isa = PBXGroup;
+			children = (
+				1CEA4D16749337F1AB29ACEB /* MargiogramUITests.swift */,
+				26875C1DA24B1624332CDE4E /* MargiogramUITestsLaunchTests.swift */,
+			);
+			path = MargiogramUITests;
+			sourceTree = "<group>";
+		};
+		3C8BE5D1263BA4125DE1AC49 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				29558311BF25C69A7DC9E82F /* Chat.swift */,
+				771CDBD911DC0730F98B6292 /* Message.swift */,
+				B290913FFEBB36B8258791BE /* User.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		44FB3B07E431E24315F71AE1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				90D650E5BC0984E092727CF2 /* ChatListView.swift */,
+				40E1A950583EE176D2324614 /* ChatRowView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4677564903658F976BF1E43D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5782EC9F7499FB9A7FFD98B7 /* AuthenticationView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4701B64E907D5A0D0DECE3E6 /* Mappers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Mappers;
+			sourceTree = "<group>";
+		};
+		47CFB734F102467D8EBE6AB5 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		4D2839DE14E3A6FA87B9DBEE /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B1B7A20CFFADF9D89A0F35E6 /* AuthViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		519AFCBAFC1271D9E4CF0DEC /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B24CCC4D384FD49BBC6323A4 /* CallViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		569CA882AD8A12051FCC364D /* MargiogramTests */ = {
+			isa = PBXGroup;
+			children = (
+				3C60EA12524F945B3D02C0C3 /* MargiogramTests.swift */,
+			);
+			path = MargiogramTests;
+			sourceTree = "<group>";
+		};
+		57479111D40E29299392EAFD /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				92DA20C8E9786E010621790C /* ViewModels */,
+				35B8DA751294A44F7D9793B5 /* Views */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		58D30FE82CED87775DAA3E49 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				4701B64E907D5A0D0DECE3E6 /* Mappers */,
+				6C6777C43635BF3657E32838 /* Repositories */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		6C6777C43635BF3657E32838 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				9F8B8F8B17F6B118491B07E0 /* ChatRepositoryImpl.swift */,
+				A08FA8527825DCE6C8C99EED /* MessageRepositoryImpl.swift */,
+				21AC0046FBEEABAE238008C8 /* UserRepositoryImpl.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		6D8E06C82A67A19C8D4E3A80 /* Margiogram */ = {
+			isa = PBXGroup;
+			children = (
+				E887CDAA8EC691F2CE300DCF /* App */,
+				BE0B8434765AB0B0C89FDB67 /* Core */,
+				58D30FE82CED87775DAA3E49 /* Data */,
+				1674A011CEEB3C251F3FE103 /* Domain */,
+				E71673F22B478826B80CB646 /* Extensions */,
+				9B18DB9B7926EA205116C37D /* Features */,
+				9BFCED2C14EAFE68D82AA563 /* Resources */,
+				1CD6F63F3ED3C0ADA73A4332 /* UI */,
+				BC16D30438B6FD13B654919F /* Utilities */,
+				D101009B3C4EB2BB453A8A89 /* Margiogram.entitlements */,
+				2533C324A0CEA2FB6AEF7BF2 /* MargiogramMac.entitlements */,
+			);
+			path = Margiogram;
+			sourceTree = "<group>";
+		};
+		7D6082D0B74ADA3A948DE1ED /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FBE4B2C397B74283D24ABBD1 /* GlobalSearchView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7EF6A40D008AAA00FDB80E32 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				7A08E7D1B1CD62861D306C8B /* StickerPanelViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		8E9FF59450C0ABB52D168D86 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				A3BE303D3A3543FE274BA5BA /* ViewModels */,
+				7D6082D0B74ADA3A948DE1ED /* Views */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		8F9303E60D8AE67847E128CA /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				21017B9FD87E1AD3E5361308 /* ChatRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		92A65AC177C756BE4025DF78 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				21CEFE2C1BAFC2F019DCE773 /* ChatUseCases.swift */,
+				5418789E14EF8DDC9C37AF83 /* MessageUseCases.swift */,
+				F0F835678EC57CB05BAFE552 /* UserUseCases.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		92DA20C8E9786E010621790C /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				CDE94125422C76E6BABA3628 /* ProfileViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		9B18DB9B7926EA205116C37D /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				DB157AA955C22CC02217AFEE /* Auth */,
+				E890DF42B1B6DCFE48DC5209 /* Calls */,
+				E9162176A18D86840E02B15C /* ChatList */,
+				179B8C9723366DE0F23E6607 /* Contacts */,
+				D9192CA87A07A98272D44533 /* Conversation */,
+				A224A8DB4130B728289125C6 /* Forward */,
+				170861427B555E70D886C286 /* MediaViewer */,
+				57479111D40E29299392EAFD /* Profile */,
+				8E9FF59450C0ABB52D168D86 /* Search */,
+				C24B7FCDE93E7B186BE3CF2F /* Settings */,
+				21A9698DE91DEE1523E3B926 /* Stickers */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		9BFCED2C14EAFE68D82AA563 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FD8BF74E962995FD5B8CE535 /* Localizable */,
+				8E0810026600ACE442140B93 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9C8458C20ABBAD056E59B638 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E9987AEBC3C3690460752F63 /* ChatListViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		9F60F539F00C8B057451A525 = {
+			isa = PBXGroup;
+			children = (
+				6D8E06C82A67A19C8D4E3A80 /* Margiogram */,
+				569CA882AD8A12051FCC364D /* MargiogramTests */,
+				3A7A653937A4EDA8BD2C4B39 /* MargiogramUITests */,
+				A299A42963745859E970096C /* Products */,
+			);
+			indentWidth = 4;
+			sourceTree = "<group>";
+			tabWidth = 4;
+			usesTabs = 0;
+		};
+		A224A8DB4130B728289125C6 /* Forward */ = {
+			isa = PBXGroup;
+			children = (
+				313B8A296C9512CFE14F1C6D /* ViewModels */,
+				F1DB6B885671E529C6042080 /* Views */,
+			);
+			path = Forward;
+			sourceTree = "<group>";
+		};
+		A299A42963745859E970096C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				45831DB5381A3256D8ECE220 /* Margiogram.app */,
+				4AD952FC1408129BF77B770E /* MargiogramMac.app */,
+				BB167D5B333EE1153287A737 /* MargiogramTests.xctest */,
+				F1221CE632A62E8858EAD541 /* MargiogramUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A3072614FFB4A43637BB22C9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				684D6F4C86C23328E47A10FF /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A3BE303D3A3543FE274BA5BA /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				9E460E08891ADE9CBF194E9D /* GlobalSearchViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		A529492E71E8A1AECE2B2DE3 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		A6F09CA2A33460024A882C8A /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				28ACA85E79B4180A331262A7 /* Colors */,
+				C02424395D2AD01145FE40F0 /* LiquidGlass */,
+				F88A7B9A5541F4543B20E451 /* Typography */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		AB166B793929FAF62D64FE90 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				370B83F81ED3AD3FDB44429E /* CallView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B0ECD8052B1D714DA4BC9C7B /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				9D2E73FE45D34579205EB2E2 /* BiometricService.swift */,
+				B49B52A6C8AD3BFFEF4CC150 /* KeychainService.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		B37C408B9B50A7974F06FE6F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				92C92A95BA247327B9825838 /* MediaGalleryView.swift */,
+				EC6B968CA6C0BE52113B1992 /* MediaViewerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B4A82C71166829FF1895509B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0E199E077FCFDCFDBC647F28 /* ContactsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BC16D30438B6FD13B654919F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		BDE68698A89568237028C67B /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				3C00D1B1E4065169C8170CCA /* ContactsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		BE0B8434765AB0B0C89FDB67 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A529492E71E8A1AECE2B2DE3 /* Database */,
+				390BEFCD60C364E0E1679B3B /* Network */,
+				B0ECD8052B1D714DA4BC9C7B /* Security */,
+				1A1C63717F7654BB46EE8645 /* Services */,
+				0C91C86A01D9AD7FA392CAD3 /* TDLib */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		C02424395D2AD01145FE40F0 /* LiquidGlass */ = {
+			isa = PBXGroup;
+			children = (
+				1B22B350C466EBEACBDB6D6F /* LiquidGlassModifier.swift */,
+			);
+			path = LiquidGlass;
+			sourceTree = "<group>";
+		};
+		C24B7FCDE93E7B186BE3CF2F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				1FA13DFBCA1B1104D7BC6561 /* ViewModels */,
+				A3072614FFB4A43637BB22C9 /* Views */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		CE46D6AB5760CF108069FD4C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4FC6B61925EA196F6249C85C /* StickerPanelView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D9192CA87A07A98272D44533 /* Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				05B305E9F2F53F23B4775FFF /* ViewModels */,
+				113BB45CA6859912DB076C4E /* Views */,
+			);
+			path = Conversation;
+			sourceTree = "<group>";
+		};
+		DB157AA955C22CC02217AFEE /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				4D2839DE14E3A6FA87B9DBEE /* ViewModels */,
+				4677564903658F976BF1E43D /* Views */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		E71673F22B478826B80CB646 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E887CDAA8EC691F2CE300DCF /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A9F81FAFC5CF7EAE812D9BFD /* MargiogramApp.swift */,
+				099D165F230372CF2A416074 /* RootView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E890DF42B1B6DCFE48DC5209 /* Calls */ = {
+			isa = PBXGroup;
+			children = (
+				519AFCBAFC1271D9E4CF0DEC /* ViewModels */,
+				AB166B793929FAF62D64FE90 /* Views */,
+			);
+			path = Calls;
+			sourceTree = "<group>";
+		};
+		E9162176A18D86840E02B15C /* ChatList */ = {
+			isa = PBXGroup;
+			children = (
+				9C8458C20ABBAD056E59B638 /* ViewModels */,
+				44FB3B07E431E24315F71AE1 /* Views */,
+			);
+			path = ChatList;
+			sourceTree = "<group>";
+		};
+		F1DB6B885671E529C6042080 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F3F5B2C20E0DD31771474BCF /* ForwardView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F6FF2E25E9E9163DFE69CBF7 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				AE2379A7FA0FAF1A0F0A9739 /* AvatarView.swift */,
+				9C49E0BE0D0780D2B23DFF42 /* GlassButton.swift */,
+				B38B07CE32D3D70B2A8A0E93 /* GlassContainer.swift */,
+				DF0C9A20515B7F8A0A8928BC /* MessageBubble.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		F7269CDE2684421BB5CE645A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				29524EF28A1214D035874238 /* MediaViewerViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F88A7B9A5541F4543B20E451 /* Typography */ = {
+			isa = PBXGroup;
+			children = (
+				F1C985D263E26238CB0FFA88 /* Typography.swift */,
+			);
+			path = Typography;
+			sourceTree = "<group>";
+		};
+		FD8BF74E962995FD5B8CE535 /* Localizable */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Localizable;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		11F081C797377DC27008CC25 /* MargiogramMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2463729DEEF96D43C133D595 /* Build configuration list for PBXNativeTarget "MargiogramMac" */;
+			buildPhases = (
+				D83E8A043763A916A7544AFF /* Sources */,
+				4AD964DFA23650E158FC6367 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MargiogramMac;
+			packageProductDependencies = (
+			);
+			productName = MargiogramMac;
+			productReference = 4AD952FC1408129BF77B770E /* MargiogramMac.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6DD4B76BE663FF28285A08C7 /* MargiogramTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9D469FC2B7106DD123FC137 /* Build configuration list for PBXNativeTarget "MargiogramTests" */;
+			buildPhases = (
+				1F3B2151D1BFABA6823980DD /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BC167044B2C58F6FBAD5952 /* PBXTargetDependency */,
+			);
+			name = MargiogramTests;
+			packageProductDependencies = (
+			);
+			productName = MargiogramTests;
+			productReference = BB167D5B333EE1153287A737 /* MargiogramTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		71AC9AC275CD45AE8C23D473 /* Margiogram */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93C7B15BEE42C0AA5B653DE2 /* Build configuration list for PBXNativeTarget "Margiogram" */;
+			buildPhases = (
+				3FE0FD3DF79B9485F7F7E9E8 /* Sources */,
+				BD6D9D20ECDAB628727EF73C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Margiogram;
+			packageProductDependencies = (
+			);
+			productName = Margiogram;
+			productReference = 45831DB5381A3256D8ECE220 /* Margiogram.app */;
+			productType = "com.apple.product-type.application";
+		};
+		92ED5CB2F2B8BA802598190D /* MargiogramUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 693597050A68555DAB5104F5 /* Build configuration list for PBXNativeTarget "MargiogramUITests" */;
+			buildPhases = (
+				4DAB46764E78D43AF11F3A85 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2D64CA40A28C2FCAFEA0C7E2 /* PBXTargetDependency */,
+			);
+			name = MargiogramUITests;
+			packageProductDependencies = (
+			);
+			productName = MargiogramUITests;
+			productReference = F1221CE632A62E8858EAD541 /* MargiogramUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B937821112FDEADF84A89C03 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1700;
+				TargetAttributes = {
+					11F081C797377DC27008CC25 = {
+						ProvisioningStyle = Automatic;
+					};
+					6DD4B76BE663FF28285A08C7 = {
+						ProvisioningStyle = Automatic;
+					};
+					71AC9AC275CD45AE8C23D473 = {
+						ProvisioningStyle = Automatic;
+					};
+					92ED5CB2F2B8BA802598190D = {
+						ProvisioningStyle = Automatic;
+						TestTargetID = 71AC9AC275CD45AE8C23D473;
+					};
+				};
+			};
+			buildConfigurationList = 1C07671A53BCB776FE0EC39F /* Build configuration list for PBXProject "Margiogram" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+				it,
+			);
+			mainGroup = 9F60F539F00C8B057451A525;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				71AC9AC275CD45AE8C23D473 /* Margiogram */,
+				11F081C797377DC27008CC25 /* MargiogramMac */,
+				6DD4B76BE663FF28285A08C7 /* MargiogramTests */,
+				92ED5CB2F2B8BA802598190D /* MargiogramUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4AD964DFA23650E158FC6367 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5136C84DE45842A7F5F60D65 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD6D9D20ECDAB628727EF73C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				534A2AF833D9D2698F18594D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1F3B2151D1BFABA6823980DD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B91AE559917D6BFF5751CD9D /* MargiogramTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3FE0FD3DF79B9485F7F7E9E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDB85118562714BC572AE535 /* AuthViewModel.swift in Sources */,
+				11D69BC0851BB9B9A8B5CE5C /* AuthenticationManager.swift in Sources */,
+				EF88CFA450BC198D30028A21 /* AuthenticationView.swift in Sources */,
+				D25AA1DBA891BAA0085673DD /* AvatarView.swift in Sources */,
+				664DD6C99BB6CBF9C112B3B5 /* BiometricService.swift in Sources */,
+				2C601245BCB7DB053E3B4E8B /* CallView.swift in Sources */,
+				A134B85F0C001FD425BFE39C /* CallViewModel.swift in Sources */,
+				C86A9DD684BE8A9EAD94D37D /* Chat.swift in Sources */,
+				1E545DD744C4484E9CD61A25 /* ChatListView.swift in Sources */,
+				604C7FA7ACD3B78A66BBADB1 /* ChatListViewModel.swift in Sources */,
+				E0A3BFDC305620207013FAD4 /* ChatRepository.swift in Sources */,
+				B548A9C800847F767E5A8972 /* ChatRepositoryImpl.swift in Sources */,
+				3BB9B46EEC3EB6E621589DDB /* ChatRowView.swift in Sources */,
+				20B6B0F4EADC563F21617920 /* ChatUseCases.swift in Sources */,
+				F0255E1CE2C0292EF64885CC /* Colors.swift in Sources */,
+				52C139EC3FEF7C33F4FD3360 /* ContactsView.swift in Sources */,
+				84C21703C4C5385E804878B8 /* ContactsViewModel.swift in Sources */,
+				254B5D9584683C006C3FE56F /* ConversationView.swift in Sources */,
+				439441610AD1D166E0319DA5 /* ConversationViewModel.swift in Sources */,
+				0CBA05AE33390EFEAC406C65 /* FileService.swift in Sources */,
+				DC6639CB86D9BCB8BC13B325 /* ForwardView.swift in Sources */,
+				77CB3426729EC190DBC0026A /* ForwardViewModel.swift in Sources */,
+				AF102889AFA0ABDEDAEE19A0 /* GlassButton.swift in Sources */,
+				AC5DBA4BFA616AAD5E0A0BAC /* GlassContainer.swift in Sources */,
+				D6B55D92B4C7C349F3AB5153 /* GlobalSearchView.swift in Sources */,
+				B28507209E8594316450AB6E /* GlobalSearchViewModel.swift in Sources */,
+				4DD0F8A08C172F6825CD70F8 /* KeychainService.swift in Sources */,
+				BC844357D6CC507EEBC7DECD /* LiquidGlassModifier.swift in Sources */,
+				A85C9AB0D796418C95474AF8 /* MargiogramApp.swift in Sources */,
+				73CB8E43C3849F2BF5AC513D /* MediaGalleryView.swift in Sources */,
+				A23AB7A798FE9D3F62E4FADC /* MediaViewerView.swift in Sources */,
+				D20D20C09AEDAC21E5170D5E /* MediaViewerViewModel.swift in Sources */,
+				A5C870048055063F8AA0D243 /* Message.swift in Sources */,
+				241D3730C561300A35F56DFA /* MessageBubble.swift in Sources */,
+				5FBD755694DAF989EC3F9D06 /* MessageInputView.swift in Sources */,
+				FCB3F43257F442A7A206E46F /* MessageRepositoryImpl.swift in Sources */,
+				4A9687E472A2AF77450A53ED /* MessageUseCases.swift in Sources */,
+				B49785B1F2DEE2E8A929204A /* NetworkMonitor.swift in Sources */,
+				1AC7D34C463620775128F83F /* NotificationService.swift in Sources */,
+				3A7BAEA8603D98B1DB0F6836 /* ProfileView.swift in Sources */,
+				2E2EB6EC0A2CCA7D97A3CBB7 /* ProfileViewModel.swift in Sources */,
+				DBBEAD9E386D751F35B79D15 /* RootView.swift in Sources */,
+				EE2B3D1AFC48E9BBD3375098 /* SettingsView.swift in Sources */,
+				D1669F9DB4328DD39C59FB5E /* StickerPanelView.swift in Sources */,
+				04B8387C647BDDDA42EECB76 /* StickerPanelViewModel.swift in Sources */,
+				6A87C8FDDB2DBAC7F0478DCC /* TDLibClient.swift in Sources */,
+				910805BCC81A5FFB85397FE1 /* TDLibFunctions.swift in Sources */,
+				F6B02EAFC4DE67970B40BF53 /* TDLibTypes.swift in Sources */,
+				297E32485B7A43DF9702B0D2 /* TDLibUpdateHandler.swift in Sources */,
+				C8AA53157AF1E69C1FE8A9D3 /* Typography.swift in Sources */,
+				D11AEE7C22542D39FFC4F292 /* User.swift in Sources */,
+				26FD0AAB944A355581016EC5 /* UserRepositoryImpl.swift in Sources */,
+				166D4D3AF07A0081062759DD /* UserUseCases.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DAB46764E78D43AF11F3A85 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4A348644847B7CC7BFC280E /* MargiogramUITests.swift in Sources */,
+				6B12C6D037B3388A111920DA /* MargiogramUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D83E8A043763A916A7544AFF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				303E563CFCDEA5695A0CCF64 /* AuthViewModel.swift in Sources */,
+				A283FCBA23896E6A4C8C2BA9 /* AuthenticationManager.swift in Sources */,
+				899778BFF2C34CAECA88BA45 /* AuthenticationView.swift in Sources */,
+				CDF461A841358F0C7A3E73AF /* AvatarView.swift in Sources */,
+				74785D2F290D7FC80B59DF7D /* BiometricService.swift in Sources */,
+				33BE6A318EE748CDDD1C6FB1 /* CallView.swift in Sources */,
+				863690DA797E58B60A161E50 /* CallViewModel.swift in Sources */,
+				A6F1AC0B5EAC78CA9A990699 /* Chat.swift in Sources */,
+				62475BE484CA6450330F2D24 /* ChatListView.swift in Sources */,
+				251C38A3EA0CB0881F89C4C3 /* ChatListViewModel.swift in Sources */,
+				DAC221119CBDEA7DC3829D43 /* ChatRepository.swift in Sources */,
+				D17E224FE092EB006380DBE5 /* ChatRepositoryImpl.swift in Sources */,
+				1409576452F1B80FC94AA414 /* ChatRowView.swift in Sources */,
+				C2EA97486EAC3D1201ACB523 /* ChatUseCases.swift in Sources */,
+				827FF92313C85E235103785F /* Colors.swift in Sources */,
+				8ED843C129BB6A3753C44D66 /* ContactsView.swift in Sources */,
+				D2B77FCFB1B43ADD02A020F0 /* ContactsViewModel.swift in Sources */,
+				61745B5DB3E658438C5DE1CE /* ConversationView.swift in Sources */,
+				804DC77CCA80693AF9CF06A4 /* ConversationViewModel.swift in Sources */,
+				548091C248AC1E0730FAF165 /* FileService.swift in Sources */,
+				BED55F8D831DEB517B468E0E /* ForwardView.swift in Sources */,
+				16170EBB0531AFD696C783A2 /* ForwardViewModel.swift in Sources */,
+				2A75B4C2EEE92496FE1FDE2E /* GlassButton.swift in Sources */,
+				F6DEA22ABFCD1C75A240EDED /* GlassContainer.swift in Sources */,
+				3CF2761650849CFB5B70F5F4 /* GlobalSearchView.swift in Sources */,
+				1D9DDA88B7B82C354E3897FA /* GlobalSearchViewModel.swift in Sources */,
+				147D65365A0D2CE66DB30247 /* KeychainService.swift in Sources */,
+				B2186FB12579B13E6DFF7115 /* LiquidGlassModifier.swift in Sources */,
+				31432DD832F5268D9E56A19E /* MargiogramApp.swift in Sources */,
+				CA33CFBF023C7AFCE55BA4BE /* MediaGalleryView.swift in Sources */,
+				2BF99432DD8DEB187BC88E50 /* MediaViewerView.swift in Sources */,
+				E23793871E0E9ACC352105A4 /* MediaViewerViewModel.swift in Sources */,
+				3B8CEF3EBF8788500C4A78EB /* Message.swift in Sources */,
+				93C556CB8A3D56701492EFC3 /* MessageBubble.swift in Sources */,
+				2DDC99730CA31CC60E990BFB /* MessageInputView.swift in Sources */,
+				D937BD3FBBA0A5EB4FABB8C6 /* MessageRepositoryImpl.swift in Sources */,
+				56A22174A909C320CE87F229 /* MessageUseCases.swift in Sources */,
+				5C0965BE84206DCC4B7592F7 /* NetworkMonitor.swift in Sources */,
+				9C868AD1F70985155B5AE61A /* NotificationService.swift in Sources */,
+				00923B28447F56ECB4E2701A /* ProfileView.swift in Sources */,
+				B2B0B3BBDA9B3FBB97BA20D0 /* ProfileViewModel.swift in Sources */,
+				E8827D34CC8F5CC004E253F7 /* RootView.swift in Sources */,
+				155E4ECCFCE1F4612B667AEA /* SettingsView.swift in Sources */,
+				3661422139C30072080B3AAF /* StickerPanelView.swift in Sources */,
+				038B95FF3C6E951581BA6D25 /* StickerPanelViewModel.swift in Sources */,
+				BB6943D92DE9EAA1390E3953 /* TDLibClient.swift in Sources */,
+				86B877BCE129567010A24605 /* TDLibFunctions.swift in Sources */,
+				B1EF2939F244A4597A5DC764 /* TDLibTypes.swift in Sources */,
+				3212EB2F181AB30A7D1445F7 /* TDLibUpdateHandler.swift in Sources */,
+				E49D15D10D47CAFB6924C0B3 /* Typography.swift in Sources */,
+				955C9E2223F85B94D1DE62F7 /* User.swift in Sources */,
+				18F60326229819545B190B04 /* UserRepositoryImpl.swift in Sources */,
+				968481B47D3548314441E1AB /* UserUseCases.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2BC167044B2C58F6FBAD5952 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 71AC9AC275CD45AE8C23D473 /* Margiogram */;
+			targetProxy = 13F20BCA58039F47F0D6CA15 /* PBXContainerItemProxy */;
+		};
+		2D64CA40A28C2FCAFEA0C7E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 71AC9AC275CD45AE8C23D473 /* Margiogram */;
+			targetProxy = FC5843D5285A560391D324D2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		15633C84AA58A900B08392C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.margiovanni.margiogram.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Margiogram.app/Margiogram";
+			};
+			name = Release;
+		};
+		3BBA8EA6937219F5BCB12816 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Margiogram;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		4570741A34646570259C0A8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Margiogram/Margiogram.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Margiogram needs camera access for video calls and media capture";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Margiogram needs contacts access to find your friends";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Margiogram uses Face ID for secure authentication";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Margiogram needs microphone access for voice messages and calls";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Margiogram needs photo library access to share media";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.margiovanni.margiogram;
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		69177223E442A9CD6C00BFF2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.margiovanni.margiogram.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Margiogram;
+			};
+			name = Debug;
+		};
+		8BBAFEACAD9324C7B5FA00AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Margiogram/Margiogram.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Margiogram needs camera access for video calls and media capture";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Margiogram needs contacts access to find your friends";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Margiogram uses Face ID for secure authentication";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Margiogram needs microphone access for voice messages and calls";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Margiogram needs photo library access to share media";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.margiovanni.margiogram;
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A95497CA8C3D90562E3F547E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Margiogram/MargiogramMac.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.margiovanni.margiogram-mac";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		ADD8CC6475751FB5189721A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.margiovanni.margiogram.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Margiogram.app/Margiogram";
+			};
+			name = Debug;
+		};
+		AF6415F5AC61B9B6CF0197BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Margiogram;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		B69C4A136ED883BCC8D3FDBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Margiogram/MargiogramMac.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.margiovanni.margiogram-mac";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C946708DC6ACCB6031D4B130 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.margiovanni.margiogram.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Margiogram;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1C07671A53BCB776FE0EC39F /* Build configuration list for PBXProject "Margiogram" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BBA8EA6937219F5BCB12816 /* Debug */,
+				AF6415F5AC61B9B6CF0197BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		2463729DEEF96D43C133D595 /* Build configuration list for PBXNativeTarget "MargiogramMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B69C4A136ED883BCC8D3FDBA /* Debug */,
+				A95497CA8C3D90562E3F547E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		693597050A68555DAB5104F5 /* Build configuration list for PBXNativeTarget "MargiogramUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				69177223E442A9CD6C00BFF2 /* Debug */,
+				C946708DC6ACCB6031D4B130 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		93C7B15BEE42C0AA5B653DE2 /* Build configuration list for PBXNativeTarget "Margiogram" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BBAFEACAD9324C7B5FA00AE /* Debug */,
+				4570741A34646570259C0A8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A9D469FC2B7106DD123FC137 /* Build configuration list for PBXNativeTarget "MargiogramTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADD8CC6475751FB5189721A7 /* Debug */,
+				15633C84AA58A900B08392C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B937821112FDEADF84A89C03 /* Project object */;
+}

@@ -155,7 +155,7 @@ final class GlobalSearchViewModel {
         #if DEBUG
         try? await Task.sleep(for: .milliseconds(300))
         return SearchMessageResult.mockResults.filter {
-            $0.message.text?.lowercased().contains(searchText.lowercased()) ?? false
+            $0.message.content.previewText.lowercased().contains(searchText.lowercased())
         }
         #else
         return []

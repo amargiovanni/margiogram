@@ -118,14 +118,14 @@ struct GlassButton: View {
             )
 
         case .secondary:
-            Material.ultraThinMaterial
+            Rectangle().fill(.ultraThinMaterial)
 
         case .ghost:
             Color.clear
 
         case .destructive:
             LinearGradient(
-                colors: [.error, .error.opacity(0.85)],
+                colors: [Color.error, Color.error.opacity(0.85)],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -221,7 +221,7 @@ struct GlassIconButton: View {
             Color.accentColor
 
         case .secondary:
-            Material.ultraThinMaterial
+            Rectangle().fill(.ultraThinMaterial)
 
         case .ghost:
             Color.clear

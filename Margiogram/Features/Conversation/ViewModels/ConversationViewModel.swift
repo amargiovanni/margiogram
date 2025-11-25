@@ -87,13 +87,13 @@ final class ConversationViewModel {
     private let client: TDLibClient
 
     /// Update listener task.
-    private var updateTask: Task<Void, Never>?
+    nonisolated(unsafe) private var updateTask: Task<Void, Never>?
 
     /// Typing indicator task.
-    private var typingTask: Task<Void, Never>?
+    nonisolated(unsafe) private var typingTask: Task<Void, Never>?
 
     /// Voice recording timer.
-    private var voiceRecordingTimer: Task<Void, Never>?
+    nonisolated(unsafe) private var voiceRecordingTimer: Task<Void, Never>?
 
     // MARK: - Computed Properties
 
@@ -398,7 +398,7 @@ final class ConversationViewModel {
 
     /// Sends attachment.
     func sendAttachment(_ attachment: Attachment) async {
-        logger.info("Sending attachment: \(attachment.type)")
+        logger.info("Sending attachment")
 
         // In real implementation: Upload and send attachment
     }
@@ -432,24 +432,32 @@ final class ConversationViewModel {
             groupMessages()
             await markAsRead()
 
-        case .messageEdited(let chatId, let messageId, let editDate, _) where chatId == chat.id:
+        case .messageEdited(let chatId, let messageId, let content) where chatId == chat.id:
             if let index = messages.firstIndex(where: { $0.id == messageId }) {
-                // Update message edit date
-                _ = editDate
+                // Update message content - create new message with updated content
+                let existingMessage = messages[index]
+                messages[index] = Message(
+                    id: existingMessage.id,
+                    chatId: existingMessage.chatId,
+                    sender: existingMessage.sender,
+                    content: content,
+                    date: existingMessage.date,
+                    editDate: Date(),
+                    isOutgoing: existingMessage.isOutgoing,
+                    canBeEdited: existingMessage.canBeEdited,
+                    canBeForwarded: existingMessage.canBeForwarded,
+                    canBeDeletedForAllUsers: existingMessage.canBeDeletedForAllUsers,
+                    replyTo: existingMessage.replyTo,
+                    forwardInfo: existingMessage.forwardInfo,
+                    reactions: existingMessage.reactions,
+                    isRead: existingMessage.isRead,
+                    interactionInfo: existingMessage.interactionInfo
+                )
             }
 
-        case .messageDeleted(let chatId, let messageIds) where chatId == chat.id:
+        case .messagesDeleted(let chatId, let messageIds) where chatId == chat.id:
             messages.removeAll { messageIds.contains($0.id) }
             groupMessages()
-
-        case .chatAction(let chatId, _, let user, let action) where chatId == chat.id:
-            if let user, action != .cancel {
-                if !typingUsers.contains(where: { $0.id == user.id }) {
-                    typingUsers.append(user)
-                }
-            } else if let user {
-                typingUsers.removeAll { $0.id == user.id }
-            }
 
         default:
             break

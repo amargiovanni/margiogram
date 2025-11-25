@@ -129,7 +129,7 @@ actor TDLibUpdateHandler {
         await userDelegate?.didUpdateUserStatus(userId: userId, status: status)
     }
 
-    private func handleFileUpdated(_ file: File) async {
+    private func handleFileUpdated(_ file: TDFile) async {
         await fileDelegate?.didUpdateFile(file)
     }
 }
@@ -147,7 +147,7 @@ protocol ChatUpdateDelegate: AnyObject, Sendable {
     func didUpdateChat(_ chat: Chat) async
     func didUpdateChatLastMessage(chatId: Int64, message: Message) async
     func didUpdateChatReadInbox(chatId: Int64, lastReadMessageId: Int64, unreadCount: Int32) async
-    func didUpdateChatPosition(chatId: Int64, position: ChatPosition) async
+    func didUpdateChatPosition(chatId: Int64, position: TDChatPosition) async
     func didUpdateChatNotificationSettings(chatId: Int64, settings: NotificationSettings) async
 }
 
@@ -169,7 +169,7 @@ protocol UserUpdateDelegate: AnyObject, Sendable {
 
 /// Protocol for receiving file-related updates.
 protocol FileUpdateDelegate: AnyObject, Sendable {
-    func didUpdateFile(_ file: File) async
+    func didUpdateFile(_ file: TDFile) async
 }
 
 /// Protocol for receiving call-related updates.
@@ -180,8 +180,8 @@ protocol CallUpdateDelegate: AnyObject, Sendable {
 
 // MARK: - Supporting Types
 
-struct ChatPosition: Equatable, Sendable {
-    let list: ChatList
+struct TDChatPosition: Equatable, Sendable {
+    let list: TDChatList
     let order: Int64
     let isPinned: Bool
 }
@@ -202,13 +202,34 @@ struct TDCall: Identifiable, Equatable, Sendable {
     let state: TDCallState
 }
 
-enum TDCallState: Equatable, Sendable {
+enum TDCallState: Sendable {
     case pending(isCreated: Bool, isReceived: Bool)
     case exchangingKeys
     case ready
     case hangingUp
     case discarded(reason: CallDiscardReason)
-    case error(TDLibError)
+    case error(code: Int, message: String)
+}
+
+extension TDCallState: Equatable {
+    static func == (lhs: TDCallState, rhs: TDCallState) -> Bool {
+        switch (lhs, rhs) {
+        case (.pending(let lc, let lr), .pending(let rc, let rr)):
+            return lc == rc && lr == rr
+        case (.exchangingKeys, .exchangingKeys):
+            return true
+        case (.ready, .ready):
+            return true
+        case (.hangingUp, .hangingUp):
+            return true
+        case (.discarded(let lr), .discarded(let rr)):
+            return lr == rr
+        case (.error(let lc, let lm), .error(let rc, let rm)):
+            return lc == rc && lm == rm
+        default:
+            return false
+        }
+    }
 }
 
 enum CallDiscardReason: Equatable, Sendable {
@@ -284,21 +305,23 @@ struct TDLibUpdateParser {
 
         switch type {
         case "authorizationStateWaitTdlibParameters":
-            return .waitingForTdlibParameters
+            return .loading
         case "authorizationStateWaitPhoneNumber":
             return .waitingForPhoneNumber
         case "authorizationStateWaitCode":
-            return .waitingForCode(isRegistered: json["is_registered"] as? Bool ?? true)
+            let codeInfo = AuthCodeInfo(
+                phoneNumber: json["phone_number"] as? String ?? "",
+                type: .sms(length: 5),
+                nextType: nil,
+                timeout: json["timeout"] as? Int32 ?? 60
+            )
+            return .waitingForCode(codeInfo: codeInfo)
         case "authorizationStateWaitPassword":
-            return .waitingForPassword(hint: json["password_hint"] as? String)
+            return .waitingForPassword(hint: json["password_hint"] as? String ?? "")
         case "authorizationStateReady":
-            return .ready
-        case "authorizationStateLoggingOut":
-            return .loggingOut
-        case "authorizationStateClosing":
-            return .closing
-        case "authorizationStateClosed":
-            return .closed
+            return .authorized
+        case "authorizationStateLoggingOut", "authorizationStateClosing", "authorizationStateClosed":
+            return .unauthorized
         default:
             return nil
         }
@@ -328,14 +351,27 @@ struct TDLibUpdateParser {
         guard let id = json["id"] as? Int64,
               let chatId = json["chat_id"] as? Int64 else { return nil }
 
+        let senderId = json["sender_id"] as? Int64 ?? 0
+        let sender: MessageSender = .user(userId: senderId)
+        let dateTimestamp = json["date"] as? Int ?? 0
+        let date = Date(timeIntervalSince1970: TimeInterval(dateTimestamp))
+
         return Message(
             id: id,
             chatId: chatId,
-            senderId: json["sender_id"] as? Int64 ?? 0,
+            sender: sender,
+            content: .text(FormattedText(text: "")),
+            date: date,
+            editDate: nil,
             isOutgoing: json["is_outgoing"] as? Bool ?? false,
-            date: Date(timeIntervalSince1970: TimeInterval(json["date"] as? Int ?? 0)),
-            content: .text(""),
-            replyToMessageId: json["reply_to_message_id"] as? Int64
+            canBeEdited: json["can_be_edited"] as? Bool ?? false,
+            canBeForwarded: json["can_be_forwarded"] as? Bool ?? true,
+            canBeDeletedForAllUsers: json["can_be_deleted_for_all_users"] as? Bool ?? false,
+            replyTo: nil,
+            forwardInfo: nil,
+            reactions: [],
+            isRead: true,
+            interactionInfo: nil
         )
     }
 
@@ -346,7 +382,7 @@ struct TDLibUpdateParser {
         case "messageText":
             if let textJson = json["text"] as? [String: Any],
                let text = textJson["text"] as? String {
-                return .text(text)
+                return .text(FormattedText(text: text))
             }
         default:
             break
@@ -364,12 +400,20 @@ struct TDLibUpdateParser {
             lastName: json["last_name"] as? String ?? "",
             username: json["username"] as? String,
             phoneNumber: json["phone_number"] as? String,
-            status: .offline,
             profilePhoto: nil,
+            status: .empty,
+            isContact: json["is_contact"] as? Bool ?? false,
+            isMutualContact: json["is_mutual_contact"] as? Bool ?? false,
             isVerified: json["is_verified"] as? Bool ?? false,
             isPremium: json["is_premium"] as? Bool ?? false,
-            isContact: json["is_contact"] as? Bool ?? false,
-            isMutualContact: json["is_mutual_contact"] as? Bool ?? false
+            isBot: json["is_bot"] as? Bool ?? false,
+            canBeCalled: true,
+            supportsVideoCalls: true,
+            restrictionReason: json["restriction_reason"] as? String,
+            bio: nil,
+            botInfo: nil,
+            isBlocked: false,
+            lastSeenDate: nil
         )
     }
 
@@ -378,9 +422,11 @@ struct TDLibUpdateParser {
 
         switch type {
         case "userStatusOnline":
-            return .online
+            let expires = json["expires"] as? Int ?? 0
+            return .online(expires: Date(timeIntervalSince1970: TimeInterval(expires)))
         case "userStatusOffline":
-            return .offline
+            let wasOnline = json["was_online"] as? Int ?? 0
+            return .offline(wasOnline: Date(timeIntervalSince1970: TimeInterval(wasOnline)))
         case "userStatusRecently":
             return .recently
         case "userStatusLastWeek":
@@ -388,19 +434,19 @@ struct TDLibUpdateParser {
         case "userStatusLastMonth":
             return .lastMonth
         case "userStatusEmpty":
-            return .unknown
+            return .empty
         default:
             return nil
         }
     }
 
-    private static func parseFile(_ json: [String: Any]) -> File? {
+    private static func parseFile(_ json: [String: Any]) -> TDFile? {
         guard let id = json["id"] as? Int32 else { return nil }
 
         let localJson = json["local"] as? [String: Any]
         let remoteJson = json["remote"] as? [String: Any]
 
-        return File(
+        return TDFile(
             id: id,
             size: Int64(json["size"] as? Int ?? 0),
             expectedSize: Int64(json["expected_size"] as? Int ?? 0),
@@ -416,28 +462,3 @@ struct TDLibUpdateParser {
     }
 }
 
-// MARK: - File
-
-struct File: Identifiable, Equatable, Sendable {
-    let id: Int32
-    let size: Int64
-    let expectedSize: Int64
-    let localPath: String?
-    let isDownloadingActive: Bool
-    let isDownloadingCompleted: Bool
-    let downloadedSize: Int64
-    let remoteId: String?
-    let isUploadingActive: Bool
-    let isUploadingCompleted: Bool
-    let uploadedSize: Int64
-
-    var downloadProgress: Double {
-        guard expectedSize > 0 else { return 0 }
-        return Double(downloadedSize) / Double(expectedSize)
-    }
-
-    var uploadProgress: Double {
-        guard size > 0 else { return 0 }
-        return Double(uploadedSize) / Double(size)
-    }
-}

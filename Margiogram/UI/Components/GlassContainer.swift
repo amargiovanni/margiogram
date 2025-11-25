@@ -4,127 +4,11 @@
 //
 //  Created by Andrea Margiovanni on 2024.
 //
+//  NOTE: Main GlassContainer and GlassIntensity are defined in
+//  UI/DesignSystem/LiquidGlass/LiquidGlassModifier.swift
+//  This file contains additional glass-styled helper components.
 
 import SwiftUI
-
-// MARK: - Glass Intensity
-
-/// The intensity of the glass blur effect.
-enum GlassIntensity {
-    case ultraThin
-    case thin
-    case regular
-    case thick
-    case ultraThick
-
-    var material: Material {
-        switch self {
-        case .ultraThin: return .ultraThinMaterial
-        case .thin: return .thinMaterial
-        case .regular: return .regularMaterial
-        case .thick: return .thickMaterial
-        case .ultraThick: return .ultraThickMaterial
-        }
-    }
-}
-
-// MARK: - Glass Container
-
-/// A container view with Liquid Glass styling.
-///
-/// Use `GlassContainer` to wrap content in a glass-like card
-/// with blur effects and subtle borders.
-///
-/// ```swift
-/// GlassContainer {
-///     Text("Hello, World!")
-/// }
-/// ```
-struct GlassContainer<Content: View>: View {
-    // MARK: - Properties
-
-    let intensity: GlassIntensity
-    let cornerRadius: CGFloat
-    let showBorder: Bool
-    let shadowRadius: CGFloat
-    let content: Content
-
-    // MARK: - Environment
-
-    @Environment(\.colorScheme) private var colorScheme
-
-    // MARK: - Initialization
-
-    init(
-        intensity: GlassIntensity = .regular,
-        cornerRadius: CGFloat = CornerRadius.large,
-        showBorder: Bool = true,
-        shadowRadius: CGFloat = 8,
-        @ViewBuilder content: () -> Content
-    ) {
-        self.intensity = intensity
-        self.cornerRadius = cornerRadius
-        self.showBorder = showBorder
-        self.shadowRadius = shadowRadius
-        self.content = content()
-    }
-
-    // MARK: - Body
-
-    var body: some View {
-        content
-            .padding(Spacing.md)
-            .background(backgroundView)
-            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-            .overlay(borderOverlay)
-            .shadow(
-                color: .black.opacity(colorScheme == .dark ? 0.3 : 0.1),
-                radius: shadowRadius,
-                x: 0,
-                y: shadowRadius / 2
-            )
-    }
-
-    // MARK: - Background
-
-    @ViewBuilder
-    private var backgroundView: some View {
-        ZStack {
-            intensity.material
-
-            // Glass highlight gradient
-            LinearGradient(
-                colors: [
-                    .white.opacity(colorScheme == .dark ? 0.05 : 0.15),
-                    .clear
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        }
-    }
-
-    // MARK: - Border
-
-    @ViewBuilder
-    private var borderOverlay: some View {
-        if showBorder {
-            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                .stroke(
-                    LinearGradient(
-                        colors: [
-                            .white.opacity(0.3),
-                            .white.opacity(0.1),
-                            .clear
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ),
-                    lineWidth: 0.5
-                )
-        }
-    }
-}
 
 // MARK: - Glass Card
 
@@ -137,9 +21,22 @@ struct GlassCard<Content: View>: View {
     }
 
     var body: some View {
-        GlassContainer(intensity: .regular, cornerRadius: CornerRadius.xlarge) {
-            content
-        }
+        content
+            .padding(Spacing.md)
+            .background(.regularMaterial)
+            .background(
+                LinearGradient(
+                    colors: [.white.opacity(0.1), .clear],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .clipShape(RoundedRectangle(cornerRadius: CornerRadius.xlarge, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: CornerRadius.xlarge, style: .continuous)
+                    .stroke(.white.opacity(0.2), lineWidth: 0.5)
+            )
+            .shadow(color: .black.opacity(0.1), radius: 8, y: 4)
     }
 }
 
@@ -166,9 +63,26 @@ struct GlassTextFieldContainer<Content: View>: View {
     }
 }
 
+// MARK: - Glass Section Header
+
+/// A glass-styled section header.
+struct GlassSectionHeader: View {
+    let title: String
+
+    var body: some View {
+        Text(title)
+            .font(Typography.captionBold)
+            .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, Spacing.md)
+            .padding(.vertical, Spacing.xs)
+            .background(.ultraThinMaterial.opacity(0.5))
+    }
+}
+
 // MARK: - Preview
 
-#Preview("Glass Containers") {
+#Preview("Glass Components") {
     ZStack {
         // Background gradient
         LinearGradient(
@@ -179,23 +93,6 @@ struct GlassTextFieldContainer<Content: View>: View {
         .ignoresSafeArea()
 
         VStack(spacing: Spacing.lg) {
-            // Basic container
-            GlassContainer {
-                Text("Regular Glass Container")
-                    .font(Typography.bodyMedium)
-            }
-
-            // Different intensities
-            GlassContainer(intensity: .ultraThin) {
-                Text("Ultra Thin")
-                    .font(Typography.bodySmall)
-            }
-
-            GlassContainer(intensity: .thick) {
-                Text("Thick")
-                    .font(Typography.bodySmall)
-            }
-
             // Card style
             GlassCard {
                 VStack(alignment: .leading, spacing: Spacing.sm) {
@@ -212,6 +109,9 @@ struct GlassTextFieldContainer<Content: View>: View {
             GlassTextFieldContainer {
                 TextField("Enter text...", text: .constant(""))
             }
+
+            // Section header
+            GlassSectionHeader(title: "Section Title")
         }
         .padding()
     }

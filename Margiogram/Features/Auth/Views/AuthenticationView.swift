@@ -262,7 +262,7 @@ struct PhoneNumberInputView: View {
             if let error = viewModel.error {
                 Text(error.localizedDescription)
                     .font(Typography.caption)
-                    .foregroundStyle(.error)
+                    .foregroundStyle(Color.red)
                     .transition(.opacity)
             }
 
@@ -344,7 +344,7 @@ struct CodeVerificationView: View {
             if let error = viewModel.error {
                 Text(error.localizedDescription)
                     .font(Typography.caption)
-                    .foregroundStyle(.error)
+                    .foregroundStyle(Color.red)
                     .transition(.opacity)
             }
 
@@ -487,7 +487,7 @@ struct PasswordInputView: View {
             if let error = viewModel.error {
                 Text(error.localizedDescription)
                     .font(Typography.caption)
-                    .foregroundStyle(.error)
+                    .foregroundStyle(Color.red)
                     .transition(.opacity)
             }
 
@@ -572,31 +572,33 @@ struct CountryPickerView: View {
 
     var body: some View {
         NavigationStack {
-            List(filteredCountries) { country in
-                Button {
-                    selectedCountry = country
-                    dismiss()
-                } label: {
-                    HStack {
-                        Text(country.flag)
-                            .font(.title2)
+            List {
+                ForEach(filteredCountries) { country in
+                    Button {
+                        selectedCountry = country
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Text(country.flag)
+                                .font(.title2)
 
-                        Text(country.name)
-                            .font(Typography.bodyMedium)
+                            Text(country.name)
+                                .font(Typography.bodyMedium)
 
-                        Spacer()
+                            Spacer()
 
-                        Text(country.dialCode)
-                            .font(Typography.bodyMedium)
-                            .foregroundStyle(.secondary)
+                            Text(country.dialCode)
+                                .font(Typography.bodyMedium)
+                                .foregroundStyle(.secondary)
 
-                        if country == selectedCountry {
-                            Image(systemName: "checkmark")
-                                .foregroundStyle(.accentColor)
+                            if country == selectedCountry {
+                                Image(systemName: "checkmark")
+                                    .foregroundStyle(Color.accentColor)
+                            }
                         }
                     }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
             }
             .searchable(text: $searchText, prompt: "Search countries")
             .navigationTitle("Select Country")

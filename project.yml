@@ -63,22 +63,16 @@ targets:
         TARGETED_DEVICE_FAMILY: "1,2"
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: "YES"
         SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: "YES"
+        INFOPLIST_KEY_NSCameraUsageDescription: "Margiogram needs camera access for video calls and media capture"
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "Margiogram needs microphone access for voice messages and calls"
+        INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "Margiogram needs photo library access to share media"
+        INFOPLIST_KEY_NSContactsUsageDescription: "Margiogram needs contacts access to find your friends"
+        INFOPLIST_KEY_NSFaceIDUsageDescription: "Margiogram uses Face ID for secure authentication"
     entitlements:
       path: Margiogram/Margiogram.entitlements
       properties:
         com.apple.security.app-sandbox: true
         com.apple.security.network.client: true
-    preBuildScripts:
-      - name: SwiftLint
-        script: |
-          if which swiftlint >/dev/null; then
-            swiftlint
-          else
-            echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-          fi
-        basedOnDependencyAnalysis: false
-    dependencies:
-      - package: TDLibKit
 
   MargiogramMac:
     type: application
@@ -100,8 +94,6 @@ targets:
         com.apple.security.app-sandbox: true
         com.apple.security.network.client: true
         com.apple.security.files.user-selected.read-write: true
-    dependencies:
-      - package: TDLibKit
 
   MargiogramTests:
     type: bundle.unit-test
@@ -128,11 +120,6 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.margiovanni.margiogram.uitests
     dependencies:
       - target: Margiogram
-
-packages:
-  TDLibKit:
-    url: https://github.com/Swiftgram/TDLibKit.git
-    from: "3.0.0"
 
 schemes:
   Margiogram:
