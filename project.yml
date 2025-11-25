@@ -58,6 +58,8 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.margiovanni.margiogram
+        # Exclude arm64 from simulator to fix TDLibFramework crash on Apple Silicon
+        EXCLUDED_ARCHS[sdk=iphonesimulator*]: arm64
         INFOPLIST_KEY_UIStatusBarStyle: ""
         INFOPLIST_KEY_LSApplicationCategoryType: "public.app-category.social-networking"
         TARGETED_DEVICE_FAMILY: "1,2"
@@ -73,6 +75,8 @@ targets:
       properties:
         com.apple.security.app-sandbox: true
         com.apple.security.network.client: true
+    dependencies:
+      - package: TDLibKit
 
   MargiogramMac:
     type: application
@@ -94,6 +98,8 @@ targets:
         com.apple.security.app-sandbox: true
         com.apple.security.network.client: true
         com.apple.security.files.user-selected.read-write: true
+    dependencies:
+      - package: TDLibKit
 
   MargiogramTests:
     type: bundle.unit-test
@@ -120,6 +126,11 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.margiovanni.margiogram.uitests
     dependencies:
       - target: Margiogram
+
+packages:
+  TDLibKit:
+    url: https://github.com/Swiftgram/TDLibKit
+    exactVersion: "1.5.2-tdlib-1.8.53-bdec6af5"
 
 schemes:
   Margiogram:

@@ -55,6 +55,7 @@
 		61745B5DB3E658438C5DE1CE /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C4E699D283488F2C14C03 /* ConversationView.swift */; };
 		62475BE484CA6450330F2D24 /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D650E5BC0984E092727CF2 /* ChatListView.swift */; };
 		664DD6C99BB6CBF9C112B3B5 /* BiometricService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2E73FE45D34579205EB2E2 /* BiometricService.swift */; };
+		68499D1063BE1D7D45B148F2 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8C55619237E8C3C160B0B63E /* TDLibKit */; };
 		6A87C8FDDB2DBAC7F0478DCC /* TDLibClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B648E846E24D96A32C6DB795 /* TDLibClient.swift */; };
 		6B12C6D037B3388A111920DA /* MargiogramUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26875C1DA24B1624332CDE4E /* MargiogramUITestsLaunchTests.swift */; };
 		73CB8E43C3849F2BF5AC513D /* MediaGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C92A95BA247327B9825838 /* MediaGalleryView.swift */; };
@@ -75,6 +76,7 @@
 		A134B85F0C001FD425BFE39C /* CallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24CCC4D384FD49BBC6323A4 /* CallViewModel.swift */; };
 		A23AB7A798FE9D3F62E4FADC /* MediaViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6B968CA6C0BE52113B1992 /* MediaViewerView.swift */; };
 		A283FCBA23896E6A4C8C2BA9 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB28ABBB88286B4A7C133C4 /* AuthenticationManager.swift */; };
+		A476222C41A43D672D484201 /* TelegramConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FBAC5CD394E4DFBAD7133E2 /* TelegramConfig.swift */; };
 		A5C870048055063F8AA0D243 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771CDBD911DC0730F98B6292 /* Message.swift */; };
 		A6F1AC0B5EAC78CA9A990699 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29558311BF25C69A7DC9E82F /* Chat.swift */; };
 		A85C9AB0D796418C95474AF8 /* MargiogramApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F81FAFC5CF7EAE812D9BFD /* MargiogramApp.swift */; };
@@ -103,11 +105,13 @@
 		D2B77FCFB1B43ADD02A020F0 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C00D1B1E4065169C8170CCA /* ContactsViewModel.swift */; };
 		D6B55D92B4C7C349F3AB5153 /* GlobalSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE4B2C397B74283D24ABBD1 /* GlobalSearchView.swift */; };
 		D937BD3FBBA0A5EB4FABB8C6 /* MessageRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08FA8527825DCE6C8C99EED /* MessageRepositoryImpl.swift */; };
+		DA788BB650074A5117F6FFE2 /* TDLibKit in Frameworks */ = {isa = PBXBuildFile; productRef = BE10FD19F6B6FB6B2A3A5856 /* TDLibKit */; };
 		DAC221119CBDEA7DC3829D43 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21017B9FD87E1AD3E5361308 /* ChatRepository.swift */; };
 		DBBEAD9E386D751F35B79D15 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099D165F230372CF2A416074 /* RootView.swift */; };
 		DC6639CB86D9BCB8BC13B325 /* ForwardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F5B2C20E0DD31771474BCF /* ForwardView.swift */; };
 		E0A3BFDC305620207013FAD4 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21017B9FD87E1AD3E5361308 /* ChatRepository.swift */; };
 		E23793871E0E9ACC352105A4 /* MediaViewerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29524EF28A1214D035874238 /* MediaViewerViewModel.swift */; };
+		E33EEDB4D105E81954058D11 /* TelegramConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FBAC5CD394E4DFBAD7133E2 /* TelegramConfig.swift */; };
 		E49D15D10D47CAFB6924C0B3 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C985D263E26238CB0FFA88 /* Typography.swift */; };
 		E4A348644847B7CC7BFC280E /* MargiogramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEA4D16749337F1AB29ACEB /* MargiogramUITests.swift */; };
 		E8827D34CC8F5CC004E253F7 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099D165F230372CF2A416074 /* RootView.swift */; };
@@ -161,6 +165,7 @@
 		5418789E14EF8DDC9C37AF83 /* MessageUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageUseCases.swift; sourceTree = "<group>"; };
 		5667DC7C5F720ABBFB44804D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		5782EC9F7499FB9A7FFD98B7 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		5FBAC5CD394E4DFBAD7133E2 /* TelegramConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelegramConfig.swift; sourceTree = "<group>"; };
 		684D6F4C86C23328E47A10FF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		75A1A86BB59CFF482325ECAD /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
 		769B3ABAADD858DDE80D7CBC /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -203,6 +208,25 @@
 		FBE4B2C397B74283D24ABBD1 /* GlobalSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFrameworksBuildPhase section */
+		48BB88C808D39D302714AED2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA788BB650074A5117F6FFE2 /* TDLibKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F957B5EFE07816E36ABCE939 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				68499D1063BE1D7D45B148F2 /* TDLibKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
 		05B305E9F2F53F23B4775FFF /* ViewModels */ = {
 			isa = PBXGroup;
@@ -220,6 +244,7 @@
 				B97E51630C9685489AD870F3 /* TDLibFunctions.swift */,
 				DE79CB9B5A982E29794EA0A2 /* TDLibTypes.swift */,
 				CE4162A9B53B74E996668A5B /* TDLibUpdateHandler.swift */,
+				5FBAC5CD394E4DFBAD7133E2 /* TelegramConfig.swift */,
 			);
 			path = TDLib;
 			sourceTree = "<group>";
@@ -789,6 +814,7 @@
 			buildPhases = (
 				D83E8A043763A916A7544AFF /* Sources */,
 				4AD964DFA23650E158FC6367 /* Resources */,
+				F957B5EFE07816E36ABCE939 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -796,6 +822,7 @@
 			);
 			name = MargiogramMac;
 			packageProductDependencies = (
+				8C55619237E8C3C160B0B63E /* TDLibKit */,
 			);
 			productName = MargiogramMac;
 			productReference = 4AD952FC1408129BF77B770E /* MargiogramMac.app */;
@@ -825,6 +852,7 @@
 			buildPhases = (
 				3FE0FD3DF79B9485F7F7E9E8 /* Sources */,
 				BD6D9D20ECDAB628727EF73C /* Resources */,
+				48BB88C808D39D302714AED2 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -832,6 +860,7 @@
 			);
 			name = Margiogram;
 			packageProductDependencies = (
+				BE10FD19F6B6FB6B2A3A5856 /* TDLibKit */,
 			);
 			productName = Margiogram;
 			productReference = 45831DB5381A3256D8ECE220 /* Margiogram.app */;
@@ -890,6 +919,9 @@
 			);
 			mainGroup = 9F60F539F00C8B057451A525;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				13A11AB30BE91C58C36B0AC4 /* XCRemoteSwiftPackageReference "TDLibKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
@@ -983,6 +1015,7 @@
 				910805BCC81A5FFB85397FE1 /* TDLibFunctions.swift in Sources */,
 				F6B02EAFC4DE67970B40BF53 /* TDLibTypes.swift in Sources */,
 				297E32485B7A43DF9702B0D2 /* TDLibUpdateHandler.swift in Sources */,
+				E33EEDB4D105E81954058D11 /* TelegramConfig.swift in Sources */,
 				C8AA53157AF1E69C1FE8A9D3 /* Typography.swift in Sources */,
 				D11AEE7C22542D39FFC4F292 /* User.swift in Sources */,
 				26FD0AAB944A355581016EC5 /* UserRepositoryImpl.swift in Sources */,
@@ -1052,6 +1085,7 @@
 				86B877BCE129567010A24605 /* TDLibFunctions.swift in Sources */,
 				B1EF2939F244A4597A5DC764 /* TDLibTypes.swift in Sources */,
 				3212EB2F181AB30A7D1445F7 /* TDLibUpdateHandler.swift in Sources */,
+				A476222C41A43D672D484201 /* TelegramConfig.swift in Sources */,
 				E49D15D10D47CAFB6924C0B3 /* Typography.swift in Sources */,
 				955C9E2223F85B94D1DE62F7 /* User.swift in Sources */,
 				18F60326229819545B190B04 /* UserRepositoryImpl.swift in Sources */,
@@ -1175,6 +1209,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Margiogram/Margiogram.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Margiogram needs camera access for video calls and media capture";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Margiogram needs contacts access to find your friends";
@@ -1216,6 +1251,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Margiogram/Margiogram.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Margiogram needs camera access for video calls and media capture";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Margiogram needs contacts access to find your friends";
@@ -1419,6 +1455,30 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		13A11AB30BE91C58C36B0AC4 /* XCRemoteSwiftPackageReference "TDLibKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swiftgram/TDLibKit";
+			requirement = {
+				kind = exactVersion;
+				version = "1.5.2-tdlib-1.8.53-bdec6af5";
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8C55619237E8C3C160B0B63E /* TDLibKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13A11AB30BE91C58C36B0AC4 /* XCRemoteSwiftPackageReference "TDLibKit" */;
+			productName = TDLibKit;
+		};
+		BE10FD19F6B6FB6B2A3A5856 /* TDLibKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13A11AB30BE91C58C36B0AC4 /* XCRemoteSwiftPackageReference "TDLibKit" */;
+			productName = TDLibKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B937821112FDEADF84A89C03 /* Project object */;
 }
