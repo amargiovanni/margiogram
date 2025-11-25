@@ -1,5 +1,11 @@
 # Margiogram - AI Agents Guide
 
+> **Last Updated**: November 2025
+> **Recommended Models**:
+> - Default: `claude-sonnet-4-5-20250929`
+> - Complex tasks: `claude-opus-4-5-20251101`
+> - Quick tasks: `claude-haiku-3-5-20250120`
+
 Guida per coordinare agenti AI (Claude, Copilot, altri) nello sviluppo di Margiogram.
 
 ---
@@ -10,12 +16,14 @@ Guida per coordinare agenti AI (Claude, Copilot, altri) nello sviluppo di Margio
 
 | Aspetto | Dettaglio |
 |---------|-----------|
-| Linguaggio | Swift 5.9+ |
+| Linguaggio | Swift 6.0+ |
 | UI Framework | SwiftUI |
-| Piattaforme | iOS 17+, macOS 14+ |
+| Piattaforme | iOS 26+, macOS 26+ |
 | Backend | TDLib (Telegram Database Library) |
 | Database | SwiftData |
 | Architettura | MVVM + Clean Architecture |
+| Concurrency | Swift 6 strict concurrency |
+| Xcode | 17.0+ |
 
 ---
 
@@ -30,7 +38,7 @@ PRIORITÀ: Sicurezza > Performance > Leggibilità > Brevità
 - **Type Safety**: Usare sempre tipi forti, evitare `Any` e `AnyObject`
 - **Optionals**: Gestire sempre in modo esplicito, mai usare `!` eccetto `@IBOutlet`
 - **Error Handling**: Usare `Result` type o `async throws`, mai silenziare errori
-- **Concurrency**: Preferire `async/await` e `Actor` a GCD
+- **Concurrency**: Preferire `async/await` e `Actor` a GCD (Swift 6 strict concurrency)
 - **Memory**: Attenzione ai retain cycle, usare `[weak self]` dove necessario
 
 ### 2. Naming Conventions
@@ -350,10 +358,10 @@ git status
 git pull origin main
 
 # Verifica build
-xcodebuild -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 15 Pro' build
+xcodebuild -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build
 
 # Verifica test
-xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 15 Pro'
+xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 ```
 
 ### 2. Durante lo Sviluppo
@@ -449,13 +457,13 @@ grep -r "TODO\|FIXME" --include="*.swift" .
 
 ```bash
 # Run tutti i test
-xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 15 Pro'
+xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 
 # Run test specifico
-xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 15 Pro' -only-testing:MargiogramTests/MessageViewModelTests
+xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -only-testing:MargiogramTests/MessageViewModelTests
 
 # Run test con coverage
-xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 15 Pro' -enableCodeCoverage YES
+xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -enableCodeCoverage YES
 
 # Genera report coverage
 xcrun xccov view --report Build/Logs/Test/*.xcresult
@@ -471,7 +479,7 @@ swiftlint lint --strict
 swiftlint lint --fix
 
 # SwiftFormat
-swiftformat . --swiftversion 5.9
+swiftformat . --swiftversion 6.0
 ```
 
 ---

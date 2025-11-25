@@ -1,3 +1,9 @@
+---
+model: claude-sonnet-4-5-20250929
+description: Template for requesting bug fixes
+updated: 2025-11
+---
+
 # Bug Fix Prompt
 
 Usa questo template per richiedere la risoluzione di un bug.
@@ -22,8 +28,8 @@ Fix bug: [TITOLO BREVE]
 [Cosa succede realmente]
 
 ## Environment
-- Device: [iPhone 15 Pro / iPad / Mac]
-- OS Version: [iOS 17.2]
+- Device: [iPhone 17 Pro / iPad / Mac]
+- OS Version: [iOS 26.x]
 - App Version: [1.0.0]
 
 ## Error Messages/Logs
@@ -72,8 +78,8 @@ La foto dovrebbe essere inviata correttamente senza didascalia.
 L'app termina inaspettatamente con crash.
 
 ## Environment
-- Device: iPhone 15 Pro
-- OS Version: iOS 17.2
+- Device: iPhone 17 Pro
+- OS Version: iOS 26.0
 - App Version: 1.0.0 (build 42)
 
 ## Error Messages/Logs

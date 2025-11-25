@@ -1,5 +1,8 @@
 # CLAUDE.md - Margiogram Project Context
 
+> **Last Updated**: November 2025
+> **Recommended Model**: `claude-sonnet-4-5-20250929` (default), `claude-opus-4-5-20251101` (complex tasks)
+
 Questo file fornisce a Claude Code tutto il contesto necessario per sviluppare Margiogram in modo efficace, sicuro e di alta qualità.
 
 ---
@@ -10,14 +13,16 @@ Questo file fornisce a Claude Code tutto il contesto necessario per sviluppare M
 name: Margiogram
 type: Telegram Client
 platforms:
-  - iOS 17+
-  - macOS 14+ (Sonoma)
-language: Swift 5.9+
+  - iOS 26+
+  - macOS 26+
+language: Swift 6.0+
 ui_framework: SwiftUI
-design_system: Liquid Glass
+design_system: Liquid Glass (iOS 26 style)
 architecture: MVVM + Clean Architecture
 backend: TDLib (Telegram Database Library)
 database: SwiftData
+concurrency: Swift 6 strict concurrency
+xcode: 17.0+
 ```
 
 ---
@@ -70,19 +75,33 @@ struct Message: Identifiable, Equatable {
     let content: String
 }
 
-// 5. Usare @Observable per ViewModels (iOS 17+)
+// 5. Usare @Observable per ViewModels (iOS 26+)
 @Observable
 final class ChatViewModel {
     var messages: [Message] = []
 }
 
-// 6. Usare weak self in closure che potrebbero causare retain cycle
+// 6. Swift 6 strict concurrency con actors
+actor DataManager {
+    private var cache: [String: Data] = [:]
+
+    func getData(for key: String) -> Data? {
+        cache[key]
+    }
+}
+
+// 7. Usare weak self in closure che potrebbero causare retain cycle
 Task { [weak self] in
     await self?.loadData()
 }
 
-// 7. Separare logica UI dalla business logic
+// 8. Separare logica UI dalla business logic
 // View -> ViewModel -> UseCase -> Repository -> DataSource
+
+// 9. Sfruttare iOS 26 APIs
+// - Liquid Glass materials
+// - New animation system
+// - Enhanced concurrency
 ```
 
 ```swift
@@ -137,9 +156,8 @@ struct LiquidGlassModifier: ViewModifier {
     }
 }
 
-// 3. Preferire @StateObject per owned objects, @ObservedObject per injected
-@StateObject private var viewModel = ChatViewModel()  // Owned
-@ObservedObject var sharedState: AppState             // Injected
+// 3. Usare @State con @Observable (iOS 26+ pattern)
+@State private var viewModel = ChatViewModel()  // @Observable class
 
 // 4. Usare .task per async work
 .task {
@@ -747,16 +765,16 @@ Text(date, style: .relative)  // Automaticamente localizzato
 
 ```bash
 # Build
-xcodebuild -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 15 Pro' build
+xcodebuild -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build
 
 # Test
-xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 15 Pro'
+xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 
 # Lint
 swiftlint lint --strict
 
 # Format
-swiftformat . --swiftversion 5.9
+swiftformat . --swiftversion 6.0
 
 # Clean
 xcodebuild clean -scheme Margiogram

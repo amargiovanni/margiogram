@@ -1,6 +1,15 @@
+---
+updated: 2025-11
+platforms: iOS 26+, macOS 26+
+swift: 6.0+
+xcode: 17.0+
+---
+
 # Margiogram - Guida all'Implementazione
 
 Questo documento descrive tutte le funzionalità da implementare per un client Telegram completo (account free) e le strategie di implementazione ad alto livello.
+
+> **Requisiti Minimi**: iOS 26.0+ / macOS 26.0+ | Swift 6.0+ | Xcode 17.0+
 
 ---
 

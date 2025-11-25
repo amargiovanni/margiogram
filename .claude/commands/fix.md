@@ -1,3 +1,9 @@
+---
+model: claude-sonnet-4-5-20250929
+description: Diagnose and fix bugs in Margiogram
+updated: 2025-11
+---
+
 # Fix Command
 
 Diagnostica e risolvi problemi nel codice.

@@ -2,10 +2,23 @@
   "$schema": "https://claude.ai/schemas/claude-code-settings.json",
   "project": {
     "name": "Margiogram",
-    "description": "Native Telegram client for iOS/macOS with Liquid Glass design",
+    "description": "Native Telegram client for iOS 26+/macOS 26+ with Liquid Glass design",
     "type": "ios-macos-app",
     "language": "swift",
-    "framework": "swiftui"
+    "framework": "swiftui",
+    "swiftVersion": "6.0",
+    "minimumPlatforms": {
+      "iOS": "26.0",
+      "macOS": "26.0"
+    }
+  },
+  "model": {
+    "default": "claude-sonnet-4-5-20250929",
+    "planning": "claude-sonnet-4-5-20250929",
+    "implementation": "claude-sonnet-4-5-20250929",
+    "review": "claude-sonnet-4-5-20250929",
+    "complex": "claude-opus-4-5-20251101",
+    "notes": "Use Opus for complex architectural decisions, security audits, and major refactoring. Use Sonnet for most coding tasks."
   },
   "preferences": {
     "codeStyle": {
@@ -31,9 +44,16 @@
       "includeExamples": true
     },
     "testing": {
-      "framework": "XCTest",
+      "framework": "Swift Testing",
+      "legacyFramework": "XCTest",
       "coverageThreshold": 80,
       "namingConvention": "test_methodName_condition_expectedResult"
+    },
+    "concurrency": {
+      "model": "Swift 6 strict concurrency",
+      "preferActors": true,
+      "useAsyncAwait": true,
+      "avoidGCD": true
     }
   },
   "rules": {
@@ -50,7 +70,8 @@
       "Implement image caching",
       "Avoid blocking main thread",
       "Use background queues for heavy operations",
-      "Implement proper memory management"
+      "Implement proper memory management",
+      "Leverage iOS 26 performance APIs"
     ],
     "codeQuality": [
       "No force unwrapping (!) except @IBOutlet",
@@ -59,15 +80,17 @@
       "Follow SOLID principles",
       "Keep functions under 50 lines",
       "Keep files under 400 lines",
-      "Extract reusable components"
+      "Extract reusable components",
+      "Use Swift 6 strict concurrency"
     ],
     "ui": [
       "Support Dark Mode",
       "Support Dynamic Type",
       "Add accessibility labels",
       "Use semantic colors",
-      "Follow Human Interface Guidelines",
-      "Implement Liquid Glass design system"
+      "Follow Human Interface Guidelines iOS 26",
+      "Implement Liquid Glass design system",
+      "Support all screen sizes adaptively"
     ]
   },
   "ignorePatterns": [
@@ -88,6 +111,7 @@
   "tools": {
     "linter": "swiftlint",
     "formatter": "swiftformat",
-    "packageManager": "spm"
+    "packageManager": "spm",
+    "xcode": "17.0+"
   }
 }

@@ -1,3 +1,9 @@
+---
+model: claude-sonnet-4-5-20250929
+description: Generate and manage project documentation
+updated: 2025-11
+---
+
 # Docs Command
 
 Genera e gestisci la documentazione del progetto.
@@ -241,9 +247,9 @@ More detailed explanation of the component's purpose and functionality.
 ## Installation
 
 ### Requirements
-- iOS 17.0+
-- macOS 14.0+
-- Xcode 15.0+
+- iOS 26.0+
+- macOS 26.0+
+- Xcode 17.0+
 
 ### Swift Package Manager
 
@@ -402,7 +408,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Build documentation
 xcodebuild docbuild \
     -scheme Margiogram \
-    -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
+    -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
     -derivedDataPath ./DerivedData
 
 # Export documentation

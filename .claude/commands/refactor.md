@@ -1,3 +1,9 @@
+---
+model: claude-sonnet-4-5-20250929
+description: Refactor code to improve quality and maintainability
+updated: 2025-11
+---
+
 # Refactor Command
 
 Migliora la struttura e qualità del codice senza cambiare comportamento.

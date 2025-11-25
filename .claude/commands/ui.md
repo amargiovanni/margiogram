@@ -1,6 +1,12 @@
+---
+model: claude-sonnet-4-5-20250929
+description: Create and improve UI components with Liquid Glass design (iOS 26+)
+updated: 2025-11
+---
+
 # UI Command
 
-Crea e migliora componenti UI seguendo il design system Liquid Glass.
+Crea e migliora componenti UI seguendo il design system Liquid Glass (iOS 26 style).
 
 ## Utilizzo
 
@@ -815,7 +821,7 @@ struct DevicePreview<Content: View>: View {
     var body: some View {
         Group {
             content
-                .previewDevice("iPhone 15 Pro")
+                .previewDevice("iPhone 17 Pro")
                 .previewDisplayName("iPhone")
 
             content

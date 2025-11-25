@@ -1,3 +1,9 @@
+---
+model: claude-opus-4-5-20251101
+description: Security audit and best practices implementation (use Opus for thorough analysis)
+updated: 2025-11
+---
+
 # Security Command
 
 Esegui audit di sicurezza e implementa best practices.

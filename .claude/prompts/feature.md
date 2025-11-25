@@ -1,3 +1,9 @@
+---
+model: claude-sonnet-4-5-20250929
+description: Template for requesting new feature implementation
+updated: 2025-11
+---
+
 # Feature Implementation Prompt
 
 Usa questo template per richiedere l'implementazione di una nuova feature.

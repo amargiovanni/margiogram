@@ -1,3 +1,9 @@
+---
+model: claude-sonnet-4-5-20250929
+description: Code review command for Margiogram
+updated: 2025-11
+---
+
 # Code Review Command
 
 Esegui una code review approfondita del codice specificato.

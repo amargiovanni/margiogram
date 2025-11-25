@@ -1,3 +1,9 @@
+---
+model: claude-sonnet-4-5-20250929
+description: Generate and run tests for Margiogram
+updated: 2025-11
+---
+
 # Test Command
 
 Genera e/o esegui test per il codice specificato.
@@ -397,7 +403,7 @@ extension Chat {
 ```bash
 xcodebuild test \
   -scheme Margiogram \
-  -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
   -resultBundlePath TestResults.xcresult
 ```
 
@@ -405,7 +411,7 @@ xcodebuild test \
 ```bash
 xcodebuild test \
   -scheme Margiogram \
-  -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
   -only-testing:MargiogramTests/ChatViewModelTests/test_loadChats_success
 ```
 
@@ -413,7 +419,7 @@ xcodebuild test \
 ```bash
 xcodebuild test \
   -scheme Margiogram \
-  -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
   -enableCodeCoverage YES
 
 # View coverage report
@@ -424,7 +430,7 @@ xcrun xccov view --report --json TestResults.xcresult
 ```bash
 xcodebuild test \
   -scheme Margiogram \
-  -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
   -parallel-testing-enabled YES \
   -parallel-testing-worker-count 4
 ```

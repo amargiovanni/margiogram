@@ -2,8 +2,8 @@
 
 > Un client Telegram nativo per macOS e iOS con design Liquid Glass, costruito interamente in Swift.
 
-![Platform](https://img.shields.io/badge/Platform-iOS%2017%2B%20%7C%20macOS%2014%2B-blue)
-![Swift](https://img.shields.io/badge/Swift-5.9%2B-orange)
+![Platform](https://img.shields.io/badge/Platform-iOS%2026%2B%20%7C%20macOS%2026%2B-blue)
+![Swift](https://img.shields.io/badge/Swift-6.0%2B-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## Panoramica
@@ -31,12 +31,12 @@ Margiogram è un client Telegram completo che sfrutta le API ufficiali di Telegr
 ## Requisiti di Sistema
 
 ### iOS
-- iOS 17.0 o successivo
-- iPhone, iPad, iPod touch
+- iOS 26.0 o successivo
+- iPhone, iPad
 
 ### macOS
-- macOS 14.0 (Sonoma) o successivo
-- Chip Apple Silicon o Intel
+- macOS 26.0 o successivo
+- Chip Apple Silicon (Intel non supportato)
 
 ## Architettura
 
@@ -106,9 +106,9 @@ Margiogram/
 
 ### Prerequisites
 
-1. **Xcode 15.0+** con Command Line Tools
+1. **Xcode 17.0+** con Command Line Tools
 2. **TDLib** compilato per le piattaforme target
-3. **CocoaPods** o **Swift Package Manager**
+3. **Swift Package Manager**
 
 ### Setup TDLib
 
@@ -303,7 +303,7 @@ struct AdaptiveLayout: View {
 ### Unit Tests
 
 ```bash
-xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 15 Pro'
+xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 ```
 
 ### UI Tests
@@ -412,7 +412,7 @@ Distribuito sotto licenza MIT. Vedi `LICENSE` per maggiori informazioni.
 
 - [TDLib](https://github.com/tdlib/td) - Telegram Database Library
 - [WebRTC](https://webrtc.org/) - Real-time communication
-- Design ispirato a iOS 18 e visionOS
+- Design ispirato a iOS 26 Liquid Glass e visionOS
 
 ## Contatti
 

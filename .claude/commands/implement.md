@@ -1,3 +1,9 @@
+---
+model: claude-sonnet-4-5-20250929
+description: Implement new features following project standards
+updated: 2025-11
+---
+
 # Implement Feature Command
 
 Implementa una nuova feature seguendo l'architettura e gli standard del progetto.
