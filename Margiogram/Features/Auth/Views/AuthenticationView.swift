@@ -11,13 +11,16 @@ import SwiftUI
 
 /// Main authentication view that handles the login flow.
 struct AuthenticationView: View {
-    // MARK: - Environment
-
-    @EnvironmentObject private var authManager: AuthenticationManager
-
     // MARK: - State
 
+    @State private var viewModel: AuthViewModel
     @State private var currentStep: AuthStep = .phoneNumber
+
+    // MARK: - Initialization
+
+    init(viewModel: AuthViewModel = AuthViewModel()) {
+        _viewModel = State(initialValue: viewModel)
+    }
 
     // MARK: - Body
 
@@ -45,7 +48,10 @@ struct AuthenticationView: View {
             }
         }
         .background(backgroundView)
-        .onChange(of: authManager.state) { _, newState in
+        .task {
+            await viewModel.initialize()
+        }
+        .onChange(of: viewModel.authState) { _, newState in
             updateStep(for: newState)
         }
     }
@@ -84,30 +90,30 @@ struct AuthenticationView: View {
 
     @ViewBuilder
     private var contentView: some View {
-        switch authManager.state {
+        switch viewModel.authState {
         case .waitingForPhoneNumber, .unauthorized, .loading:
-            PhoneNumberInputView()
+            PhoneNumberInputView(viewModel: viewModel)
                 .transition(.asymmetric(
                     insertion: .move(edge: .trailing).combined(with: .opacity),
                     removal: .move(edge: .leading).combined(with: .opacity)
                 ))
 
         case .waitingForCode(let codeInfo):
-            CodeVerificationView(codeInfo: codeInfo)
+            CodeVerificationView(viewModel: viewModel, codeInfo: codeInfo)
                 .transition(.asymmetric(
                     insertion: .move(edge: .trailing).combined(with: .opacity),
                     removal: .move(edge: .leading).combined(with: .opacity)
                 ))
 
         case .waitingForPassword(let hint):
-            PasswordInputView(hint: hint)
+            PasswordInputView(viewModel: viewModel, hint: hint)
                 .transition(.asymmetric(
                     insertion: .move(edge: .trailing).combined(with: .opacity),
                     removal: .move(edge: .leading).combined(with: .opacity)
                 ))
 
         case .waitingForRegistration:
-            RegistrationView()
+            RegistrationView(viewModel: viewModel)
                 .transition(.asymmetric(
                     insertion: .move(edge: .trailing).combined(with: .opacity),
                     removal: .move(edge: .leading).combined(with: .opacity)
@@ -170,7 +176,7 @@ struct AuthenticationView: View {
     // MARK: - Helpers
 
     private var subtitleText: String {
-        switch authManager.state {
+        switch viewModel.authState {
         case .waitingForPhoneNumber, .unauthorized, .loading:
             return "Enter your phone number to get started"
         case .waitingForCode:
@@ -212,13 +218,8 @@ struct AuthenticationView: View {
 // MARK: - Phone Number Input View
 
 struct PhoneNumberInputView: View {
-    @EnvironmentObject private var authManager: AuthenticationManager
-
-    @State private var phoneNumber = ""
-    @State private var selectedCountry = Country.italy
+    @Bindable var viewModel: AuthViewModel
     @FocusState private var isPhoneFocused: Bool
-    @State private var showCountryPicker = false
-    @State private var shake = false
 
     var body: some View {
         VStack(spacing: Spacing.lg) {
@@ -227,13 +228,13 @@ struct PhoneNumberInputView: View {
                 HStack(spacing: Spacing.sm) {
                     // Country selector
                     Button {
-                        showCountryPicker = true
+                        viewModel.showCountryPicker = true
                     } label: {
                         HStack(spacing: Spacing.xs) {
-                            Text(selectedCountry.flag)
+                            Text(viewModel.selectedCountry.flag)
                                 .font(.title2)
 
-                            Text(selectedCountry.dialCode)
+                            Text(viewModel.selectedCountry.dialCode)
                                 .font(Typography.bodyMedium)
                                 .foregroundStyle(.primary)
 
@@ -248,17 +249,17 @@ struct PhoneNumberInputView: View {
                         .frame(height: 30)
 
                     // Phone field
-                    TextField("Phone number", text: $phoneNumber)
+                    TextField("Phone number", text: $viewModel.phoneNumber)
                         .keyboardType(.phonePad)
                         .textContentType(.telephoneNumber)
                         .focused($isPhoneFocused)
                         .font(Typography.bodyLarge)
                 }
             }
-            .modifier(ShakeEffect(animatableData: shake ? 1 : 0))
+            .modifier(ShakeEffect(animatableData: viewModel.shouldShake ? 1 : 0))
 
             // Error message
-            if let error = authManager.error {
+            if let error = viewModel.error {
                 Text(error.localizedDescription)
                     .font(Typography.caption)
                     .foregroundStyle(.error)
@@ -269,36 +270,20 @@ struct PhoneNumberInputView: View {
             GlassButton(
                 "Continue",
                 icon: "arrow.right",
-                isLoading: authManager.isProcessing,
-                isDisabled: !isValidPhoneNumber
+                isLoading: viewModel.isProcessing,
+                isDisabled: !viewModel.isPhoneNumberValid
             ) {
-                submitPhoneNumber()
+                Task {
+                    await viewModel.submitPhoneNumber()
+                }
             }
             .frame(maxWidth: .infinity)
         }
         .onAppear {
             isPhoneFocused = true
         }
-        .sheet(isPresented: $showCountryPicker) {
-            CountryPickerView(selectedCountry: $selectedCountry)
-        }
-    }
-
-    private var isValidPhoneNumber: Bool {
-        phoneNumber.filter { $0.isNumber }.count >= 7
-    }
-
-    private func submitPhoneNumber() {
-        let fullNumber = selectedCountry.dialCode + phoneNumber.filter { $0.isNumber }
-
-        Task {
-            do {
-                try await authManager.sendPhoneNumber(fullNumber)
-            } catch {
-                withAnimation(.default) {
-                    shake.toggle()
-                }
-            }
+        .sheet(isPresented: $viewModel.showCountryPicker) {
+            CountryPickerView(selectedCountry: $viewModel.selectedCountry)
         }
     }
 }
@@ -306,19 +291,9 @@ struct PhoneNumberInputView: View {
 // MARK: - Code Verification View
 
 struct CodeVerificationView: View {
-    @EnvironmentObject private var authManager: AuthenticationManager
-
+    @Bindable var viewModel: AuthViewModel
     let codeInfo: AuthCodeInfo
-
-    @State private var code = ""
-    @State private var timeRemaining: Int
     @FocusState private var isCodeFocused: Bool
-    @State private var shake = false
-
-    init(codeInfo: AuthCodeInfo) {
-        self.codeInfo = codeInfo
-        _timeRemaining = State(initialValue: Int(codeInfo.timeout))
-    }
 
     var body: some View {
         VStack(spacing: Spacing.lg) {
@@ -339,23 +314,25 @@ struct CodeVerificationView: View {
                     ForEach(0..<6, id: \.self) { index in
                         CodeDigitView(
                             digit: digit(at: index),
-                            isFocused: code.count == index
+                            isFocused: viewModel.verificationCode.count == index
                         )
                     }
                 }
                 .frame(maxWidth: .infinity)
             }
-            .modifier(ShakeEffect(animatableData: shake ? 1 : 0))
+            .modifier(ShakeEffect(animatableData: viewModel.shouldShake ? 1 : 0))
             .overlay {
-                TextField("", text: $code)
+                TextField("", text: $viewModel.verificationCode)
                     .keyboardType(.numberPad)
                     .textContentType(.oneTimeCode)
                     .focused($isCodeFocused)
                     .opacity(0.01)
-                    .onChange(of: code) { _, newValue in
-                        code = String(newValue.prefix(6).filter { $0.isNumber })
-                        if code.count == 6 {
-                            submitCode()
+                    .onChange(of: viewModel.verificationCode) { _, newValue in
+                        viewModel.verificationCode = String(newValue.prefix(6).filter { $0.isNumber })
+                        if viewModel.verificationCode.count == 6 {
+                            Task {
+                                await viewModel.submitCode()
+                            }
                         }
                     }
             }
@@ -364,7 +341,7 @@ struct CodeVerificationView: View {
             }
 
             // Error message
-            if let error = authManager.error {
+            if let error = viewModel.error {
                 Text(error.localizedDescription)
                     .font(Typography.caption)
                     .foregroundStyle(.error)
@@ -373,13 +350,15 @@ struct CodeVerificationView: View {
 
             // Resend / Timer
             HStack {
-                if timeRemaining > 0 {
-                    Text("Resend code in \(timeRemaining)s")
+                if viewModel.resendTimeRemaining > 0 {
+                    Text("Resend code in \(viewModel.resendTimeRemaining)s")
                         .font(Typography.caption)
                         .foregroundStyle(.secondary)
                 } else {
                     Button("Resend code") {
-                        resendCode()
+                        Task {
+                            await viewModel.resendCode()
+                        }
                     }
                     .font(Typography.captionBold)
                 }
@@ -387,7 +366,9 @@ struct CodeVerificationView: View {
                 Spacer()
 
                 Button("Change number") {
-                    // Go back
+                    Task {
+                        await viewModel.logout()
+                    }
                 }
                 .font(Typography.captionBold)
             }
@@ -396,16 +377,18 @@ struct CodeVerificationView: View {
             GlassButton(
                 "Continue",
                 icon: "arrow.right",
-                isLoading: authManager.isProcessing,
-                isDisabled: code.count < 5
+                isLoading: viewModel.isProcessing,
+                isDisabled: !viewModel.isCodeValid
             ) {
-                submitCode()
+                Task {
+                    await viewModel.submitCode()
+                }
             }
             .frame(maxWidth: .infinity)
         }
         .onAppear {
             isCodeFocused = true
-            startTimer()
+            viewModel.startResendTimer()
         }
     }
 
@@ -425,39 +408,9 @@ struct CodeVerificationView: View {
     }
 
     private func digit(at index: Int) -> String? {
+        let code = viewModel.verificationCode
         guard index < code.count else { return nil }
         return String(code[code.index(code.startIndex, offsetBy: index)])
-    }
-
-    private func submitCode() {
-        Task {
-            do {
-                try await authManager.verifyCode(code)
-            } catch {
-                withAnimation(.default) {
-                    shake.toggle()
-                }
-                code = ""
-            }
-        }
-    }
-
-    private func resendCode() {
-        Task {
-            try? await authManager.resendCode()
-            timeRemaining = Int(codeInfo.timeout)
-            startTimer()
-        }
-    }
-
-    private func startTimer() {
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-            if timeRemaining > 0 {
-                timeRemaining -= 1
-            } else {
-                timer.invalidate()
-            }
-        }
     }
 }
 
@@ -493,12 +446,8 @@ struct CodeDigitView: View {
 // MARK: - Password Input View
 
 struct PasswordInputView: View {
-    @EnvironmentObject private var authManager: AuthenticationManager
-
+    @Bindable var viewModel: AuthViewModel
     let hint: String
-
-    @State private var password = ""
-    @State private var showPassword = false
     @FocusState private var isPasswordFocused: Bool
 
     var body: some View {
@@ -514,10 +463,10 @@ struct PasswordInputView: View {
             GlassContainer(intensity: .thin, cornerRadius: CornerRadius.large) {
                 HStack {
                     Group {
-                        if showPassword {
-                            TextField("Password", text: $password)
+                        if viewModel.showPassword {
+                            TextField("Password", text: $viewModel.password)
                         } else {
-                            SecureField("Password", text: $password)
+                            SecureField("Password", text: $viewModel.password)
                         }
                     }
                     .textContentType(.password)
@@ -525,16 +474,17 @@ struct PasswordInputView: View {
                     .font(Typography.bodyLarge)
 
                     Button {
-                        showPassword.toggle()
+                        viewModel.showPassword.toggle()
                     } label: {
-                        Image(systemName: showPassword ? "eye.slash" : "eye")
+                        Image(systemName: viewModel.showPassword ? "eye.slash" : "eye")
                             .foregroundStyle(.secondary)
                     }
                 }
             }
+            .modifier(ShakeEffect(animatableData: viewModel.shouldShake ? 1 : 0))
 
             // Error message
-            if let error = authManager.error {
+            if let error = viewModel.error {
                 Text(error.localizedDescription)
                     .font(Typography.caption)
                     .foregroundStyle(.error)
@@ -545,10 +495,12 @@ struct PasswordInputView: View {
             GlassButton(
                 "Continue",
                 icon: "arrow.right",
-                isLoading: authManager.isProcessing,
-                isDisabled: password.isEmpty
+                isLoading: viewModel.isProcessing,
+                isDisabled: !viewModel.isPasswordValid
             ) {
-                submitPassword()
+                Task {
+                    await viewModel.submitPassword()
+                }
             }
             .frame(maxWidth: .infinity)
 
@@ -562,19 +514,12 @@ struct PasswordInputView: View {
             isPasswordFocused = true
         }
     }
-
-    private func submitPassword() {
-        Task {
-            try? await authManager.verifyPassword(password)
-        }
-    }
 }
 
 // MARK: - Registration View
 
 struct RegistrationView: View {
-    @State private var firstName = ""
-    @State private var lastName = ""
+    @Bindable var viewModel: AuthViewModel
     @FocusState private var focusedField: Field?
 
     enum Field {
@@ -585,7 +530,7 @@ struct RegistrationView: View {
         VStack(spacing: Spacing.lg) {
             // First name
             GlassContainer(intensity: .thin, cornerRadius: CornerRadius.large) {
-                TextField("First name", text: $firstName)
+                TextField("First name", text: $viewModel.firstName)
                     .textContentType(.givenName)
                     .focused($focusedField, equals: .firstName)
                     .font(Typography.bodyLarge)
@@ -593,7 +538,7 @@ struct RegistrationView: View {
 
             // Last name
             GlassContainer(intensity: .thin, cornerRadius: CornerRadius.large) {
-                TextField("Last name (optional)", text: $lastName)
+                TextField("Last name (optional)", text: $viewModel.lastName)
                     .textContentType(.familyName)
                     .focused($focusedField, equals: .lastName)
                     .font(Typography.bodyLarge)
@@ -603,9 +548,12 @@ struct RegistrationView: View {
             GlassButton(
                 "Create Account",
                 icon: "person.badge.plus",
-                isDisabled: firstName.isEmpty
+                isLoading: viewModel.isProcessing,
+                isDisabled: !viewModel.isRegistrationValid
             ) {
-                // Submit registration
+                Task {
+                    await viewModel.submitRegistration()
+                }
             }
             .frame(maxWidth: .infinity)
         }
@@ -718,5 +666,4 @@ struct ShakeEffect: GeometryEffect {
 
 #Preview("Authentication") {
     AuthenticationView()
-        .environmentObject(AuthenticationManager())
 }
