@@ -101,8 +101,9 @@ firebase*.json
 credentials.json
 api_keys.json
 
-# TDLib
-tdlib/
+# TDLib external library (not our Swift wrapper)
+/tdlib/
+/td/
 *.a
 *.dylib
 
