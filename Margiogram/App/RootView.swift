@@ -164,6 +164,36 @@ struct MainView: View {
     @EnvironmentObject private var appState: AppState
     @Environment(\.horizontalSizeClass) private var sizeClass
 
+    // MARK: - State
+
+    @State private var selectedTab: Tab = .chats
+    @State private var selectedChat: Chat?
+    @State private var navigationPath = NavigationPath()
+
+    // MARK: - Tab Enum
+
+    enum Tab: String, CaseIterable {
+        case contacts = "Contacts"
+        case chats = "Chats"
+        case settings = "Settings"
+
+        var icon: String {
+            switch self {
+            case .contacts: return "person.crop.circle"
+            case .chats: return "bubble.left.and.bubble.right"
+            case .settings: return "gearshape"
+            }
+        }
+
+        var selectedIcon: String {
+            switch self {
+            case .contacts: return "person.crop.circle.fill"
+            case .chats: return "bubble.left.and.bubble.right.fill"
+            case .settings: return "gearshape.fill"
+            }
+        }
+    }
+
     var body: some View {
         Group {
             #if os(iOS)
@@ -181,11 +211,45 @@ struct MainView: View {
     // MARK: - iPhone Layout
 
     private var iPhoneLayout: some View {
-        NavigationStack {
-            ChatListView()
-                .navigationDestination(for: Int64.self) { chatId in
-                    ConversationView(chatId: chatId)
-                }
+        TabView(selection: $selectedTab) {
+            // Contacts Tab
+            NavigationStack(path: $navigationPath) {
+                ContactsView(selectedChat: $selectedChat)
+                    .navigationDestination(for: Chat.self) { chat in
+                        ConversationView(chat: chat)
+                    }
+            }
+            .tabItem {
+                Label(Tab.contacts.rawValue, systemImage: selectedTab == .contacts ? Tab.contacts.selectedIcon : Tab.contacts.icon)
+            }
+            .tag(Tab.contacts)
+
+            // Chats Tab
+            NavigationStack(path: $navigationPath) {
+                ChatListView(selectedChat: $selectedChat)
+                    .navigationDestination(for: Chat.self) { chat in
+                        ConversationView(chat: chat)
+                    }
+            }
+            .tabItem {
+                Label(Tab.chats.rawValue, systemImage: selectedTab == .chats ? Tab.chats.selectedIcon : Tab.chats.icon)
+            }
+            .tag(Tab.chats)
+
+            // Settings Tab
+            NavigationStack {
+                SettingsView()
+            }
+            .tabItem {
+                Label(Tab.settings.rawValue, systemImage: selectedTab == .settings ? Tab.settings.selectedIcon : Tab.settings.icon)
+            }
+            .tag(Tab.settings)
+        }
+        .onChange(of: selectedChat) { _, newChat in
+            if let chat = newChat {
+                navigationPath.append(chat)
+                selectedChat = nil
+            }
         }
     }
 
@@ -193,10 +257,32 @@ struct MainView: View {
 
     private var iPadLayout: some View {
         NavigationSplitView {
-            ChatListView()
+            // Sidebar
+            List(selection: $selectedTab) {
+                ForEach(Tab.allCases, id: \.self) { tab in
+                    Label(tab.rawValue, systemImage: tab.icon)
+                        .tag(tab)
+                }
+            }
+            .listStyle(.sidebar)
+            .navigationTitle("Margiogram")
+        } content: {
+            // Content based on selected tab
+            switch selectedTab {
+            case .contacts:
+                ContactsView(selectedChat: $selectedChat)
+            case .chats:
+                ChatListView(selectedChat: $selectedChat)
+            case .settings:
+                SettingsView()
+            }
         } detail: {
-            if let chatId = appState.selectedChatId {
-                ConversationView(chatId: chatId)
+            // Detail view
+            if let chat = selectedChat {
+                ConversationView(chat: chat)
+            } else if selectedTab == .settings {
+                Text("Select a setting")
+                    .foregroundStyle(.secondary)
             } else {
                 ContentUnavailableView(
                     "Select a Chat",
@@ -212,17 +298,37 @@ struct MainView: View {
     #if os(macOS)
     private var macOSLayout: some View {
         NavigationSplitView(columnVisibility: .constant(.all)) {
-            // Sidebar with folders
-            SidebarView()
-                .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 280)
+            // Sidebar with tabs
+            List(selection: $selectedTab) {
+                Section("Navigation") {
+                    ForEach(Tab.allCases, id: \.self) { tab in
+                        Label(tab.rawValue, systemImage: tab.icon)
+                            .tag(tab)
+                    }
+                }
+
+                Section("Folders") {
+                    ForEach(SidebarFolder.allCases) { folder in
+                        Label(folder.rawValue, systemImage: folder.icon)
+                    }
+                }
+            }
+            .listStyle(.sidebar)
+            .navigationSplitViewColumnWidth(min: 180, ideal: 200, max: 250)
         } content: {
-            // Chat list
-            ChatListView()
-                .navigationSplitViewColumnWidth(min: 280, ideal: 320, max: 400)
+            // Content based on selected tab
+            switch selectedTab {
+            case .contacts:
+                ContactsView(selectedChat: $selectedChat)
+            case .chats:
+                ChatListView(selectedChat: $selectedChat)
+            case .settings:
+                SettingsView()
+            }
         } detail: {
-            // Conversation
-            if let chatId = appState.selectedChatId {
-                ConversationView(chatId: chatId)
+            // Conversation or detail
+            if let chat = selectedChat {
+                ConversationView(chat: chat)
             } else {
                 ContentUnavailableView(
                     "Select a Chat",
@@ -236,44 +342,32 @@ struct MainView: View {
     #endif
 }
 
-// MARK: - Sidebar View (macOS)
+// MARK: - Sidebar Folder (macOS)
 
 #if os(macOS)
-struct SidebarView: View {
-    @State private var selectedFolder: ChatFolder? = .all
+enum SidebarFolder: String, CaseIterable, Identifiable {
+    case all = "All Chats"
+    case personal = "Personal"
+    case groups = "Groups"
+    case channels = "Channels"
+    case bots = "Bots"
+    case archived = "Archived"
 
-    enum ChatFolder: String, CaseIterable, Identifiable {
-        case all = "All Chats"
-        case personal = "Personal"
-        case groups = "Groups"
-        case channels = "Channels"
-        case bots = "Bots"
-        case archived = "Archived"
+    var id: String { rawValue }
 
-        var id: String { rawValue }
-
-        var icon: String {
-            switch self {
-            case .all: return "tray.fill"
-            case .personal: return "person.fill"
-            case .groups: return "person.3.fill"
-            case .channels: return "megaphone.fill"
-            case .bots: return "cpu.fill"
-            case .archived: return "archivebox.fill"
-            }
+    var icon: String {
+        switch self {
+        case .all: return "tray.fill"
+        case .personal: return "person.fill"
+        case .groups: return "person.3.fill"
+        case .channels: return "megaphone.fill"
+        case .bots: return "cpu.fill"
+        case .archived: return "archivebox.fill"
         }
-    }
-
-    var body: some View {
-        List(ChatFolder.allCases, selection: $selectedFolder) { folder in
-            Label(folder.rawValue, systemImage: folder.icon)
-                .tag(folder)
-        }
-        .listStyle(.sidebar)
-        .navigationTitle("Margiogram")
     }
 }
 #endif
+
 
 // MARK: - Menu Bar View (macOS)
 
