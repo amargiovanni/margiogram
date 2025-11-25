@@ -5,28 +5,194 @@
 ![Platform](https://img.shields.io/badge/Platform-iOS%2026%2B%20%7C%20macOS%2026%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-6.0%2B-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-In%20Development-yellow)
 
 ## Panoramica
 
 Margiogram è un client Telegram completo che sfrutta le API ufficiali di Telegram (TDLib) per offrire un'esperienza utente premium su dispositivi Apple. Il design Liquid Glass si adatta fluidamente tra iOS e macOS, mantenendo un'estetica moderna e coerente.
 
-## Caratteristiche Principali
+## Stato Sviluppo
 
-### Design Liquid Glass
-- Effetti di trasparenza e blur dinamici
-- Animazioni fluide e responsive
-- Adattamento automatico alla modalità chiara/scura
-- Supporto completo per Dynamic Island e StandBy Mode
-- Interfaccia che scala perfettamente da iPhone a Mac
+### ✅ Completato
 
-### Funzionalità Complete
-- **Messaggistica completa**: testo, media, documenti, posizione, contatti
-- **Chiamate**: audio e video con supporto per group calls
-- **Gruppi e Canali**: gestione completa con ruoli e permessi
-- **Sticker e GIF**: librerie complete con supporto animazioni
-- **Bot**: interazione completa con inline mode
-- **Ricerca**: globale e per chat con filtri avanzati
-- **Sincronizzazione**: multi-dispositivo in tempo reale
+#### Core Layer
+- **TDLib Integration**: Wrapper completo per TDLib con supporto actor-based
+  - `TDLibClient.swift` - Client principale con async/await
+  - `TDLibFunctions.swift` - Tutte le funzioni TDLib (auth, chat, messages, calls, stickers)
+  - `TDLibUpdateHandler.swift` - Gestione aggiornamenti real-time con delegate pattern
+
+#### Domain Layer
+- **Entities**: User, Chat, Message, ChatFolder con supporto completo
+- **Repositories**: Protocol-based abstractions per data access
+- **UseCases**: Business logic per Chat, Message, User operations
+
+#### Data Layer
+- **Repository Implementations**: ChatRepositoryImpl, MessageRepositoryImpl, UserRepositoryImpl
+- **Mappers**: TDLib to Domain entity mapping
+
+#### Services
+- **KeychainService**: Storage sicuro con actor-based design
+- **BiometricService**: Face ID / Touch ID / Optic ID support
+- **NotificationService**: Push notifications con categories e actions
+- **FileService**: File management con cache e directory handling
+- **NetworkMonitor**: Connectivity monitoring
+
+#### Features
+| Feature | Views | ViewModels | Status |
+|---------|-------|------------|--------|
+| **Authentication** | AuthView, PhoneInputView, CodeInputView, PasswordView | AuthViewModel | ✅ |
+| **Chat List** | ChatListView, ChatRowView | ChatListViewModel | ✅ |
+| **Conversation** | ConversationView, MessageBubble, MessageInputView | ConversationViewModel | ✅ |
+| **Contacts** | ContactsView | ContactsViewModel | ✅ |
+| **Settings** | SettingsView | - | ✅ |
+| **Profile** | ProfileView | ProfileViewModel | ✅ |
+| **Media Viewer** | MediaViewerView, MediaGalleryView | MediaViewerViewModel | ✅ |
+| **Global Search** | GlobalSearchView | GlobalSearchViewModel | ✅ |
+| **Calls** | CallView, CallHistoryView | CallViewModel | ✅ |
+| **Stickers** | StickerPanelView, StickerStoreView | StickerPanelViewModel | ✅ |
+| **Forward** | ForwardView, ShareSheetView | ForwardViewModel | ✅ |
+
+#### UI Design System
+- **Liquid Glass Components**: GlassContainer, GlassButton, GlassTextField
+- **Typography**: Complete type system
+- **Colors**: Dynamic color palette with dark mode
+- **Modifiers**: LiquidGlass view modifiers
+
+#### Navigation
+- **RootView**: Adaptive layout (TabView iPhone, NavigationSplitView iPad/Mac)
+- **Cross-platform support**: iOS, iPadOS, macOS
+
+### 🚧 In Progress
+- Xcode project generation (project.yml ready)
+- Widget extensions
+- Watch companion app
+
+### 📋 Planned
+- Stories feature
+- Channels management
+- Bot interactions
+- SharePlay integration
+- Siri shortcuts
+
+## Architettura
+
+```
+Margiogram/
+├── App/
+│   ├── MargiogramApp.swift          # Entry point
+│   └── RootView.swift               # Adaptive navigation
+├── Core/
+│   ├── TDLib/
+│   │   ├── TDLibClient.swift        # Main TDLib wrapper
+│   │   ├── TDLibFunctions.swift     # All TDLib functions
+│   │   └── TDLibUpdateHandler.swift # Update handling
+│   ├── Database/
+│   │   └── DatabaseService.swift
+│   ├── Network/
+│   │   └── NetworkMonitor.swift
+│   ├── Security/
+│   │   ├── KeychainService.swift
+│   │   └── BiometricService.swift
+│   └── Services/
+│       ├── NotificationService.swift
+│       └── FileService.swift
+├── Domain/
+│   ├── Entities/
+│   │   ├── User.swift
+│   │   ├── Chat.swift
+│   │   ├── Message.swift
+│   │   └── ChatFolder.swift
+│   ├── Repositories/                # Protocols
+│   └── UseCases/
+│       ├── ChatUseCases.swift
+│       ├── MessageUseCases.swift
+│       └── UserUseCases.swift
+├── Data/
+│   ├── Repositories/
+│   │   ├── ChatRepositoryImpl.swift
+│   │   ├── MessageRepositoryImpl.swift
+│   │   └── UserRepositoryImpl.swift
+│   └── Mappers/
+├── Features/
+│   ├── Auth/
+│   │   ├── Views/
+│   │   └── ViewModels/
+│   ├── ChatList/
+│   │   ├── Views/
+│   │   │   ├── ChatListView.swift
+│   │   │   └── ChatRowView.swift
+│   │   └── ViewModels/
+│   │       └── ChatListViewModel.swift
+│   ├── Conversation/
+│   │   ├── Views/
+│   │   │   ├── ConversationView.swift
+│   │   │   ├── MessageBubble.swift
+│   │   │   └── MessageInputView.swift
+│   │   └── ViewModels/
+│   │       └── ConversationViewModel.swift
+│   ├── Contacts/
+│   ├── Settings/
+│   ├── Profile/
+│   ├── MediaViewer/
+│   │   ├── Views/
+│   │   │   ├── MediaViewerView.swift
+│   │   │   └── MediaGalleryView.swift
+│   │   └── ViewModels/
+│   │       └── MediaViewerViewModel.swift
+│   ├── Search/
+│   │   ├── Views/
+│   │   │   └── GlobalSearchView.swift
+│   │   └── ViewModels/
+│   │       └── GlobalSearchViewModel.swift
+│   ├── Calls/
+│   │   ├── Views/
+│   │   │   └── CallView.swift
+│   │   └── ViewModels/
+│   │       └── CallViewModel.swift
+│   ├── Stickers/
+│   │   ├── Views/
+│   │   │   └── StickerPanelView.swift
+│   │   └── ViewModels/
+│   │       └── StickerPanelViewModel.swift
+│   └── Forward/
+│       ├── Views/
+│       │   └── ForwardView.swift
+│       └── ViewModels/
+│           └── ForwardViewModel.swift
+├── UI/
+│   ├── DesignSystem/
+│   │   ├── LiquidGlass/
+│   │   │   ├── GlassContainer.swift
+│   │   │   ├── GlassButton.swift
+│   │   │   └── GlassTextField.swift
+│   │   ├── Colors/
+│   │   │   └── AppColors.swift
+│   │   └── Typography/
+│   │       └── AppTypography.swift
+│   ├── Components/
+│   └── Modifiers/
+│       └── LiquidGlassModifier.swift
+├── Extensions/
+└── Resources/
+    ├── Assets.xcassets/
+    └── Localizable/
+```
+
+## Stack Tecnologico
+
+| Componente | Tecnologia |
+|------------|------------|
+| UI Framework | SwiftUI |
+| Backend API | TDLib (Telegram Database Library) |
+| Architecture | MVVM + Clean Architecture |
+| Concurrency | Swift Concurrency (async/await, actors) |
+| State Management | @Observable (iOS 17+) |
+| Database Locale | SwiftData |
+| Networking | URLSession + WebSocket |
+| Media | AVFoundation, PhotosUI |
+| Chiamate | WebRTC (planned) |
+| Notifiche | UserNotifications, PushKit |
+| Sicurezza | CryptoKit, Keychain |
 
 ## Requisiti di Sistema
 
@@ -38,119 +204,37 @@ Margiogram è un client Telegram completo che sfrutta le API ufficiali di Telegr
 - macOS 26.0 o successivo
 - Chip Apple Silicon (Intel non supportato)
 
-## Architettura
-
-```
-Margiogram/
-├── App/
-│   ├── MargiogramApp.swift
-│   └── AppDelegate.swift
-├── Core/
-│   ├── TDLib/                    # Wrapper TDLib
-│   │   ├── TDLibClient.swift
-│   │   ├── TDLibManager.swift
-│   │   └── Models/
-│   ├── Database/                 # Core Data / SwiftData
-│   │   ├── DataController.swift
-│   │   └── Entities/
-│   ├── Network/                  # Networking layer
-│   │   ├── APIClient.swift
-│   │   └── WebSocket/
-│   └── Security/                 # Encryption & Auth
-│       ├── KeychainManager.swift
-│       └── EncryptionService.swift
-├── Features/
-│   ├── Auth/                     # Login e registrazione
-│   ├── Chats/                    # Lista chat
-│   ├── Conversation/             # Singola conversazione
-│   ├── Contacts/                 # Rubrica
-│   ├── Calls/                    # Chiamate audio/video
-│   ├── Groups/                   # Gestione gruppi
-│   ├── Channels/                 # Gestione canali
-│   ├── Settings/                 # Impostazioni
-│   ├── Profile/                  # Profilo utente
-│   ├── Search/                   # Ricerca globale
-│   ├── Media/                    # Galleria media
-│   └── Stories/                  # Storie
-├── UI/
-│   ├── Components/               # Componenti riutilizzabili
-│   │   ├── LiquidGlass/
-│   │   ├── MessageBubble/
-│   │   ├── AvatarView/
-│   │   └── InputBar/
-│   ├── Styles/                   # Stili e temi
-│   └── Modifiers/                # View modifiers
-├── Resources/
-│   ├── Assets.xcassets
-│   ├── Localizable/
-│   └── Fonts/
-└── Extensions/
-    └── ...
-```
-
-## Stack Tecnologico
-
-| Componente | Tecnologia |
-|------------|------------|
-| UI Framework | SwiftUI |
-| Backend API | TDLib (Telegram Database Library) |
-| Database Locale | SwiftData |
-| Networking | URLSession + WebSocket |
-| Media | AVFoundation, PhotosUI |
-| Chiamate | WebRTC |
-| Notifiche | UserNotifications, PushKit |
-| Sicurezza | CryptoKit, Keychain |
-| Animazioni | Core Animation, Metal |
-
 ## Installazione
 
 ### Prerequisites
 
 1. **Xcode 17.0+** con Command Line Tools
-2. **TDLib** compilato per le piattaforme target
-3. **Swift Package Manager**
+2. **XcodeGen** (opzionale, per generare il progetto)
+3. **TDLib** compilato per le piattaforme target
 
-### Setup TDLib
-
-```bash
-# Clona TDLib
-git clone https://github.com/tdlib/td.git
-cd td
-
-# Build per iOS
-mkdir build-ios && cd build-ios
-cmake -DCMAKE_BUILD_TYPE=Release \
-      -DCMAKE_TOOLCHAIN_FILE=../CMake/iOS.cmake \
-      -DIOS_PLATFORM=OS64 ..
-make -j4
-
-# Build per macOS
-cd ..
-mkdir build-macos && cd build-macos
-cmake -DCMAKE_BUILD_TYPE=Release ..
-make -j4
-```
-
-### Configurazione Progetto
+### Setup
 
 1. Clona il repository:
 ```bash
-git clone https://github.com/tuousername/margiogram.git
+git clone https://github.com/amargiovanni/margiogram.git
 cd margiogram
 ```
 
-2. Configura le API credentials:
+2. Genera il progetto Xcode (opzionale):
 ```bash
-cp Config.example.xcconfig Config.xcconfig
-# Modifica Config.xcconfig con le tue API_ID e API_HASH
+xcodegen generate
 ```
 
-3. Apri il progetto in Xcode:
+3. Configura le API credentials in `Config.xcconfig`:
+```xcconfig
+TELEGRAM_API_ID = your_api_id
+TELEGRAM_API_HASH = your_api_hash
+```
+
+4. Apri e builda il progetto:
 ```bash
 open Margiogram.xcodeproj
 ```
-
-4. Build e run!
 
 ### Ottenere API Credentials
 
@@ -160,174 +244,53 @@ open Margiogram.xcodeproj
 4. Crea una nuova applicazione
 5. Copia `api_id` e `api_hash`
 
-## Configurazione
-
-### Config.xcconfig
-
-```xcconfig
-// Telegram API
-TELEGRAM_API_ID = your_api_id
-TELEGRAM_API_HASH = your_api_hash
-
-// App Configuration
-APP_NAME = Margiogram
-APP_BUNDLE_ID = com.yourname.margiogram
-
-// Build Settings
-DEVELOPMENT_TEAM = YOUR_TEAM_ID
-```
-
-### Info.plist Permissions
-
-```xml
-<key>NSCameraUsageDescription</key>
-<string>Margiogram needs camera access for video calls and media capture</string>
-<key>NSMicrophoneUsageDescription</key>
-<string>Margiogram needs microphone access for voice messages and calls</string>
-<key>NSPhotoLibraryUsageDescription</key>
-<string>Margiogram needs photo library access to share media</string>
-<key>NSLocationWhenInUseUsageDescription</key>
-<string>Margiogram needs location access to share your position</string>
-<key>NSContactsUsageDescription</key>
-<string>Margiogram needs contacts access to find your friends</string>
-```
-
-## Utilizzo
-
-### Autenticazione
-
-```swift
-import Margiogram
-
-// Inizializza il client
-let client = TDLibClient(apiId: apiId, apiHash: apiHash)
-
-// Login con numero di telefono
-await client.authenticate(phoneNumber: "+391234567890")
-
-// Verifica codice
-await client.verifyCode("12345")
-
-// (Opzionale) Password 2FA
-await client.verify2FA(password: "your_password")
-```
-
-### Invio Messaggi
-
-```swift
-// Testo
-await client.sendMessage(chatId: chatId, text: "Ciao!")
-
-// Media
-await client.sendPhoto(chatId: chatId, photo: imageData, caption: "Foto")
-
-// Documento
-await client.sendDocument(chatId: chatId, document: fileURL)
-
-// Posizione
-await client.sendLocation(chatId: chatId, latitude: 45.0, longitude: 9.0)
-```
-
-### Gestione Chat
-
-```swift
-// Ottieni lista chat
-let chats = await client.getChats(limit: 100)
-
-// Cerca messaggi
-let results = await client.searchMessages(query: "keyword", chatId: chatId)
-
-// Crea gruppo
-let group = await client.createGroup(title: "Nuovo Gruppo", memberIds: [id1, id2])
-```
-
 ## Design Liquid Glass
 
 ### Principi di Design
 
-1. **Trasparenza Contestuale**: Gli elementi UI mostrano blur e trasparenza basati sul contenuto sottostante
+1. **Trasparenza Contestuale**: Elementi UI con blur e trasparenza basati sul contenuto sottostante
 2. **Profondità Visiva**: Uso di ombre e gradienti per creare gerarchia
 3. **Fluidità**: Transizioni e animazioni smooth tra stati
-4. **Adattabilità**: L'interfaccia si adatta al contesto (dispositivo, tema, contenuto)
+4. **Adattabilità**: Interfaccia che si adatta a dispositivo, tema e contenuto
 
 ### Implementazione
 
 ```swift
-// Componente Liquid Glass base
-struct LiquidGlassView<Content: View>: View {
+// Liquid Glass Container
+struct GlassContainer<Content: View>: View {
     let content: Content
 
     var body: some View {
         content
+            .padding()
             .background(.ultraThinMaterial)
             .background(
                 LinearGradient(
-                    colors: [.white.opacity(0.1), .clear],
+                    colors: [.white.opacity(0.15), .white.opacity(0.05)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
             )
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-            .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .stroke(.white.opacity(0.2), lineWidth: 1)
+            )
+            .shadow(color: .black.opacity(0.1), radius: 10, y: 5)
     }
 }
-
-// View Modifier
-extension View {
-    func liquidGlass() -> some View {
-        modifier(LiquidGlassModifier())
-    }
-}
-```
-
-### Adattamento Cross-Platform
-
-```swift
-struct AdaptiveLayout: View {
-    @Environment(\.horizontalSizeClass) var sizeClass
-
-    var body: some View {
-        if sizeClass == .compact {
-            // Layout iPhone
-            NavigationStack { ... }
-        } else {
-            // Layout iPad/Mac
-            NavigationSplitView { ... }
-        }
-    }
-}
-```
-
-## Testing
-
-### Unit Tests
-
-```bash
-xcodebuild test -scheme Margiogram -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
-```
-
-### UI Tests
-
-```bash
-xcodebuild test -scheme MargiogramUITests -destination 'platform=iOS Simulator,name=iPhone 15 Pro'
-```
-
-### Test Coverage
-
-```bash
-xcodebuild test -scheme Margiogram -enableCodeCoverage YES
 ```
 
 ## Performance
 
-### Ottimizzazioni
+### Ottimizzazioni Implementate
 
 - **Lazy Loading**: Immagini e media caricati on-demand
-- **Caching Intelligente**: Cache multi-livello per media e messaggi
-- **Background Fetch**: Sincronizzazione in background ottimizzata
-- **Memory Management**: Gestione memoria aggressiva per liste lunghe
+- **Actor-based Services**: Thread-safe operations
+- **Cache Multi-livello**: Per media e messaggi
+- **Async/Await**: Modern concurrency throughout
 
-### Benchmark Target
+### Target Performance
 
 | Operazione | Target |
 |------------|--------|
@@ -339,9 +302,35 @@ xcodebuild test -scheme Margiogram -enableCodeCoverage YES
 ## Sicurezza
 
 - **End-to-End Encryption**: Chat segrete con MTProto 2.0
-- **Local Storage**: Dati sensibili in Keychain
-- **Biometric Auth**: Face ID / Touch ID supportati
+- **Secure Storage**: Keychain per dati sensibili
+- **Biometric Auth**: Face ID / Touch ID / Optic ID
 - **App Lock**: PIN/Password per protezione app
+
+## Roadmap
+
+### v1.0 (MVP)
+- [x] Autenticazione completa
+- [x] Lista chat con folders
+- [x] Messaggi (testo, media, voice)
+- [x] Chiamate audio/video
+- [x] Sticker e GIF
+- [x] Ricerca globale
+- [x] Media viewer
+- [x] Forward/Share
+- [ ] Notifiche push
+- [ ] Widget iOS
+
+### v1.1
+- [ ] Storie
+- [ ] Bot interactions
+- [ ] Temi personalizzati
+- [ ] Scheduled messages
+
+### v2.0
+- [ ] Group calls
+- [ ] Apple Watch companion
+- [ ] SharePlay integration
+- [ ] Siri shortcuts
 
 ## Contribuire
 
@@ -356,53 +345,9 @@ xcodebuild test -scheme Margiogram -enableCodeCoverage YES
 ### Coding Guidelines
 
 - Segui le [Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)
-- Usa SwiftLint per il linting
-- Scrivi test per nuove funzionalità
+- Usa `@Observable` per ViewModels
+- Usa `actor` per services thread-safe
 - Documenta con DocC
-
-### Code Style
-
-```swift
-// MARK: - Properties
-private let viewModel: ChatViewModel
-
-// MARK: - Lifecycle
-init(viewModel: ChatViewModel) {
-    self.viewModel = viewModel
-}
-
-// MARK: - Methods
-func sendMessage(_ text: String) async throws {
-    // Implementation
-}
-```
-
-## Roadmap
-
-### v1.0 (MVP)
-- [ ] Autenticazione
-- [ ] Lista chat
-- [ ] Messaggi testo
-- [ ] Invio media base
-- [ ] Notifiche push
-
-### v1.1
-- [ ] Chiamate audio
-- [ ] Sticker
-- [ ] GIF
-- [ ] Ricerca avanzata
-
-### v1.2
-- [ ] Chiamate video
-- [ ] Group calls
-- [ ] Storie
-- [ ] Temi personalizzati
-
-### v2.0
-- [ ] Widget iOS/macOS
-- [ ] Shortcuts e Siri
-- [ ] Apple Watch companion
-- [ ] SharePlay integration
 
 ## Licenza
 
@@ -411,17 +356,16 @@ Distribuito sotto licenza MIT. Vedi `LICENSE` per maggiori informazioni.
 ## Riconoscimenti
 
 - [TDLib](https://github.com/tdlib/td) - Telegram Database Library
-- [WebRTC](https://webrtc.org/) - Real-time communication
 - Design ispirato a iOS 26 Liquid Glass e visionOS
 
 ## Contatti
 
-Andrea Margiovanni - [@tuohandle](https://twitter.com/tuohandle)
+Andrea Margiovanni - [@margio.uk](https://bsky.app/profile/margio.uk)
 
-Link Progetto: [https://github.com/tuousername/margiogram](https://github.com/tuousername/margiogram)
+Link Progetto: [https://github.com/amargiovanni/margiogram](https://github.com/amargiovanni/margiogram)
 
 ---
 
 <p align="center">
-  Made with ❤️ in Italy
+  Made with ❤️ in Europe
 </p>
