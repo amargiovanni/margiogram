@@ -1,0 +1,93 @@
+{
+  "$schema": "https://claude.ai/schemas/claude-code-settings.json",
+  "project": {
+    "name": "Margiogram",
+    "description": "Native Telegram client for iOS/macOS with Liquid Glass design",
+    "type": "ios-macos-app",
+    "language": "swift",
+    "framework": "swiftui"
+  },
+  "preferences": {
+    "codeStyle": {
+      "indentation": "spaces",
+      "indentSize": 4,
+      "lineWidth": 120,
+      "trailingComma": false,
+      "bracketStyle": "same-line"
+    },
+    "naming": {
+      "classes": "PascalCase",
+      "structs": "PascalCase",
+      "enums": "PascalCase",
+      "protocols": "PascalCase",
+      "functions": "camelCase",
+      "variables": "camelCase",
+      "constants": "camelCase",
+      "typeAliases": "PascalCase"
+    },
+    "documentation": {
+      "style": "swift-doc-comments",
+      "requirePublicDocs": true,
+      "includeExamples": true
+    },
+    "testing": {
+      "framework": "XCTest",
+      "coverageThreshold": 80,
+      "namingConvention": "test_methodName_condition_expectedResult"
+    }
+  },
+  "rules": {
+    "security": [
+      "Never hardcode API keys or secrets",
+      "Always use Keychain for sensitive data",
+      "Validate all user inputs",
+      "Use secure connections only (HTTPS)",
+      "Implement certificate pinning for TDLib",
+      "Never log PII or sensitive data"
+    ],
+    "performance": [
+      "Use LazyVStack for long lists",
+      "Implement image caching",
+      "Avoid blocking main thread",
+      "Use background queues for heavy operations",
+      "Implement proper memory management"
+    ],
+    "codeQuality": [
+      "No force unwrapping (!) except @IBOutlet",
+      "Handle all error cases explicitly",
+      "Use async/await instead of callbacks",
+      "Follow SOLID principles",
+      "Keep functions under 50 lines",
+      "Keep files under 400 lines",
+      "Extract reusable components"
+    ],
+    "ui": [
+      "Support Dark Mode",
+      "Support Dynamic Type",
+      "Add accessibility labels",
+      "Use semantic colors",
+      "Follow Human Interface Guidelines",
+      "Implement Liquid Glass design system"
+    ]
+  },
+  "ignorePatterns": [
+    "*.xcodeproj/*",
+    "*.xcworkspace/*",
+    "DerivedData/*",
+    "build/*",
+    "Pods/*",
+    ".build/*",
+    "*.generated.swift"
+  ],
+  "contextFiles": [
+    "CLAUDE.md",
+    "AGENTS.md",
+    "IMPLEMENTATION.md",
+    "README.md"
+  ],
+  "tools": {
+    "linter": "swiftlint",
+    "formatter": "swiftformat",
+    "packageManager": "spm"
+  }
+}

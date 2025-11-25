@@ -1,0 +1,121 @@
+# SwiftFormat Configuration for Margiogram
+
+# File options
+--exclude Pods,DerivedData,.build,vendor,Generated
+
+# Format options
+--swiftversion 5.9
+
+# Indentation
+--indent 4
+--tabwidth 4
+--smarttabs enabled
+--indentcase false
+--ifdef indent
+
+# Wrapping
+--maxwidth 120
+--wraparguments before-first
+--wrapparameters before-first
+--wrapcollections before-first
+--wrapreturntype preserve
+--wrapconditions after-first
+--wraptypealiases before-first
+
+# Spacing
+--operatorfunc spaced
+--nospaceoperators ..<,...
+--ranges spaced
+--typeattributes prev-line
+--varattributes same-line
+--funcattributes prev-line
+--storedvarattrs same-line
+--computedvarattrs same-line
+
+# Blank lines
+--linebreaks lf
+--maxblanklines 1
+--trimwhitespace always
+--insertlines true
+
+# Braces
+--allman false
+--elseposition same-line
+--guardelse same-line
+
+# Semicolons
+--semicolons never
+
+# Redundant
+--redundanttype inferred
+--emptybraces no-space
+--modifierorder acl,setterACL,override,dynamic,mutating,lazy,final,required,convenience
+
+# Imports
+--importgrouping alpha
+
+# Self
+--self remove
+--selfrequired
+
+# Closures
+--closingparen balanced
+--trailingclosures
+
+# Marks
+--marktypes always
+--markextensions always
+--markcategories true
+--organizetypes class,struct,enum,extension
+
+# Types
+--acronyms ID,URL,UUID,HTTP,HTTPS,API,JSON,XML,HTML,CSS,SQL,UI,URL
+
+# Other
+--hexliteralcase lowercase
+--exponentcase lowercase
+--decimalgrouping 3
+--binarygrouping 4
+--octalgrouping 4
+--hexgrouping 4
+--fractiongrouping enabled
+--exponentgrouping enabled
+--patternlet hoist
+--stripunusedargs always
+--enumnamespaces always
+--extensionacl on-declarations
+
+# Rules
+--enable isEmpty
+--enable redundantSelf
+--enable redundantReturn
+--enable redundantType
+--enable sortImports
+--enable consecutiveBlankLines
+--enable trailingSpace
+--enable blankLinesAtEndOfScope
+--enable blankLinesAtStartOfScope
+--enable consecutiveSpaces
+--enable spaceAroundBraces
+--enable spaceAroundBrackets
+--enable spaceAroundComments
+--enable spaceAroundGenerics
+--enable spaceAroundOperators
+--enable spaceAroundParens
+--enable spaceInsideBraces
+--enable spaceInsideBrackets
+--enable spaceInsideComments
+--enable spaceInsideGenerics
+--enable spaceInsideParens
+--enable todos
+--enable void
+--enable wrapEnumCases
+--enable wrapSwitchCases
+--enable modifierOrder
+--enable markTypes
+--enable organizeDeclarations
+--enable sortDeclarations
+
+--disable andOperator
+--disable initCoderUnavailable
+--disable redundantObjc
